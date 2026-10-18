@@ -13,6 +13,11 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "notebooks" / "02_final_public.ipynb"
 SAL = ROOT / "outputs" / "salary"
 
+import sys
+
+sys.path.insert(0, str(ROOT / "src"))
+from viz.figures import LABELS  # noqa: E402
+
 # Embed the derived salary panel, rent table, and soccer table so the notebook
 # is self-contained on Kaggle without an external dataset attachment. The
 # derivation and source notes are in the repository (src/salary/,
@@ -38,7 +43,7 @@ md_intro = """# The testing is informative; the decisions are not
 
 **What is new**
 
-- The 10 Hz Combine signal predicts performance (**+0.299 SD/SD**) but not playing time (**−0.019**).
+- The 10 Hz Combine signal predicts performance (**+0.299 SD/SD** in the full pipeline) but not playing time (**−0.019**). This notebook's self-contained reconstruction gives **+0.41** and **−0.05**; the pattern and the playing-time null are the same. Small differences come from rebuilding the movement composite and performance residuals from the raw files.
 - Next-season playing time follows current playing time (**+0.606**) and draft position (**+0.785**), not performance (**−0.011**); the within-player change is **−0.095** (p = 0.11).
 - The weekly check: next-week playing time follows this-week playing time (**+0.753**); this-week performance does not (**−0.006**, p = 0.59).
 - The cap repeats the pattern: star share **−0.70** (p = 0.89); rookie snap share **−28.4** (p = 0.004); homegrown **+9.2** (p = 0.001); QB spending flattens at about **14% of payroll**.
@@ -259,14 +264,14 @@ for g, sub in t1.groupby("position_group"):
     if g == "DB":
         sub = sub.dropna(subset=["role_z","B_draft","next_role"])
         f = fit("next_role ~ role_z + B_draft", sub)
-        pos_rows.append({"position":g,
+        pos_rows.append({"position":g,"n":len(sub),
                          "role":f.params["role_z"],"role_lo":f.conf_int().loc["role_z",0],"role_hi":f.conf_int().loc["role_z",1],
                          "perf":np.nan,"perf_lo":np.nan,"perf_hi":np.nan,
                          "draft":f.params["B_draft"],"draft_lo":f.conf_int().loc["B_draft",0],"draft_hi":f.conf_int().loc["B_draft",1]})
     else:
         sub = sub.dropna(subset=["role_z","perf_z","B_draft","next_role"])
         f = fit("next_role ~ role_z + perf_z + B_draft", sub)
-        pos_rows.append({"position":g,
+        pos_rows.append({"position":g,"n":len(sub),
                          "role":f.params["role_z"],"role_lo":f.conf_int().loc["role_z",0],"role_hi":f.conf_int().loc["role_z",1],
                          "perf":f.params["perf_z"],"perf_lo":f.conf_int().loc["perf_z",0],"perf_hi":f.conf_int().loc["perf_z",1],
                          "draft":f.params["B_draft"],"draft_lo":f.conf_int().loc["B_draft",0],"draft_hi":f.conf_int().loc["B_draft",1]})
@@ -321,11 +326,15 @@ def attempt_stats(d):
     hit=np.where(dist>=1)[0]; first=e<=0.5
     return pd.Series({"max_speed":s.max(),"max_accel_first":a[first].max() if first.any() else np.nan,
                       "time_to_1yd":e[hit[0]] if len(hit) else np.nan,
-                      "path_eff":dist[-1]/path if path>0 else np.nan})
+                      "path_eff":min(dist[-1]/path,1.0) if path>0 else np.nan})
 att = g.apply(attempt_stats, include_groups=False).reset_index()
 att = att.merge(ct[["event_id","nfl_id","attempt","drill_name"]].drop_duplicates(), on=["event_id","nfl_id","attempt"], how="left")
+att["position_group"] = att["nfl_id"].map(
+    players.drop_duplicates("nfl_id").set_index("nfl_id")["nfl_position"]
+).map(group_map).fillna("OTHER")
 for col in ["max_speed","max_accel_first","time_to_1yd","path_eff"]:
-    att[col]=att.groupby("drill_name")[col].transform(lambda x:(x-x.mean())/x.std(ddof=0) if x.std(ddof=0)>0 else x*0)
+    att[col]=att.groupby(["drill_name","position_group"])[col].transform(
+        lambda x:(x-x.mean())/x.std(ddof=1) if x.std(ddof=1)>0 else x*0)
 cm = att.groupby("nfl_id").agg(speed=("max_speed","mean"),accel=("max_accel_first","mean"),
                                time1=("time_to_1yd","mean"),path=("path_eff","mean")).reset_index()
 z = cm[["speed","accel","path"]].apply(lambda x:(x-x.mean())/x.std(ddof=0))
@@ -334,7 +343,8 @@ print("Combine movement players:", len(cm))
 
 perf_sample = ps.merge(cm, on="nfl_id", how="left").dropna(subset=["combine_movement","perf_z"])
 perf_sample = perf_sample[perf_sample["position_group"] != "DB"].copy()
-role_sample = base.merge(cm, on="nfl_id", how="left").dropna(subset=["combine_movement"])
+role_sample = base[(base["perf_n"] >= 50) & base["role_gap"].notna()].merge(
+    cm, on="nfl_id", how="left").dropna(subset=["combine_movement"])
 combine_rows = []
 for data, formula, label in [
     (perf_sample,"perf_z ~ combine_movement + B_draft + C(position_group) + C(season_c)","performance"),
@@ -348,86 +358,158 @@ for data, formula, label in [
 combine_df = pd.DataFrame(combine_rows)
 '''
 
-code_figs = r'''
+code_figs = "LABELS = " + repr(LABELS) + "\n" + r'''
 FIG = Path("figures"); FIG.mkdir(exist_ok=True)
-BLUE, ORANGE, AQUA, GRAY, BASELINE, SURFACE, INK = "#2a78d6","#eb6834","#1baf7a","#898781","#c3c2b7","#fcfcfb","#0b0b0b"
-plt.rcParams.update({"figure.facecolor":SURFACE,"axes.facecolor":SURFACE,"font.size":9,
-                     "axes.spines.top":False,"axes.spines.right":False,"grid.color":"#e1e0d9"})
+BLUE, ORANGE, AQUA, GRAY, BASELINE, SURFACE, INK, SECONDARY = "#2a78d6","#eb6834","#1baf7a","#898781","#c3c2b7","#fcfcfb","#0b0b0b","#52514e"
+plt.rcParams.update({"figure.facecolor":SURFACE,"axes.facecolor":SURFACE,"font.size":10,
+                     "axes.spines.top":False,"axes.spines.right":False,"grid.color":"#e1e0d9",
+                     "axes.edgecolor":BASELINE,"axes.linewidth":0.8,
+                     "xtick.color":GRAY,"ytick.color":GRAY,"axes.labelcolor":SECONDARY})
+from statistics import NormalDist
+NORMAL = NormalDist()
+RNG = np.random.default_rng(42)
 
-# Combine linkage.
-fig, ax = plt.subplots(figsize=(7.2, 3.0))
-cf = combine_df.iloc[::-1].reset_index(drop=True)
-for i, row in cf.iterrows():
-    color = BLUE if row["ci_low"] > 0 else ORANGE
-    ax.errorbar(row["coef"], i, xerr=[[row["coef"]-row["ci_low"]],[row["ci_high"]-row["coef"]]],
-                fmt="o", color=color, ecolor=color, capsize=0, markersize=6)
-    ax.annotate(f"n={int(row['n'])}", (row["ci_high"], i), xytext=(5,0), textcoords="offset points",
-                va="center", fontsize=7, color=GRAY)
-ax.axvline(0, color=BASELINE, lw=.8); ax.set_yticks(range(len(cf))); ax.set_yticklabels(cf["outcome"])
-ax.set_xlabel("Coefficient per SD of Combine movement (95% CI)")
-ax.set_title("Combine movement predicts performance, not role", loc="left")
+def _cboot(frame, col, cluster="nfl_id", n=1200):
+    groups=[g[col].dropna().to_numpy() for _,g in frame.groupby(cluster) if g[col].notna().any()]
+    if len(groups) < 3:
+        return (np.nan, np.nan)
+    draws=[]
+    for _ in range(n):
+        idx=RNG.integers(0,len(groups),len(groups))
+        draws.append(np.concatenate([groups[i] for i in idx]).mean())
+    return tuple(np.percentile(draws,[2.5,97.5]))
+
+def _ord(v):
+    n=int(round(v)); suf="th" if 10 <= n%100 <= 20 else {1:"st",2:"nd",3:"rd"}.get(n%10,"th")
+    return f"{n}{suf}"
+
+def _pct(z): return 100*NORMAL.cdf(z)
+
+def _title(ax,title,sub):
+    ax.set_title(title,loc="left",fontsize=12.5,color=INK,pad=24)
+    ax.text(0.0,1.015,sub,transform=ax.transAxes,ha="left",va="bottom",fontsize=9.5,color=SECONDARY)
+
+# Figure 1: the Combine signal moves performance, not playing time.
+pf=smf.ols("perf_z ~ combine_movement + B_draft + C(position_group) + C(season_c)",data=perf_sample).fit(cov_type="cluster",cov_kwds={"groups":perf_sample["nfl_id"]})
+rf=smf.ols("role_z ~ combine_movement + B_draft + C(position_group) + C(season_c)",data=role_sample).fit(cov_type="cluster",cov_kwds={"groups":role_sample["nfl_id"]})
+gname=["Bottom third","Middle third","Top third"]
+fig,ax=plt.subplots(figsize=(7.4,4.3)); xs=np.arange(3)
+for fit,data,label,color,off in [(pf,perf_sample,"Performance",BLUE,12),(rf,role_sample,"Playing time",ORANGE,-12)]:
+    d=data.copy(); d["partial"]=fit.resid+fit.params["combine_movement"]*d["combine_movement"]
+    d["third"]=pd.qcut(d["combine_movement"],3,labels=gname)
+    means=[]; los=[]; his=[]
+    for g in gname:
+        sub=d[d["third"]==g]; m=sub["partial"].mean(); lo,hi=_cboot(sub,"partial")
+        means.append(_pct(m)); los.append(_pct(lo)); his.append(_pct(hi))
+    means=np.array(means); los=np.array(los); his=np.array(his)
+    ax.plot(xs,means,color=color,lw=1.8,zorder=2)
+    ax.errorbar(xs,means,yerr=[means-los,his-means],fmt="o",color=color,ecolor=color,
+                elinewidth=1.3,capsize=0,markersize=8,markeredgecolor=SURFACE,
+                markeredgewidth=.8,zorder=3)
+    ax.annotate(f"{label}\n{_ord(means[-1])}",(xs[-1],means[-1]),
+                xytext=(12,off),textcoords="offset points",color=color,
+                fontsize=9.5,va="center",fontweight="bold")
+ax.axhline(50,color=BASELINE,lw=.9,zorder=1)
+ax.set_xticks(xs); ax.set_xticklabels(["Bottom\nthird","Middle\nthird","Top\nthird"])
+ax.set_xlim(-0.28,2.78); ax.set_ylim(34,66); ax.set_yticks([35,40,45,50,55,60,65])
+ax.set_xlabel("Combine movement"); ax.set_ylabel("Adjusted percentile (50 = average)")
+ax.grid(axis="y",alpha=.7)
+ax.text(0.0,-0.24,f"{len(perf_sample)} player-seasons with performance data; {len(role_sample)} with playing-time data.",
+        transform=ax.transAxes,ha="left",va="top",fontsize=8.5,color=GRAY)
+_title(ax,LABELS["fig1_title"],LABELS["fig1_subtitle"])
 fig.savefig(FIG/"combine_linkage.png",dpi=180,bbox_inches="tight"); plt.show()
 
-# Next-role forest.
-fig, ax = plt.subplots(figsize=(8, 4))
-yy = np.arange(len(pos_df))
-for key, label, color, off in [("role","Current playing time",BLUE,-.2),("perf","Performance",ORANGE,0),("draft","Draft position",AQUA,.2)]:
-    coef = pos_df[key].to_numpy(); lo = pos_df[key+"_lo"].to_numpy(); hi = pos_df[key+"_hi"].to_numpy()
-    mask = ~np.isnan(coef)
-    ax.errorbar(coef[mask], (yy+off)[mask], xerr=[(coef-lo)[mask],(hi-coef)[mask]],
-                fmt="o", color=color, ecolor=color, capsize=0, markersize=6, label=label)
-    if key == "perf":
-        for idx in np.where(~mask)[0]:
-            ax.text(0.02, yy[idx]+off, "unidentifiable", fontsize=6.5, color=GRAY, va="center")
-ax.axvline(0, color=BASELINE, lw=.8); ax.set_yticks(yy); ax.set_yticklabels(pos_df["position"]); ax.invert_yaxis()
-ax.set_xlabel("Coefficient for next-season playing time (z; 95% CI)"); ax.legend(frameon=False, fontsize=7)
-ax.set_title("Current playing time and draft position predict next season — performance does not", loc="left", fontsize=9)
+# Figure 4: three facets, one per driver.
+order=["DL","WR","OL","TE","DB"]
+pos=pos_df.set_index("position").reindex([p for p in order if p in pos_df["position"].values]).reset_index()
+fig,axes=plt.subplots(1,3,figsize=(9.6,4.6),sharey=True); yy=np.arange(len(pos))
+for ax,(key,label,color,xlim) in zip(axes,[("role","Current playing time",ORANGE,(0.2,0.9)),
+                                           ("draft","Draft position",AQUA,(-0.25,2.95)),
+                                           ("perf","Performance",BLUE,(-0.4,0.45))]):
+    c=pos[key].to_numpy(float); lo=pos[key+"_lo"].to_numpy(float); hi=pos[key+"_hi"].to_numpy(float)
+    mask=np.isfinite(c)&np.isfinite(lo)&np.isfinite(hi)
+    ax.errorbar(c[mask],yy[mask],xerr=[c[mask]-lo[mask],hi[mask]-c[mask]],fmt="o",
+                color=color,ecolor=color,elinewidth=1.2,capsize=0,markersize=7,
+                markeredgecolor=SURFACE,markeredgewidth=.6,zorder=3)
+    for yi,v in zip(yy[mask],c[mask]):
+        ax.annotate(f"{v:+.2f}",(v,yi),xytext=(0,9),textcoords="offset points",
+                    ha="center",fontsize=8.2,color=SECONDARY)
+    if key=="perf":
+        for yi in yy[~mask]:
+            ax.text(0,yi,"not measurable",ha="center",va="center",fontsize=8.2,
+                    color=GRAY,style="italic",
+                    bbox=dict(facecolor=SURFACE,edgecolor="none",pad=1.5))
+    ax.axvline(0,color=BASELINE,lw=.9,zorder=1); ax.set_xlim(*xlim)
+    ax.set_title(label,loc="left",fontsize=11,color=INK,pad=8); ax.grid(axis="x",alpha=.7)
+axes[0].set_yticks(yy)
+axes[0].set_yticklabels([f"{p} ({int(n)})" for p,n in zip(pos["position"],pos["n"])])
+axes[0].invert_yaxis(); axes[1].set_xlabel("Effect on next-season playing time (SD; 95% CI)")
+fig.suptitle(LABELS["fig4_title"],x=.01,y=.995,ha="left",fontsize=12.5,color=INK)
+fig.text(.01,.952,LABELS["fig4_subtitle"],ha="left",va="top",fontsize=9.5,color=SECONDARY)
+fig.tight_layout(rect=[0,0,1,.89])
 fig.savefig(FIG/"next_role_forest.png",dpi=180,bbox_inches="tight"); plt.show()
 
-# Role-measure sensitivity.
+# Figure 5: snaps persist; a better season does not earn more snaps.
+def _qrows(frame,xcol,ycol,nq=5):
+    f=frame.copy(); f["_q"]=pd.qcut(f[xcol],nq,labels=False)
+    rows=[]
+    for _,sub in f.groupby("_q"):
+        rows.append((sub[ycol].mean(),*_cboot(sub,ycol)))
+    return np.array(rows)
+base5=base[base["next_role"].notna() & (base["perf_n"]>=50)].copy()
+fig,axes=plt.subplots(1,2,figsize=(9.6,4.3)); xs=np.arange(5)
+for ax,frame,xcol,ycol,title,xlabel,ylabel,color,ntext,slope in [
+    (axes[0],base5,"role_z","next_role","Current snaps → next season",
+     "Playing time quintile\n(low → high)","Next-season playing time (SD)",
+     ORANGE,"n=192","model: +0.61 per SD"),
+    (axes[1],diff,"d_perf","d_role","Change in performance → change in snaps",
+     "Change in performance quintile\n(worst → best)","Change in playing time (SD)",
+     BLUE,"n=235","model: −0.10 (p=0.11)")]:
+    rows=_qrows(frame,xcol,ycol); y=rows[:,0]; lo=rows[:,1]; hi=rows[:,2]
+    ax.axhline(0,color=BASELINE,lw=.9,zorder=1); ax.plot(xs,y,color=color,lw=1.5,zorder=2)
+    ax.errorbar(xs,y,yerr=[y-lo,hi-y],fmt="o",color=color,ecolor=color,
+                elinewidth=1.2,capsize=0,markersize=7,markeredgecolor=SURFACE,
+                markeredgewidth=.7,zorder=3)
+    ax.annotate(f"{y[-1]:+.2f}",(xs[-1],y[-1]),xytext=(8,0),textcoords="offset points",
+                va="center",fontsize=9.5,color=color,fontweight="bold")
+    ax.set_xticks(xs); ax.set_xticklabels(["1","2","3","4","5"])
+    ax.set_xlabel(xlabel); ax.set_ylabel(ylabel); ax.set_ylim(-.6,1.5)
+    ax.set_title(title,loc="left",fontsize=10.5,color=INK,pad=8); ax.grid(axis="y",alpha=.7)
+    ax.text(.02,.96,ntext,transform=ax.transAxes,ha="left",va="top",fontsize=9,color=GRAY)
+    ax.text(.02,.89,slope,transform=ax.transAxes,ha="left",va="top",fontsize=8.5,color=SECONDARY)
+fig.suptitle(LABELS["fig5_title"],x=.01,y=.995,ha="left",fontsize=12.5,color=INK)
+fig.text(.01,.952,LABELS["fig5_subtitle"],ha="left",va="top",fontsize=9.5,color=SECONDARY)
+fig.tight_layout(rect=[0,0,1,.89])
+fig.savefig(FIG/"persistence_within_player.png",dpi=180,bbox_inches="tight"); plt.show()
+
+# Supporting check: the performance null survives playing-time measure choices.
 fig, ax = plt.subplots(figsize=(8, 4))
 models = list(dict.fromkeys(sens_df["model"]))
 ypos = {m:i for i,m in enumerate(models)}
 for series, color, off in [("role",BLUE,-.18),("performance",ORANGE,0),("draft",AQUA,.18)]:
     sub = sens_df[sens_df["series"] == series]
+    label = "playing time" if series == "role" else series
     ax.errorbar(sub["coef"], [ypos[m]+off for m in sub["model"]],
                 xerr=[sub["coef"]-sub["lo"], sub["hi"]-sub["coef"]],
-                fmt="o", color=color, ecolor=color, capsize=0, markersize=6, label=series)
-ax.axvline(0, color=BASELINE, lw=.8); ax.set_yticks(range(len(models))); ax.set_yticklabels(models); ax.invert_yaxis()
-ax.set_xlabel("Coefficient for next-season role (z; 95% CI)"); ax.legend(frameon=False, fontsize=7)
-ax.set_title("The performance null survives role-measure choices", loc="left")
+                fmt="o", color=color, ecolor=color, capsize=0, markersize=6, label=label)
+ax.axvline(0, color=BASELINE, lw=.8); ax.set_yticks(range(len(models)))
+ax.set_yticklabels(models); ax.invert_yaxis()
+ax.set_xlabel("Coefficient for next-season playing time (z; 95% CI)")
+ax.legend(frameon=False, fontsize=8)
+ax.set_title("The performance null survives playing-time measure choices", loc="left")
 fig.savefig(FIG/"role_sensitivity.png",dpi=180,bbox_inches="tight"); plt.show()
 
-# Role persistence vs performance.
-fig, axes = plt.subplots(1,2,figsize=(9,3.8),sharey=True)
-for ax,col,label,color in [(axes[0],"role_z","Current playing time (z)",BLUE),(axes[1],"perf_z","Performance (z)",ORANGE)]:
-    ax.scatter(base[col],base["next_role"],s=14,c=GRAY,alpha=.45,edgecolors=SURFACE,linewidths=.3)
-    coef=np.polyfit(base[col],base["next_role"],1); xs=np.linspace(base[col].min(),base[col].max(),50)
-    ax.plot(xs,np.polyval(coef,xs),color=color,lw=1.5); ax.axhline(0,color=BASELINE,lw=.8)
-    ax.set_xlabel(label); ax.set_title(label.split(" (")[0]+" to next season",loc="left")
-    ax.annotate(f"slope {coef[0]:+.2f}",(0.04,.92),xycoords="axes fraction",fontsize=8)
-axes[0].set_ylabel("Next-season playing time (z)")
-fig.suptitle("Playing time persists; performance does not",x=.01,ha="left")
-fig.tight_layout(); fig.savefig(FIG/"role_persistence.png",dpi=180,bbox_inches="tight"); plt.show()
-
-# Within-player change.
-fig,ax=plt.subplots(figsize=(6,4))
-ax.scatter(diff["d_perf"],diff["d_role"],s=16,c=GRAY,alpha=.5,edgecolors=SURFACE,linewidths=.3)
-coef=np.polyfit(diff["d_perf"],diff["d_role"],1); xs=np.linspace(diff["d_perf"].min(),diff["d_perf"].max(),50)
-ax.plot(xs,np.polyval(coef,xs),color=ORANGE,lw=1.5); ax.axhline(0,color=BASELINE,lw=.8); ax.axvline(0,color=BASELINE,lw=.8)
-ax.set_xlabel("Change in performance (z)"); ax.set_ylabel("Change in playing time (z)")
-ax.set_title("When performance changes, role does not",loc="left")
-fig.savefig(FIG/"within_player_change.png",dpi=180,bbox_inches="tight"); plt.show()
-
-# Role gap tails.
+# Supporting check: the tails of the playing-time gap.
 tail_plot=tail[tail["allocation"]!="mid"]
 fig,ax=plt.subplots(figsize=(6.6,3.8))
 for label,color in [("high role / low performance",ORANGE),("low role / high performance",BLUE)]:
     sub=tail_plot[tail_plot["allocation"]==label]
-    ax.scatter(sub["perf_z"],sub["role_gap"],s=36,c=color,edgecolors=SURFACE,linewidths=.5,label=label)
+    ax.scatter(sub["perf_z"],sub["role_gap"],s=36,c=color,edgecolors=SURFACE,
+               linewidths=.5,label=label.replace("role","snaps"))
 ax.axhline(0,color=BASELINE,lw=.8); ax.axvline(0,color=BASELINE,lw=.8)
-ax.set_xlabel("Performance (z)"); ax.set_ylabel("Role gap"); ax.legend(frameon=False,fontsize=7)
-ax.set_title("Role is not allocated to measured performance",loc="left")
+ax.set_xlabel("Performance (z)"); ax.set_ylabel("Playing-time gap")
+ax.legend(frameon=False,fontsize=7)
+ax.set_title("Playing time is not allocated to measured performance",loc="left")
 fig.savefig(FIG/"role_gap_tails.png",dpi=180,bbox_inches="tight"); plt.show()
 '''
 
@@ -490,59 +572,83 @@ print(soccer[["club", "league", "season", "position", "wage_measure", "revenue_m
 '''
 
 code_salary_figs = r'''
-# Salary figure 1: star share is flat; rookie volume vs homegrown continuity.
-fig, axes = plt.subplots(1, 2, figsize=(11, 4))
-ax = axes[0]
-for season, color in zip(sorted(panel.season.unique()), [BLUE, ORANGE, AQUA]):
-    s = panel[panel.season == season]
-    ax.scatter(s["star_share"], s["wins_per_100m"], s=22, c=color, alpha=.75,
-               edgecolors=SURFACE, linewidths=.4, label=str(season))
-coef = np.polyfit(panel["star_share"], panel["wins_per_100m"], 1)
-xs = np.linspace(panel["star_share"].min(), panel["star_share"].max(), 50)
-ax.plot(xs, np.polyval(coef, xs), color=GRAY, lw=1.2)
-ax.set_xlabel("Star / highlight-reel share of cap spending")
-ax.set_ylabel("Wins per $100M")
-ax.set_title("Star share: flat", loc="left")
-ax.grid(alpha=.7); ax.legend(frameon=False, fontsize=7)
-ax = axes[1]
-ax.scatter(panel["rookie_snap_share"], panel["wins_per_100m"], s=20, c=ORANGE,
-           alpha=.75, edgecolors=SURFACE, linewidths=.4, label="Rookie snap share")
-ax.scatter(panel["homegrown_snap_share"], panel["wins_per_100m"], s=20, c=BLUE,
-           alpha=.65, edgecolors=SURFACE, linewidths=.4, label="Homegrown snap share")
-for col, color in [("rookie_snap_share", ORANGE), ("homegrown_snap_share", BLUE)]:
-    c = np.polyfit(panel[col], panel["wins_per_100m"], 1)
-    xs = np.linspace(panel[col].min(), panel[col].max(), 50)
-    ax.plot(xs, np.polyval(c, xs), color=color, lw=1.5)
-ax.set_xlabel("Share of team snaps"); ax.set_ylabel("Wins per $100M")
-ax.set_title("Rookie volume vs homegrown continuity", loc="left")
-ax.grid(alpha=.7); ax.legend(frameon=False, fontsize=7)
-fig.suptitle("The dollar data do not show a simple star or youth premium", x=.01, ha="left")
-fig.tight_layout(); fig.savefig(FIG/"salary_efficiency.png", dpi=180, bbox_inches="tight"); plt.show()
+# Figure 2: star spending flat; rookie and homegrown snaps move.
+def _qrows4(frame,xcol,ycol,cluster="team",nq=4):
+    f=frame.copy(); f["_q"]=pd.qcut(f[xcol],nq,labels=False)
+    rows=[]
+    for _,sub in f.groupby("_q"):
+        lo,hi=_cboot(sub,ycol,cluster,800); rows.append((sub[xcol].mean(),sub[ycol].mean(),lo,hi))
+    return np.array(rows)
+fig,axes=plt.subplots(1,3,figsize=(9.6,4.2),sharey=True)
+for ax,(col,title,xlabel,color) in zip(axes,[("star_share","Star spending","Star spending (% of cap)",ORANGE),
+                                             ("rookie_snap_share","Rookie snaps","Rookie snap share (%)",AQUA),
+                                             ("homegrown_snap_share","Homegrown snaps","Homegrown snap share (%)",AQUA)]):
+    rows=_qrows4(panel,col,"wins_per_100m")
+    x=rows[:,0]*100; y=rows[:,1]; lo=rows[:,2]; hi=rows[:,3]
+    ax.plot(x,y,color=color,lw=1.5,zorder=2)
+    ax.errorbar(x,y,yerr=[y-lo,hi-y],fmt="o",color=color,ecolor=color,elinewidth=1.2,
+                capsize=0,markersize=7,markeredgecolor=SURFACE,markeredgewidth=.7,zorder=3)
+    ax.annotate(f"{y[-1]:.1f}",(x[-1],y[-1]),xytext=(7,9),textcoords="offset points",
+                fontsize=9,color=color,fontweight="bold")
+    change=y[-1]-y[0]; ctxt="0.0" if abs(change)<0.05 else f"{change:+.1f}".replace("-","−")
+    ax.text(.98,.96,f"Q4 − Q1: {ctxt}",transform=ax.transAxes,ha="right",va="top",
+            fontsize=9,color=SECONDARY,bbox=dict(facecolor=SURFACE,edgecolor="none",pad=1.5))
+    ax.set_title(title,loc="left",fontsize=11,color=INK,pad=8); ax.set_xlabel(xlabel); ax.grid(axis="y",alpha=.7)
+axes[0].set_ylabel("Wins per $100M"); axes[0].set_ylim(3.0,5.6)
+fig.suptitle(LABELS["fig2_title"],x=.01,y=.995,ha="left",fontsize=12.5,color=INK)
+fig.text(.01,.952,LABELS["fig2_subtitle"],ha="left",va="top",fontsize=9.5,color=SECONDARY)
+fig.tight_layout(rect=[0,0,1,.89])
+fig.savefig(FIG/"salary_efficiency.png",dpi=180,bbox_inches="tight"); plt.show()
 
-# Salary figure 2: QB share vs wins per $100M with a quadratic fit.
-qdata = panel.dropna(subset=["wins", "qb_share", "log_payroll", "season_c"]).copy()
-q = smf.ols("wins ~ qb_share + I(qb_share**2) + log_payroll + C(season_c)",
-            data=qdata).fit(cov_type="cluster", cov_kwds={"groups": qdata["team"]})
-q2 = [k for k in q.params.index if k.startswith("I(")][0]
-fig, ax = plt.subplots(figsize=(6.6, 4))
-for season, color in zip(sorted(panel.season.unique()), [BLUE, ORANGE, AQUA]):
-    s = panel[panel.season == season]
-    ax.scatter(s["qb_share"], s["wins_per_100m"], s=22, c=color, alpha=.75,
-               edgecolors=SURFACE, linewidths=.4, label=str(season))
-c = np.polyfit(panel["qb_share"], panel["wins_per_100m"], 2)
-xs = np.linspace(panel["qb_share"].min(), panel["qb_share"].max(), 80)
-ax.plot(xs, np.polyval(c, xs), color=GRAY, lw=1.5)
-ax.axvline(-q.params["qb_share"]/(2*q.params[q2]), color=ORANGE, lw=1, linestyle="--")
-ax.set_xlabel("QB share of offense+defense cap spending")
-ax.set_ylabel("Wins per $100M")
-ax.set_title("Quarterback spending has a fitted turning point", loc="left")
-ax.grid(alpha=.7); ax.legend(frameon=False, fontsize=7, title="Season")
-fig.tight_layout(); fig.savefig(FIG/"qb_premium.png", dpi=180, bbox_inches="tight"); plt.show()
+# Figure 3: one quarterback panel with an honest band.
+qd=panel.dropna(subset=["wins","qb_share","log_payroll","season_c"]).copy()
+qf=smf.ols("wins ~ qb_share + I(qb_share**2) + log_payroll + C(season_c)",data=qd).fit(
+    cov_type="cluster",cov_kwds={"groups":qd["team"]})
+q2=[k for k in qf.params.index if k.startswith("I(")][0]
+b1,b2=float(qf.params["qb_share"]),float(qf.params[q2])
+partial=qf.resid+b1*qd["qb_share"]+b2*qd["qb_share"]**2
+xbar=float(qd["qb_share"].mean()); xbar2=float((qd["qb_share"]**2).mean()); baseq=float(partial.mean())
+xs=np.linspace(float(qd["qb_share"].min()),float(qd["qb_share"].max()),120)
+curve=baseq+b1*(xs-xbar)+b2*(xs**2-xbar2)
+cov=qf.cov_params().loc[["qb_share",q2],["qb_share",q2]].to_numpy()
+draws=RNG.multivariate_normal(np.array([b1,b2]),cov,size=1500)
+curves=baseq+draws[:,0][:,None]*(xs[None,:]-xbar)+draws[:,1][:,None]*(xs[None,:]**2-xbar2)
+blo,bhi=np.percentile(curves,[2.5,97.5],axis=0)
+infl=-b1/(2*b2)
+fig,ax=plt.subplots(figsize=(7.4,4.5))
+ax.scatter(qd["qb_share"]*100,partial,s=16,c=GRAY,alpha=.55,edgecolors=SURFACE,linewidths=.35,zorder=2)
+ax.fill_between(xs*100,blo,bhi,color=ORANGE,alpha=.15,lw=0,zorder=1)
+ax.plot(xs*100,curve,color=ORANGE,lw=2.0,zorder=3)
+ax.axvline(infl*100,color=ORANGE,lw=1.0,ls="--",zorder=1)
+ytop=float(np.nanmax(partial))+0.8; ax.set_xlim(0,max(xs*100)+1); ax.set_ylim(float(np.nanmin(partial))-0.8,ytop)
+ax.annotate(f"fitted turning point ≈{infl*100:.0f}%",(infl*100,ytop),xytext=(6,-12),
+            textcoords="offset points",fontsize=9,color=ORANGE)
+ax.text(.02,.05,"shaded band: 95% (clustered covariance); vertex not statistically identified",transform=ax.transAxes,
+        ha="left",va="bottom",fontsize=8.5,color=SECONDARY,
+        bbox=dict(facecolor=SURFACE,edgecolor="none",pad=2))
+ax.set_xlabel("QB share of offense+defense cap spending (%)")
+ax.set_ylabel("Wins, adjusted for payroll and season"); ax.grid(axis="y",alpha=.7)
+_title(ax,LABELS["fig3_title"],LABELS["fig3_subtitle"])
+fig.savefig(FIG/"qb_premium.png",dpi=180,bbox_inches="tight"); plt.show()
 
-# Top-quartile QB cap share (2025) vs the rest.
-d25 = panel[panel.season == 2025].copy()
-d25["top_qb"] = d25["cap_qb_share"] >= d25["cap_qb_share"].quantile(.75)
-print(d25.groupby("top_qb")[["wins", "point_diff", "wins_per_100m"]].mean().round(2))
+# Figure 6: overpay by 2025 efficiency quartile.
+rq=rent_quartiles; xx=np.arange(len(rq))
+star=rq["star_rent_m"].to_numpy(float); under=rq["under_rent_m"].to_numpy(float)
+fig,ax=plt.subplots(figsize=(7.4,4.4))
+ax.bar(xx,star,width=.58,color=GRAY,edgecolor=SURFACE,linewidth=1.5,label="Star cap dollars",zorder=2)
+ax.bar(xx,under,width=.58,bottom=star,color=ORANGE,edgecolor=SURFACE,linewidth=1.5,
+       label="Underperformers",zorder=2)
+for xi,total in zip(xx,star+under):
+    ax.annotate(f"${total:.0f}M",(xi,total),xytext=(0,6),textcoords="offset points",
+                ha="center",va="bottom",fontsize=9.5,color=INK)
+ax.set_xticks(xx); ax.set_xticklabels(["Q1\nleast efficient","Q2","Q3","Q4\nmost efficient"])
+ax.set_xlabel("2025 efficiency quartile (wins per $100M)")
+ax.set_ylabel("$M per team above the pay model"); ax.set_ylim(0,82); ax.grid(axis="y",alpha=.7)
+ax.text(3.42,80,"Most vs least efficient\nTotal −$20.5M (−$40.9M to −$2.0M)\nUnderperformers −$6.3M (−$14.5M to −$0.2M)",
+        ha="right",va="top",fontsize=8.5,color=SECONDARY,linespacing=1.35)
+ax.legend(loc="upper left",fontsize=8.5)
+_title(ax,LABELS["fig6_title"],LABELS["fig6_subtitle"])
+fig.savefig(FIG/"overpay_quartiles.png",dpi=180,bbox_inches="tight"); plt.show()
 '''
 
 md_salary_appendix = """## Salary appendix: sources and limits

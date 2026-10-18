@@ -8,15 +8,15 @@ The Combine tests tell you how a player moves: top speed, acceleration, time to 
 
 Compare Combine movement with how well he performs on Sundays, holding position, season, and draft range constant. Better movement goes with better performance. The relationship is modest: about one-third of the typical spread, roughly the 50th to 62nd percentile. Figure 1 shows the result: performance rises, playing time is flat.
 
-![Figure 1. Combine movement predicts performance, but not playing time.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/combine_linkage.png)
+![Figure 1. Combine movement separates performers, not playing time.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/combine_linkage.png)
 
 The same movement score shows no detectable link to playing time. Next season's snaps follow this season's snaps and draft position; performance barely matters.
 
-Spending a large share on star positions — quarterback, running back, receiver, tight end, and edge rusher — has no clear relationship with wins per $100 million. Teams that give a larger share of snaps to rookies average fewer wins per $100 million. That does not mean rookies cause losses; losing teams often play rookies. Teams that give more snaps to their own drafted players average more wins per $100 million. That may reflect winning teams keeping their players, not a causal effect. Figure 5 shows the quarterback detail: wins rise as quarterback spending rises, up to about 14% of the offense-and-defense cap, then level off, with a wide margin of error.
+Spending a large share on star positions — quarterback, running back, receiver, tight end, and edge rusher — has no clear relationship with wins per $100 million. Teams that give a larger share of snaps to rookies average fewer wins per $100 million. That does not mean rookies cause losses; losing teams often play rookies. Teams that give more snaps to their own drafted players average more wins per $100 million. That may reflect winning teams keeping their players, not a causal effect. Figure 3 shows the quarterback detail: wins rise as quarterback spending rises, up to about 14% of the offense-and-defense cap, then level off, with a wide margin of error.
 
-![Figure 4. Star spending shows no clear link to wins per dollar; rookie-heavy teams win less, homegrown-heavy teams win more.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/salary_efficiency.png)
+![Figure 2. Star spending is flat; rookie and homegrown snap shares move with wins.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/salary_efficiency.png)
 
-![Figure 5. Quarterback spending levels off near 14% of the cap, with a wide margin of error.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/qb_premium.png)
+![Figure 3. Quarterback spending flattens near 14%, with a wide margin of error.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/qb_premium.png)
 
 ### Why it matters
 
@@ -82,11 +82,11 @@ Combine linkages: performance and playing time on combine movement, draft capita
 
 Next-season playing time: current playing time +0.606 (0.510 to 0.701); performance −0.011 (−0.119 to 0.097); draft capital +0.785 (0.347 to 1.222); n=233. Within-player change in performance: −0.095 (−0.211 to 0.022, n=235).
 
-![Figure 2. Next-season playing time by position.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/next_role_forest.png)
+![Figure 4. Current snaps and draft position predict next season; performance does not.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/next_role_forest.png)
 
 Week-to-week: next-week playing time on current-week playing time +0.753 (0.717 to 0.788); current-week performance −0.006 (−0.027 to 0.015, p=0.586); n=3,885 player-weeks, 249 players. Early-season (weeks 1–6) performance to late-season (weeks 7+) playing time +0.008 (−0.072 to 0.087, p=0.846); n=282 player-seasons, 180 players. Controls: current playing time, performance, draft capital, position group, season, week; early-late adds early playing time and performance.
 
-![Figure 3. Playing time persists; performance does not.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/persistence_within_player.png)
+![Figure 5. Snaps persist; a better season does not earn more snaps.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/persistence_within_player.png)
 
 Salary panel: wins on star share, payroll, and season: −0.70 (−10.23 to +8.83, p=0.886, n=96); the wins-per-$100M model is −0.40 (−5.20 to +4.39, p=0.869). Rookie snap share −28.39 (−47.96 to −8.82, p=0.004); homegrown +9.21 (+3.81 to +14.62, p=0.001); n=96. Quarterback quadratic on wins (OTC positional share, not the 2025 cap measure): linear +42.37 (−2.87 to +87.60), quadratic −149.17 (−309.99 to +11.64, p=0.069), fitted turning point 0.142, n=96; the vertex is not statistically identified.
 
@@ -106,7 +106,9 @@ Salary panel: wins on star share, payroll, and season: −0.70 (−10.23 to +8.8
 | Wins | Rookie snap share | −28.39 (−47.96, −8.82) | 96 |
 | Wins | Homegrown snap share | +9.21 (3.81, 14.62) | 96 |
 
-Efficiency quartiles are 2025 team wins per $100M. Cap residuals by quartile (Q1 low to Q4 high): total $51.2M, $69.4M, $57.7M, $30.7M; Q4−Q1 −$20.5M (95% CI −$40.9M to −$2.0M). Star −$14.2M (−$29.3M to +$0.7M); underperformer −$6.3M (−$14.5M to −$0.2M); youth +$1.9M (+$0.1M to +$4.0M). Star is not distinguishable from zero; the total is driven by underperformers. Positive = above-model cap dollars, not intent; total = star + underperformer. Sample: 909 players, 69% of active-cap dollars; OL and specialists excluded.
+Figure 6 shows the cap residuals by efficiency quartile. Efficiency quartiles are 2025 team wins per $100M. Cap residuals by quartile (Q1 low to Q4 high): total $51.2M, $69.4M, $57.7M, $30.7M; Q4−Q1 −$20.5M (95% CI −$40.9M to −$2.0M). Star −$14.2M (−$29.3M to +$0.7M); underperformer −$6.3M (−$14.5M to −$0.2M); youth +$1.9M (+$0.1M to +$4.0M). Above-model dollars, not intent. Sample: 909 players, 69% of active-cap dollars; OL and specialists excluded.
+
+![Figure 6. The most efficient teams carry the least overpay.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/overpay_quartiles.png)
 
 ### Validation and robustness
 

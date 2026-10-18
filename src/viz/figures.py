@@ -7,6 +7,7 @@ surface, hairline chrome. No dual axes; small multiples where scales differ.
 from __future__ import annotations
 
 from pathlib import Path
+from statistics import NormalDist
 
 import matplotlib
 
@@ -16,10 +17,17 @@ import numpy as np
 import pandas as pd
 from matplotlib.colors import LinearSegmentedColormap
 
+try:  # scripts run with ``src`` on sys.path; the package import also works
+    from discovery.combine_linkage import fit_models, partial_residual
+except ImportError:  # pragma: no cover
+    from src.discovery.combine_linkage import fit_models, partial_residual
+
 ROOT = Path(__file__).resolve().parents[2]
 DISC = ROOT / "outputs" / "discovery"
 FIG = ROOT / "outputs" / "figures"
+WRITEUP_FIG = ROOT / "writeup" / "figures"
 RNG = np.random.default_rng(42)
+NORMAL = NormalDist()
 
 BLUE = "#2a78d6"
 ORANGE = "#eb6834"
@@ -32,13 +40,41 @@ BASELINE = "#c3c2b7"
 GRID = "#e1e0d9"
 RED = "#e34948"
 
+BASE_SIZE = 10.0
+TICK_SIZE = 9.5
+TITLE_SIZE = 12.5
+SUBTITLE_SIZE = 9.5
+ANNOT_SIZE = 9.0
+
+# Single source of truth for the writeup and the public notebook.
+LABELS = {
+    "fig1_title": "The Combine test sorts performers. It does not sort who plays.",
+    "fig1_subtitle": "Adjusted for position, season and draft range; thirds within each sample; whiskers: 95% confidence.",
+    "fig1_caption": "Combine movement separates performers, not playing time.",
+    "fig2_title": "Star spending shows no edge; rookie and homegrown snaps move with wins.",
+    "fig2_subtitle": "2023–2025 team-seasons; quartile averages; whiskers: 95% confidence.",
+    "fig2_caption": "Star spending is flat; rookie and homegrown snap shares move with wins.",
+    "fig3_title": "Quarterback spending: a fitted peak, not a proven cliff.",
+    "fig3_subtitle": "OTC offense+defense positional spend, 2023–2025; wins adjusted for payroll and season.",
+    "fig3_caption": "Quarterback spending flattens near 14%, with a wide margin of error.",
+    "fig4_title": "Current snaps and draft position predict next season; performance does not.",
+    "fig4_subtitle": "Coefficient by position, 95% CI; standard deviations of next-season playing time; x-axis scales differ by facet.",
+    "fig4_caption": "Current snaps and draft position predict next season; performance does not.",
+    "fig5_title": "Snaps persist; a better season does not earn more snaps.",
+    "fig5_subtitle": "Quintiles; 95% CI; both panels share one vertical scale.",
+    "fig5_caption": "Snaps persist; a better season does not earn more snaps.",
+    "fig6_title": "The most efficient teams carry the least overpay.",
+    "fig6_subtitle": "2025; 32 teams, 8 per quartile; 909 players, 69% of active-cap dollars.",
+    "fig6_caption": "The most efficient teams carry the least overpay.",
+}
+
 plt.rcParams.update(
     {
         "figure.facecolor": SURFACE,
         "axes.facecolor": SURFACE,
         "savefig.facecolor": SURFACE,
         "font.family": "DejaVu Sans",
-        "font.size": 9,
+        "font.size": BASE_SIZE,
         "axes.edgecolor": BASELINE,
         "axes.linewidth": 0.8,
         "axes.spines.top": False,
@@ -64,12 +100,68 @@ def _save(fig, name: str) -> Path:
     return path
 
 
+def _save_both(fig, name: str) -> Path:
+    """Save a writeup figure to both the appendix output and the writeup."""
+    FIG.mkdir(parents=True, exist_ok=True)
+    WRITEUP_FIG.mkdir(parents=True, exist_ok=True)
+    fig.savefig(FIG / name, dpi=220, bbox_inches="tight")
+    path = WRITEUP_FIG / name
+    fig.savefig(path, dpi=220, bbox_inches="tight")
+    plt.close(fig)
+    return path
+
+
 def _boot_ci(values: pd.Series, n: int = 3000) -> tuple[float, float]:
     values = values.dropna().to_numpy()
     if len(values) < 3:
         return (np.nan, np.nan)
     draws = [RNG.choice(values, len(values), True).mean() for _ in range(n)]
     return tuple(np.percentile(draws, [2.5, 97.5]))
+
+
+def _cluster_boot_ci(
+    frame: pd.DataFrame,
+    value_col: str,
+    cluster_col: str = "nfl_id",
+    n: int = 2000,
+) -> tuple[float, float]:
+    """Cluster (player/team) bootstrap CI for a mean."""
+    groups = [
+        g[value_col].dropna().to_numpy()
+        for _, g in frame.groupby(cluster_col)
+        if g[value_col].notna().any()
+    ]
+    if len(groups) < 3:
+        return (np.nan, np.nan)
+    draws = []
+    for _ in range(n):
+        picks = RNG.integers(0, len(groups), len(groups))
+        draws.append(np.concatenate([groups[i] for i in picks]).mean())
+    return tuple(np.percentile(draws, [2.5, 97.5]))
+
+
+def _percentile(z: float) -> float:
+    return 100.0 * NORMAL.cdf(z)
+
+
+def _ordinal(value: float) -> str:
+    n = int(round(value))
+    suffix = "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
+
+def _title_block(ax, title: str, subtitle: str) -> None:
+    """Left-aligned takeaway title with a smaller gray subtitle below it."""
+    ax.set_title(title, loc="left", fontsize=TITLE_SIZE, color=INK, pad=24)
+    ax.text(0.0, 1.015, subtitle, transform=ax.transAxes, ha="left", va="bottom",
+            fontsize=SUBTITLE_SIZE, color=SECONDARY)
+
+
+def _figure_title(fig, title: str, subtitle: str, top: float = 0.89) -> None:
+    fig.suptitle(title, x=0.01, y=0.995, ha="left", fontsize=TITLE_SIZE, color=INK)
+    fig.text(0.01, 0.952, subtitle, ha="left", va="top", fontsize=SUBTITLE_SIZE,
+             color=SECONDARY)
+    fig.tight_layout(rect=[0, 0, 1, top])
 
 
 def role_gap_scatter() -> Path:
@@ -115,40 +207,58 @@ def role_gap_scatter() -> Path:
 
 
 def next_role_forest() -> Path:
+    """Figure 4: three facets, one per driver, rows are positions."""
     pos = pd.read_csv(DISC / "role_allocation_positions.csv")
-    order = ["DL", "WR", "OL", "DB", "TE"]
-    pos = pos.set_index("position_group").loc[[p for p in order if p in pos["position_group"].values]].reset_index()
-    fig, ax = plt.subplots(figsize=(8.4, 5.0))
-    y = np.arange(len(pos))
+    order = ["DL", "WR", "OL", "TE", "DB"]
+    pos = (
+        pos.set_index("position_group")
+        .loc[[p for p in order if p in pos["position_group"].values]]
+        .reset_index()
+    )
     specs = [
-        ("role", "Current playing time", BLUE, -0.20),
-        ("perf", "Performance", ORANGE, 0.0),
-        ("draft", "Draft position", AQUA, 0.20),
+        ("role", "Current playing time", ORANGE, (0.20, 0.92)),
+        ("draft", "Draft position", AQUA, (-0.25, 2.95)),
+        ("perf", "Performance", BLUE, (-0.40, 0.45)),
     ]
-    for key, label, color, offset in specs:
-        coef = pos[f"{key}_coef"]
-        lo = pos[f"{key}_ci_low"]
-        hi = pos[f"{key}_ci_high"]
-        mask = coef.notna() & lo.notna() & hi.notna()
-        ax.errorbar(coef[mask], (y + offset)[mask],
-                    xerr=[(coef - lo)[mask], (hi - coef)[mask]], fmt="o",
-                    color=color, ecolor=color, elinewidth=1.2, capsize=0,
-                    markersize=6, markeredgecolor=SURFACE, markeredgewidth=0.6,
-                    label=label)
+    y = np.arange(len(pos))
+    fig, axes = plt.subplots(1, 3, figsize=(9.6, 4.6), sharey=True)
+    for ax, (key, label, color, xlim) in zip(axes, specs):
+        coef = pos[f"{key}_coef"].to_numpy(dtype=float)
+        lo = pos[f"{key}_ci_low"].to_numpy(dtype=float)
+        hi = pos[f"{key}_ci_high"].to_numpy(dtype=float)
+        mask = np.isfinite(coef) & np.isfinite(lo) & np.isfinite(hi)
+        ax.errorbar(
+            coef[mask], y[mask],
+            xerr=[coef[mask] - lo[mask], hi[mask] - coef[mask]],
+            fmt="o", color=color, ecolor=color, elinewidth=1.2, capsize=0,
+            markersize=7, markeredgecolor=SURFACE, markeredgewidth=0.6, zorder=3,
+        )
+        for yi, value in zip(y[mask], coef[mask]):
+            ax.annotate(
+                f"{value:+.2f}", (value, yi), xytext=(0, 9),
+                textcoords="offset points", ha="center", va="bottom",
+                fontsize=8.2, color=SECONDARY,
+            )
         if key == "perf":
-            for idx in pos.index[~mask]:
-                ax.text(0.02, y[idx] + offset, "unidentifiable", fontsize=6.5,
-                        color=GRAY, va="center")
-    ax.axvline(0, color=BASELINE, lw=0.9)
-    ax.set_yticks(y)
-    ax.set_yticklabels(pos["position_group"])
-    ax.invert_yaxis()
-    ax.grid(axis="x", alpha=0.7)
-    ax.set_xlabel("Coefficient for next-season playing time (z; 95% CI)")
-    ax.set_title("Current playing time and draft position predict next season — performance does not",
-                 loc="left", fontsize=11, color=INK)
-    ax.legend(loc="lower right", fontsize=8)
-    return _save(fig, "next_role_forest.png")
+            for yi in y[~mask]:
+                ax.text(
+                    0.0, yi, "not measurable", ha="center", va="center",
+                    fontsize=8.2, color=GRAY, style="italic",
+                    bbox=dict(facecolor=SURFACE, edgecolor="none", pad=1.5),
+                )
+        ax.axvline(0, color=BASELINE, lw=0.9, zorder=1)
+        ax.set_xlim(*xlim)
+        ax.set_title(label, loc="left", fontsize=11, color=INK, pad=8)
+        ax.grid(axis="x", alpha=0.7)
+        ax.tick_params(axis="x", labelsize=TICK_SIZE)
+    axes[0].set_yticks(y)
+    axes[0].set_yticklabels(
+        [f"{group} ({int(n)})" for group, n in zip(pos["position_group"], pos["n"])]
+    )
+    axes[0].invert_yaxis()
+    axes[1].set_xlabel("Effect on next-season playing time (SD; 95% CI)")
+    _figure_title(fig, LABELS["fig4_title"], LABELS["fig4_subtitle"])
+    return _save_both(fig, "next_role_forest.png")
 
 
 def career_divergence() -> Path:
@@ -355,30 +465,61 @@ def rent_figure() -> Path:
 
 
 def combine_linkage_figure() -> Path:
-    df = pd.read_csv(DISC / "combine_linkage.csv")
-    df = df.iloc[::-1].reset_index(drop=True)
-    fig, ax = plt.subplots(figsize=(8.2, 3.8))
-    labels = []
-    for i, row in df.iterrows():
-        positive = row["ci_low"] > 0
-        color = BLUE if positive else ORANGE
-        ax.errorbar(row["coef"], i, xerr=[[row["coef"] - row["ci_low"]],
-                                          [row["ci_high"] - row["coef"]]],
-                    fmt="o", color=color, ecolor=color, elinewidth=1.3,
-                    capsize=0, markersize=7, markeredgecolor=SURFACE,
-                    markeredgewidth=0.5)
-        labels.append({"performance": "Performance", "role": "Playing time",
-                       "role gap": "Playing-time gap"}.get(row["outcome"], row["outcome"]))
-        ax.annotate(f"n={int(row['n'])}", (row["ci_high"], i), xytext=(6, 0),
-                    textcoords="offset points", va="center", fontsize=7, color=GRAY)
-    ax.axvline(0, color=BASELINE, lw=0.9)
-    ax.set_yticks(range(len(df)))
-    ax.set_yticklabels(labels)
-    ax.set_xlabel("Coefficient per SD of Combine movement (95% CI)")
-    ax.set_title("Combine movement predicts performance — but not playing time",
-                 loc="left", fontsize=12, color=INK)
-    ax.grid(axis="x", alpha=0.7)
-    return _save(fig, "combine_linkage.png")
+    """Figure 1: the Combine signal moves performance, not playing time."""
+    fits = fit_models()
+    groups = ["Bottom third", "Middle third", "Top third"]
+    specs = [
+        ("performance", "Performance", BLUE, 12),
+        ("role", "Playing time", ORANGE, -12),
+    ]
+    fig, ax = plt.subplots(figsize=(7.4, 4.3))
+    x = np.arange(3)
+    n_perf = len(fits["performance"][1])
+    n_role = len(fits["role"][1])
+    for key, label, color, label_offset in specs:
+        fit, data = fits[key]
+        d = data.copy()
+        d["partial"] = partial_residual(fit, d)
+        d["third"] = pd.qcut(d["combine_movement"], 3, labels=groups)
+        means, los, his = [], [], []
+        for group in groups:
+            sub = d[d["third"] == group]
+            mean = float(sub["partial"].mean())
+            lo, hi = _cluster_boot_ci(sub, "partial", "nfl_id")
+            means.append(_percentile(mean))
+            los.append(_percentile(lo))
+            his.append(_percentile(hi))
+        means = np.array(means)
+        los = np.array(los)
+        his = np.array(his)
+        ax.plot(x, means, color=color, lw=1.8, zorder=2)
+        ax.errorbar(
+            x, means, yerr=[means - los, his - means], fmt="o", color=color,
+            ecolor=color, elinewidth=1.3, capsize=0, markersize=8,
+            markeredgecolor=SURFACE, markeredgewidth=0.8, zorder=3,
+        )
+        ax.annotate(
+            f"{label}\n{_ordinal(means[-1])}",
+            (x[-1], means[-1]), xytext=(12, label_offset),
+            textcoords="offset points", color=color, fontsize=9.5,
+            va="center", fontweight="bold",
+        )
+    ax.axhline(50, color=BASELINE, lw=0.9, zorder=1)
+    ax.set_xticks(x)
+    ax.set_xticklabels(["Bottom\nthird", "Middle\nthird", "Top\nthird"])
+    ax.set_xlim(-0.28, 2.78)
+    ax.set_ylim(34, 66)
+    ax.set_yticks([35, 40, 45, 50, 55, 60, 65])
+    ax.set_xlabel("Combine movement")
+    ax.set_ylabel("Adjusted percentile (50 = average)")
+    ax.grid(axis="y", alpha=0.7)
+    ax.text(
+        0.0, -0.24,
+        f"{n_perf} player-seasons with performance data; {n_role} with playing-time data.",
+        transform=ax.transAxes, ha="left", va="top", fontsize=8.5, color=GRAY,
+    )
+    _title_block(ax, LABELS["fig1_title"], LABELS["fig1_subtitle"])
+    return _save_both(fig, "combine_linkage.png")
 
 
 def within_player_figure() -> Path:

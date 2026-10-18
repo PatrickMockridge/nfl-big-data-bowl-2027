@@ -23,8 +23,20 @@ def _fit(formula: str, data: pd.DataFrame):
     )
 
 
-def build() -> pd.DataFrame:
+PERF_FORMULA = "perf_z ~ combine_movement + B_draft + C(position_group) + C(season_c)"
+ROLE_FORMULA = "role_z ~ combine_movement + B_draft + C(position_group) + C(season_c)"
+GAP_FORMULA = "role_gap ~ combine_movement + role_z + B_draft + C(position_group)"
+
+
+def movement_cohort() -> pd.DataFrame:
+    """All Combine participants with a movement score (the 510-player cohort)."""
     cm = pd.read_parquet(ROOT / "outputs" / "panel" / "combine_movement.parquet")
+    return cm.dropna(subset=["combine_movement"]).copy()
+
+
+def samples() -> tuple[pd.DataFrame, pd.DataFrame]:
+    """The exact estimation samples used by :func:`build`."""
+    cm = movement_cohort()
     panel = pd.read_parquet(ROOT / "outputs" / "panel" / "panel_full.parquet")
     role = pd.read_parquet(OUT / "role_allocation_player_seasons.parquet")
     role = role[role["role_gap"].notna()].copy()
@@ -43,15 +55,31 @@ def build() -> pd.DataFrame:
         .copy()
     )
     role_sample["season_c"] = role_sample["season"].astype(str)
+    return perf_sample, role_sample
 
+
+def fit_models(
+    perf_sample: pd.DataFrame | None = None,
+    role_sample: pd.DataFrame | None = None,
+) -> dict[str, tuple[object, pd.DataFrame]]:
+    """Fit the three linkage models and return ``label -> (fit, data)``."""
+    if perf_sample is None or role_sample is None:
+        perf_sample, role_sample = samples()
+    return {
+        "performance": (_fit(PERF_FORMULA, perf_sample), perf_sample),
+        "role": (_fit(ROLE_FORMULA, role_sample), role_sample),
+        "role gap (role-controlled)": (_fit(GAP_FORMULA, role_sample), role_sample),
+    }
+
+
+def partial_residual(fit, data: pd.DataFrame, term: str = "combine_movement") -> pd.Series:
+    """The outcome with the controls held constant (coefficient × term + residual)."""
+    return fit.resid + fit.params[term] * data[term]
+
+
+def build() -> pd.DataFrame:
     rows = []
-    specs = [
-        (perf_sample, "perf_z ~ combine_movement + B_draft + C(position_group) + C(season_c)", "performance"),
-        (role_sample, "role_z ~ combine_movement + B_draft + C(position_group) + C(season_c)", "role"),
-        (role_sample, "role_gap ~ combine_movement + role_z + B_draft + C(position_group)", "role gap (role-controlled)"),
-    ]
-    for data, formula, label in specs:
-        fit = _fit(formula, data)
+    for label, (fit, _) in fit_models().items():
         rows.append(
             {
                 "outcome": label,

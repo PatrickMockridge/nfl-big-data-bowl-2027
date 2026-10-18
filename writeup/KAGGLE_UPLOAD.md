@@ -23,18 +23,22 @@ Alternate (52 characters):
 ## 2. Paste the body
 
 Open `writeup/kaggle_writeup.md` and paste the whole file into the Kaggle
-writeup editor. It is the same 1,997-word writeup as `writeup/submission.md`,
-but the five image paths point at public raw GitHub URLs:
+writeup editor. It is the same 1,995-word writeup as `writeup/submission.md`,
+but the six image paths point at public raw GitHub URLs:
 
 - `combine_linkage.png`
-- `next_role_forest.png`
-- `persistence_within_player.png`
 - `salary_efficiency.png`
 - `qb_premium.png`
+- `next_role_forest.png`
+- `persistence_within_player.png`
+- `overpay_quartiles.png`
+
+If the writeup page already exists, replace the body with this version and
+republish; the chart redesign changed the figure numbers and captions.
 
 If Kaggle renders the external images, publish directly.
 
-If the images do not render, upload the five PNGs from `writeup/figures/`
+If the images do not render, upload the six PNGs from `writeup/figures/`
 through the editor's image button and replace each raw GitHub URL with the
 uploaded image. The captions already name the figures.
 
@@ -67,10 +71,10 @@ container and the notebook is attached to it.
 
 ## Limits check
 
-- Words: 1,997 (limit: 2,000)
-- Figures: 5
+- Words: 1,995 (limit: 2,000)
+- Figures: 6
 - Tables: 2
-- Total visuals: 7 (limit: fewer than 10)
+- Total visuals: 8 (limit: fewer than 10)
 - Public notebook: yes
 - Combine sensor tracking → regular-season performance linkage: explicit in
   Part 1 "What we found" and Part 2 "Combine linkages"
