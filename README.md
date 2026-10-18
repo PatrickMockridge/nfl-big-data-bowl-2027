@@ -57,19 +57,3 @@ jupyter nbconvert --execute --to notebook --inplace notebooks/02_final_public.ip
 
 Competition data is CC BY-NC 4.0; it is not committed and must not be redistributed. External data sources, coverage, and licenses are documented in `docs/EXTERNAL_DATA.md`. See `DATA_LICENSE.md`.
 
-## Status
-
-- [x] Data download and audit
-- [x] Corrected regular-season panel (722 player-seasons / 401 players)
-- [x] Position-specific performance residuals (DL/WR/TE/OL/DB)
-- [x] Yellow, Möbius, pond, market, replication, and price-vs-prediction audits
-- [x] 10 Hz Combine movement → performance linkage (positive)
-- [x] Playing-time persistence, within-player validation, playing-time-measure sensitivities
-- [x] Week-to-week playing-time check (null performance coefficient; 4–6 week review)
-- [x] Team-season salary panel (OTC, nflverse, archived OTC 2025 cap)
-- [x] Cost-efficiency models, QB premium, overpay, soccer table
-- [x] Figures and writeup (1,997 words, 5 figures, 2 tables)
-- [x] Public notebook built and executed locally
-- [x] Notebook salary and weekly cells rebuilt and executed
-- [ ] Kaggle notebook published (requires explicit approval)
-- [ ] Writeup submitted (requires explicit approval)
