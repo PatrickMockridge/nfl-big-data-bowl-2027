@@ -58,11 +58,11 @@ The testing is informative; the decisions are not.
 
 ### Data
 
-The 2023–2025 Combine cohorts: 510 players; 401 with 722 regular-season player-seasons. Combine tracking is 10 Hz per player. Performance comes from Next Gen Stats `player_play` (get-off, separation, pressure allowed, pass result); snaps and games from nflverse. Salary data combine OverTheCap positional spending (96 team-seasons), archived 2025 OTC active-cap pages (32 teams; 99.3% of active-cap dollars match a 2025 snap on player ID and team), and a public contract snapshot used only for sensitivity.
+The 2023–2025 Combine cohorts: 510 players; 401 with 722 regular-season player-seasons. Combine tracking: 10 Hz. Performance comes from Next Gen Stats `player_play`; snaps and games from nflverse. Salary data combine OverTheCap positional spending (96 team-seasons), archived 2025 OTC active-cap pages (32 teams; 99.3% of active-cap dollars match a 2025 snap on player ID and team), and a public contract snapshot used only for sensitivity.
 
 ### Measures
 
-**Combine movement.** Attempt-level z-scores within drill and position group for max speed, first-step acceleration (0.5 s), time to 1 yard (reversed), and path efficiency. Attempt scores are averaged per player, the four components re-standardized across players, and their mean is the movement score.
+**Combine movement.** Attempt-level z-scores within drill and position group for max speed, first-step acceleration (0.5 s), time to 1 yard (reversed), and path efficiency. Attempt scores are averaged per player, re-standardized, and averaged into one movement score.
 
 **Performance.** Position-specific play outcome, oriented higher-is-better, residualized (the part not explained by controls) against play context including down, distance, pressure, coverage, field position, motion, blitz, and season, using ridge regression and 5-fold grouped cross-validation by player. Player-seasons are empirical-Bayes shrunk (small samples pulled toward the group-season mean) and standardized within position group and season (mean 0, SD 1).
 
@@ -76,7 +76,7 @@ The 2023–2025 Combine cohorts: 510 players; 401 with 722 regular-season player
 
 ### Models
 
-Models use ordinary least squares (OLS) with standard errors clustered by player (allowing within-player correlation); salary models cluster by team with season controls. Table 1 reports selected estimates.
+Models use ordinary least squares with standard errors clustered by player; salary models cluster by team with season controls. Table 1 reports selected estimates.
 
 Combine linkages: performance and playing time on combine movement, draft capital, position group, and season. Performance +0.299 (95% CI 0.153 to 0.446, n=543); playing time −0.019 (−0.194 to 0.156, n=192); the playing-time gap (with current snaps) +0.012 (−0.049 to 0.073, n=192).
 
@@ -116,10 +116,12 @@ Out-of-sample R² 0.503 is for next-season playing time, not the Combine coeffic
 
 ### Limits
 
-Observational; no causal claims. Playing time is snaps per appearance, not depth-chart rank or coaching intent. DB performance is unidentifiable and excluded from pooled models. Salary is a proxy: cap hits reflect proration, restructures, timing; the cap measure is descriptive. The weekly check is exploratory. Opponent, injuries, scheme, game script are unavailable. The review is a decision aid, not a verdict.
+Observational; no causal claims. Playing time is snaps per appearance, not depth-chart rank or coaching intent. DB performance is unidentifiable and excluded from pooled models. Salary is a proxy: cap hits reflect proration, restructures, timing; the cap measure is descriptive. The weekly check is exploratory. Opponent, injuries, scheme, game script are unavailable. The review is a decision aid.
 
 ### Code
 
 Public notebook: https://www.kaggle.com/code/patrickm/nfl-bdb-2027-the-allocation-gap
+
+The notebook's self-contained reconstruction gives +0.41 and −0.05 for the two Combine links; the full pipeline gives +0.299 and −0.019.
 
 Code: [Combine movement](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/features/combine_movement.py), [performance](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/features/performance.py), [role allocation](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/discovery/role_allocation.py), [Combine linkage](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/discovery/combine_linkage.py), [weekly role](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/discovery/weekly_role.py), [salary analysis](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/salary/analysis.py), [rent](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/salary/rents.py).

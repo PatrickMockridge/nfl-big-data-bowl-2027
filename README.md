@@ -15,7 +15,7 @@ The entry is honest about what is not identified: no causal claims about coaches
 
 ## Deliverables
 
-- `writeup/submission.md` — 1,995 words, 6 figures, 2 tables (selected models and the Football scorecard), within the competition limits.
+- `writeup/submission.md` — 1,993 words, 6 figures, 2 tables (selected models and the Football scorecard), within the competition limits.
 - `notebooks/02_final_public.ipynb` — self-contained public Kaggle notebook (core + salary panel + weekly check); 23 cells, 0 errors.
 - `notebooks/kernel-metadata.json` — Kaggle push metadata (public, competition data mounted).
 - `writeup/figures/` — the six figures used in the writeup, including the new overpay-by-efficiency-quartile chart.

@@ -23,7 +23,7 @@ Alternate (52 characters):
 ## 2. Paste the body
 
 Open `writeup/kaggle_writeup.md` and paste the whole file into the Kaggle
-writeup editor. It is the same 1,995-word writeup as `writeup/submission.md`,
+writeup editor. It is the same 1,993-word writeup as `writeup/submission.md`,
 but the six image paths point at public raw GitHub URLs:
 
 - `combine_linkage.png`
@@ -71,7 +71,7 @@ container and the notebook is attached to it.
 
 ## Limits check
 
-- Words: 1,995 (limit: 2,000)
+- Words: 1,993 (limit: 2,000)
 - Figures: 6
 - Tables: 2
 - Total visuals: 8 (limit: fewer than 10)
