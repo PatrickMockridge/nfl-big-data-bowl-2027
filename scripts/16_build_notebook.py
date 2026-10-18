@@ -590,6 +590,11 @@ md_repro = """## Reproduce
 """
 
 nb = nbf.v4.new_notebook()
+nb["metadata"]["kernelspec"] = {
+    "display_name": "Python 3",
+    "language": "python",
+    "name": "python3",
+}
 nb["cells"] = [
     nbf.v4.new_markdown_cell(md_intro),
     nbf.v4.new_code_cell(code_setup),
