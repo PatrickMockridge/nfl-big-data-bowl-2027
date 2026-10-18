@@ -1,0 +1,10 @@
+/data/
+/outputs/
+/figures/
+/notebooks/figures/
+.venv/
+__pycache__/
+*.pyc
+*.parquet
+.ipynb_checkpoints/
+.env

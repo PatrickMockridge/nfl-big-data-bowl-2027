@@ -1,0 +1,36 @@
+competition: nfl-big-data-bowl-2027
+seed: 42
+raw_path_file: data/raw_path.txt
+data_dir: data
+output_dir: outputs
+
+# Frozen after the audit gate (docs/gate_decision.md).
+position_group: DL
+position_group_definition: "combine_position == 'DL'"
+primary_outcome: player_get_off
+focal_trait: first_step_quickness
+
+
+# Primary split: train on 2023-2024 draft classes, test on 2025 once.
+train_years: [2023, 2024]
+test_year: 2025
+
+# Data corrections (see docs/PREREGISTRATION_v2.md)
+season_type: REG
+team_abbr_fix: {LA: LAR}
+min_def_plays: 50
+min_pass_rush_reps: 20
+transition_min_plays: 100
+primary_validation: LOPO
+
+# Square definitions from the Green/Yellow Square post.
+bridge_cutoff: 0.5          # B >= 0.5 is non-Green
+alignment_red_max: 0.30     # Red: A < 0.30
+alignment_yellow_min: 0.30  # Yellow: 0.30 <= A <= 0.70
+alignment_yellow_max: 0.70
+alignment_blue_min: 0.70    # Blue: A > 0.70
+
+# Möbius flag (post thresholds, retained as hypotheses; data-driven quantiles reported too).
+mobius_flip_rate_threshold: 0.25
+mobius_dwell_threshold: 12
+mobius_yellow_count_threshold: 10
