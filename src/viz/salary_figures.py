@@ -163,7 +163,7 @@ def qb_premium() -> Path:
 
 def persistence_within_player() -> Path:
     """Figure 5: snaps persist; a better season does not earn more snaps."""
-    d = pd.read_parquet(DISC / "role_allocation_player_seasons.parquet")
+    d = pd.read_parquet(DISC / "role_allocation_player_seasons_full.parquet")
     d = d[d["next_role"].notna()].copy()
     w = pd.read_parquet(DISC / "role_within_player.parquet").copy()
 
@@ -175,7 +175,7 @@ def persistence_within_player() -> Path:
             "Current snaps → next season",
             "Playing time quintile\n(low → high)",
             "Next-season playing time (SD)",
-            ORANGE, "n=192", "model: +0.61 per SD",
+            ORANGE, "n=233", "model: +0.61 per SD",
         ),
         (
             axes[1], w, "d_perf", "d_role",

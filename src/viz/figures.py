@@ -234,9 +234,11 @@ def next_role_forest() -> Path:
             markersize=7, markeredgecolor=SURFACE, markeredgewidth=0.6, zorder=3,
         )
         for yi, value in zip(y[mask], coef[mask]):
+            first = yi == 0
             ax.annotate(
-                f"{value:+.2f}", (value, yi), xytext=(0, 9),
-                textcoords="offset points", ha="center", va="bottom",
+                f"{value:+.2f}", (value, yi), xytext=(0, -10 if first else 9),
+                textcoords="offset points", ha="center",
+                va="top" if first else "bottom",
                 fontsize=8.2, color=SECONDARY,
             )
         if key == "perf":
@@ -634,7 +636,6 @@ def role_gap_tails() -> Path:
 
 def main() -> None:
     paths = [
-        combine_linkage_figure(),
         next_role_forest(),
         role_persistence_figure(),
         within_player_figure(),

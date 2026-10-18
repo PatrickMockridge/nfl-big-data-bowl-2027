@@ -337,8 +337,10 @@ for col in ["max_speed","max_accel_first","time_to_1yd","path_eff"]:
         lambda x:(x-x.mean())/x.std(ddof=1) if x.std(ddof=1)>0 else x*0)
 cm = att.groupby("nfl_id").agg(speed=("max_speed","mean"),accel=("max_accel_first","mean"),
                                time1=("time_to_1yd","mean"),path=("path_eff","mean")).reset_index()
-z = cm[["speed","accel","path"]].apply(lambda x:(x-x.mean())/x.std(ddof=0))
-cm["combine_movement"] = pd.concat([z, -cm["time1"]], axis=1).mean(axis=1)
+parts = cm[["speed","accel","path"]].copy()
+parts["time1"] = -cm["time1"]
+parts = parts.apply(lambda x:(x-x.mean())/x.std(ddof=0))
+cm["combine_movement"] = parts.mean(axis=1)
 print("Combine movement players:", len(cm))
 
 perf_sample = ps.merge(cm, on="nfl_id", how="left").dropna(subset=["combine_movement","perf_z"])
@@ -356,6 +358,23 @@ for data, formula, label in [
     combine_rows.append({"outcome":label,"coef":f.params["combine_movement"],"ci_low":ci[0],"ci_high":ci[1],"p":f.pvalues["combine_movement"],"n":len(data)})
     print(label, f"{f.params['combine_movement']:+.3f}", f"({ci[0]:+.3f}, {ci[1]:+.3f})", "p", f"{f.pvalues['combine_movement']:.3g}", "n", len(data))
 combine_df = pd.DataFrame(combine_rows)
+
+# Position-specific Combine -> performance models.
+print("\nBy position:")
+pos_rows = []
+for group in ["DL", "WR", "OL", "TE"]:
+    sub = perf_sample[perf_sample["position_group"] == group]
+    f = smf.ols("perf_z ~ combine_movement + B_draft + C(season_c)", data=sub).fit(
+        cov_type="cluster", cov_kwds={"groups": sub["nfl_id"]}
+    )
+    ci = f.conf_int().loc["combine_movement"]
+    pos_rows.append({"position_group": group, "coef": f.params["combine_movement"],
+                     "ci_low": ci[0], "ci_high": ci[1], "p": f.pvalues["combine_movement"],
+                     "n": len(sub)})
+    print(group, f"{f.params['combine_movement']:+.3f}", f"({ci[0]:+.3f}, {ci[1]:+.3f})",
+          "p", f"{f.pvalues['combine_movement']:.3g}", "n", len(sub))
+position_df = pd.DataFrame(pos_rows)
+print(position_df.round(3).to_string(index=False))
 '''
 
 code_figs = "LABELS = " + repr(LABELS) + "\n" + r'''
@@ -701,6 +720,101 @@ nb["metadata"]["kernelspec"] = {
     "language": "python",
     "name": "python3",
 }
+# ---------------------------------------------------------------------------
+# Cost-risk rebuild overrides (keep the notebook consistent with the writeup)
+# ---------------------------------------------------------------------------
+FIG_NAMES = [
+    "combine_linkage.png",
+    "net_rent.png",
+    "next_role_forest.png",
+    "persistence_within_player.png",
+    "allocation_gap.png",
+]
+FIG_B64 = {
+    name: base64.b64encode((ROOT / "writeup" / "figures" / name).read_bytes()).decode()
+    for name in FIG_NAMES
+}
+
+def _csv_b64(path: Path) -> str:
+    csv = pd.read_csv(path).to_csv(index=False)
+    return base64.b64encode(zlib.compress(csv.encode())).decode()
+
+NET_RENT_B64 = _csv_b64(SAL / "net_rent_groups.csv")
+PAY_NESTED_B64 = _csv_b64(SAL / "pay_model_nested.csv")
+GAP_GROUPS_B64 = _csv_b64(ROOT / "outputs" / "discovery" / "allocation_gap_groups.csv")
+GAP_TAILS_B64 = _csv_b64(ROOT / "outputs" / "discovery" / "allocation_gap_tails.csv")
+
+md_intro = """# The testing is informative; the decisions are not
+
+**NFL Big Data Bowl 2027 — public analysis notebook**
+
+This notebook reproduces the core competition-data results: the 10 Hz Combine movement composite, position-specific performance models, role persistence, and the week-to-week check. The cost-risk tables are derived public-data aggregates embedded for self-containment; the writeup and repository carry the full derivation.
+
+- **The Combine signal is position-specific.** DL +0.734 (95% CI 0.461–1.007), WR +0.366 (p=0.084), OL +0.058, TE +0.093; interaction p=0.0004. The pooled +0.299 is a defensive-line result; the standardized effect is 0.185, not one-third.
+- **Playing time is sticky and draft-driven.** Next-season role follows current role (+0.606) and draft capital (+0.785), not performance (−0.011); the within-player change is −0.095 (p=0.11).
+- **The cap pays for status.** Signed net rent: stars about +$6.3M, young high performers −$1.1M; the nested pay model's performance coefficient falls from +0.128 to +0.040 once role and draft enter.
+- **The allocation gap is systematic.** Performance minus role: late picks/UDFAs +0.59, early picks −0.92 in the full 233-row sample; the strict top-performance/bottom-role quartile tail is 13 player-seasons.
+- **All analyses are exploratory/post-hoc.** The preregistered RJF/Yellow Square null pattern is in the repository appendix. Competition data is CC BY-NC 4.0; do not redistribute.
+
+Self-contained reconstruction: Combine +0.295 (p<0.001), role −0.034 (n=195); full pipeline +0.299 and −0.019 (n=192). The small differences come from the reconstruction's role-standardization universe, not sampling variation.
+"""
+
+code_figs = f"""
+import base64
+from IPython.display import Image, display
+FIG_B64 = {repr(FIG_B64)}
+for name, b64 in FIG_B64.items():
+    print(name)
+    display(Image(data=base64.b64decode(b64)))
+"""
+
+md_cost_risk = """## Cost-risk layer: signed net rent and the allocation gap
+
+The 2025 cap ledger is modeled on performance, age, experience, and position. We report the **signed** residual — dollars above or below the model, netted across over- and under-payments — not a positive-part sum. The nested model adds snap share and draft capital. The allocation gap is performance z minus role z, both within position and season. These are derived public-data aggregates embedded for self-containment; the full derivation is in `src/discovery/cost_risk.py` and `src/salary/rents.py`. All analyses are exploratory.
+"""
+
+code_cost_risk = f"""
+import base64, zlib, io
+def _load(b64):
+    return pd.read_csv(io.StringIO(zlib.decompress(base64.b64decode(b64)).decode()))
+net_rent = _load("{NET_RENT_B64}")
+pay_nested = _load("{PAY_NESTED_B64}")
+gap_groups = _load("{GAP_GROUPS_B64}")
+gap_tails = _load("{GAP_TAILS_B64}")
+print("Signed net rent by group ($M):")
+print(net_rent.round(2).to_string(index=False))
+print("\\nNested pay model (performance coefficient):")
+print(pay_nested.round(3).to_string(index=False))
+print("\\nAllocation gap by draft quartile:")
+print(gap_groups.round(2).to_string(index=False))
+print("\\nAllocation gap tails:")
+print(gap_tails.round(2).to_string(index=False))
+"""
+
+md_salary_appendix = """## Cost-risk appendix: sources and limits
+
+- **OTC positional spending** (2023–2025) and the archived 2025 OTC active-roster cap pages are the salary sources; nflverse supplies snaps, rosters, stats, and schedules.
+- The 2025 cap snapshot matches 99.3% of active-cap dollars to a 2025 snap on player ID and team. The 909-player rent sample covers 68.7% of active-cap dollars; offensive linemen and specialists are excluded.
+- **Net rent** is the signed residual from log 2025 cap number on performance, age, experience, and position. It is an accounting residual, not a causal rent: cap hits reflect proration, restructures, timing, and expected future performance. The nested model adds snap share and draft capital; draft capital is partly the rookie wage scale.
+- The allocation gap is descriptive; the strict tail is 12 players. The salary performance measure is nflverse public production, not the NGS `player_play` residual.
+- **Soccer** uses UEFA 2025, Deloitte Money League 2025, club annual reports, and official league tables; accounting scopes and season windows differ. The table is illustrative, not a natural experiment.
+
+Full source notes: `docs/EXTERNAL_DATA.md` and `docs/SOCCER_DATA.md`.
+"""
+
+md_weekly = """## Week-to-week check
+
+Next-week role is predicted by this-week role, not by this-week performance. Early-season performance also does not predict late-season role after controlling for early role. The data do not identify an optimal review cadence; a monthly review is a process choice, not a tested rule. The result table is embedded below; the derivation is in `src/discovery/weekly_role.py`.
+"""
+
+md_appendix = """## Formal appendix: what is identified
+
+- **Combine linkage:** the 10 Hz movement composite is tested against the tracking-derived performance residual. The pooled coefficient is positive, but position-specific models show it is a defensive-line result: DL +0.734, WR +0.366 (p=0.084), OL +0.058, TE +0.093; interaction p=0.0004. The DL outcome is get-off.
+- **Role persistence:** next-season role is modeled as a function of current role, the performance residual, draft capital, position, and season, with cluster-robust standard errors. The performance coefficient is near zero; role and draft capital are positive. Leave-one-player-out R² and within-player changes are reported as validation.
+- **Cost-risk:** signed net rent and the performance-role gap are exploratory. The predictability lens does not survive role controls.
+- **What is not identified:** causal effects of coaches, teams, schemes, injuries, or contracts. Role is snaps per appearance, not full depth-chart share. The role gap is a diagnostic. DB performance is unidentifiable and excluded from pooled models.
+"""
+
 nb["cells"] = [
     nbf.v4.new_markdown_cell(md_intro),
     nbf.v4.new_code_cell(code_setup),
@@ -714,12 +828,8 @@ nb["cells"] = [
     nbf.v4.new_code_cell(code_combine),
     nbf.v4.new_markdown_cell("## Figures"),
     nbf.v4.new_code_cell(code_figs),
-    nbf.v4.new_markdown_cell(md_salary_intro),
-    nbf.v4.new_code_cell(code_salary_data),
-    nbf.v4.new_markdown_cell("## Cost-efficiency models and the QB premium"),
-    nbf.v4.new_code_cell(code_salary_models),
-    nbf.v4.new_markdown_cell("## Salary figures"),
-    nbf.v4.new_code_cell(code_salary_figs),
+    nbf.v4.new_markdown_cell(md_cost_risk),
+    nbf.v4.new_code_cell(code_cost_risk),
     nbf.v4.new_markdown_cell(md_weekly),
     nbf.v4.new_code_cell(code_weekly),
     nbf.v4.new_markdown_cell(md_salary_appendix),

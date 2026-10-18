@@ -209,6 +209,7 @@ def build() -> dict[str, pd.DataFrame]:
 
     # Descriptive tails on reliable samples; player-cluster bootstrap.
     base["role_gap"] = concurrent.resid
+    full_base = base.copy()
     base = base[base["perf_n"] >= 50].copy()
     base["allocation"] = "mid"
     base.loc[
@@ -260,6 +261,7 @@ def build() -> dict[str, pd.DataFrame]:
         "groups": groups_tbl,
         "contrasts": pd.DataFrame(contrasts),
         "player_seasons": base,
+        "player_seasons_full": full_base,
         "within_player": within_player,
     }
 
@@ -273,6 +275,9 @@ def main() -> None:
     out["groups"].to_csv(OUT / "role_allocation_groups.csv", index=False)
     out["contrasts"].to_csv(OUT / "role_allocation_contrasts.csv", index=False)
     out["player_seasons"].to_parquet(OUT / "role_allocation_player_seasons.parquet", index=False)
+    out["player_seasons_full"].to_parquet(
+        OUT / "role_allocation_player_seasons_full.parquet", index=False
+    )
     out["within_player"].to_parquet(OUT / "role_within_player.parquet", index=False)
     print(out["coefficients"].to_string(index=False))
     print("\nPositions:")
@@ -288,6 +293,8 @@ def main() -> None:
             {
                 "rows": len(out["player_seasons"]),
                 "players": int(out["player_seasons"]["nfl_id"].nunique()),
+                "rows_full": len(out["player_seasons_full"]),
+                "players_full": int(out["player_seasons_full"]["nfl_id"].nunique()),
                 "models": out["coefficients"]["model"].unique().tolist(),
             },
             indent=2,
