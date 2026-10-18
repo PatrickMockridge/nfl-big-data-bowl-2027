@@ -1,6 +1,6 @@
 {
-  "id": "patrickm/nfl-bdb-2027-combine-signal-role",
-  "title": "The Allocation Gap: The Combine Signal Is Real; the Depth Chart and the Cap Ignore It",
+  "id": "patrickm/nfl-bdb-2027-the-allocation-gap",
+  "title": "NFL BDB 2027 — The Allocation Gap",
   "code_file": "02_final_public.ipynb",
   "language": "python",
   "kernel_type": "notebook",
