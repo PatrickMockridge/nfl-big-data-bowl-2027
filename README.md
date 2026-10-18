@@ -1,26 +1,26 @@
-# The Allocation Gap: The Combine Signal Is Real; the Depth Chart and the Cap Ignore It
+# The testing is informative; the decisions are not
 
-Entry for the [NFL Big Data Bowl 2027](https://www.kaggle.com/competitions/nfl-big-data-bowl-2027), starting from the Romeo–Juliet Framework (RJF) / Green–Yellow Square, then auditing where the evaluation system is and is not self-regulating.
+Entry for the [NFL Big Data Bowl 2027](https://www.kaggle.com/competitions/nfl-big-data-bowl-2027). We test whether the 10 Hz Combine movement signal predicts regular-season performance, whether teams reward that performance with playing time, and whether the salary cap rewards it.
 
 ## Headline findings
 
-- **The 10 Hz Combine signal is real, but the depth chart ignores it.** The movement composite predicts context-adjusted regular-season performance: **+0.299 SD per SD** (95% CI 0.153 to 0.446, p < 0.001, n = 543). The same composite does not predict role (**−0.019**, p = 0.83) or the role gap (+0.012, p = 0.70).
-- **Role is sticky and draft-driven.** Next-season role follows current role (+0.606) and draft capital (+0.785), not performance (−0.011); leave-one-player-out R² = 0.503. The within-player test is the identification move: when the same player’s performance changes, role does not follow (**−0.095**, p = 0.11, n = 235).
-- **The weekly check confirms it.** Next-week role follows this-week role (**+0.753**, 95% CI 0.717 to 0.788); this-week performance does not (**−0.006**, p = 0.59; 3,885 player-weeks, 249 players). Early performance does not predict late role (+0.008, p = 0.85). The operational conclusion is a 4–6 week rolling review, not a single-week trigger.
-- **The cap repeats the pattern.** Star/highlight-reel cap share is unrelated to wins per $100M (**−0.70**, p = 0.89). Rookie snap share is negative (**−28.4**, p = 0.004); homegrown snap share is positive (**+9.2**, p = 0.001); QB spending flattens at about **14% of payroll** (p ≈ 0.07).
-- **Rent proxy.** Less efficient teams carry more positive cap-allocation residual: Q4−Q1 total rent −$20.5M (bootstrap CI −$40.9M to −$2.0M); underperformer rent −$6.3M (−$14.5M to −$0.2M); youth surplus +$1.9M (+$0.1M to +$4.0M). Descriptive, not causal.
-- **The RJF reversal is the method.** The Yellow Square and Möbius lenses were wide nulls; the residual is the allocation layer. The unique contribution is the **translation-to-allocation audit** — Combine → performance → role → cap — not another drill-to-game correlation.
+- **The 10 Hz Combine signal is real, but the depth chart ignores it.** The movement composite predicts regular-season performance after adjusting for position, season, and play context: **+0.299 SD per SD** (95% CI 0.153 to 0.446, p < 0.001, n = 543). The same composite does not predict playing time (**−0.019**, p = 0.83) or the gap between playing time and performance (+0.012, p = 0.70).
+- **Playing time is sticky and draft-driven.** Next-season playing time follows current playing time (+0.606) and draft position (+0.785), not performance (−0.011); leave-one-player-out R² = 0.503. The within-player test is the identification move: when the same player’s performance changes, his playing time does not follow (**−0.095**, p = 0.11, n = 235).
+- **The weekly check confirms it.** Next-week playing time follows this-week playing time (**+0.753**, 95% CI 0.717 to 0.788); this-week performance does not (**−0.006**, p = 0.59; 3,885 player-weeks, 249 players). Early performance does not predict late playing time (+0.008, p = 0.85). The operational conclusion is a 4–6 week rolling review, not a single-week trigger.
+- **The cap repeats the pattern.** Star/highlight-reel cap share is unrelated to wins (**−0.70**, p = 0.89) and to wins per $100M (**−0.40**, p = 0.87). Rookie snap share is negative (**−28.4**, p = 0.004); homegrown snap share is positive (**+9.2**, p = 0.001); QB spending has a fitted turning point at about **14% of payroll** (p ≈ 0.07; not statistically identified).
+- **Overpay relative to performance.** Less efficient teams carry more positive overpay: Q4−Q1 total overpay −$20.5M (bootstrap CI −$40.9M to −$2.0M); underperformer overpay −$6.3M (−$14.5M to −$0.2M); underpay of young high performers +$1.9M (+$0.1M to +$4.0M). Descriptive, not causal.
+- **The starting point was a null.** An earlier exploratory framework produced no usable signal. The finding is the gap between measurement and decisions: the Combine signal is real, but playing time and cap spending do not reward it.
 
-The entry is honest about what is not identified: no causal claims about coaches, teams, schemes, injuries, or contracts; DB performance is unidentifiable (reliability 0.12) and excluded from pooled models; the role, salary, and weekly models are exploratory; the rent proxy is a cap-allocation residual; the soccer table is illustrative and lives in `docs/SOCCER_DATA.md`.
+The entry is honest about what is not identified: no causal claims about coaches, teams, schemes, injuries, or contracts; DB performance is unidentifiable (reliability 0.12) and excluded from pooled models; the playing-time, salary, and weekly models are exploratory; the overpay measure is a cap-allocation residual; the soccer table is illustrative and lives in `docs/SOCCER_DATA.md`.
 
 ## Deliverables
 
-- `writeup/submission.md` — 1,949 words, 5 figures, 3 tables (including the Football scorecard), within the competition limits.
+- `writeup/submission.md` — 1,997 words, 5 figures, 2 tables (selected models and the Football scorecard), within the competition limits.
 - `notebooks/02_final_public.ipynb` — self-contained public Kaggle notebook (core + salary panel + weekly check); 23 cells, 0 errors.
 - `notebooks/kernel-metadata.json` — Kaggle push metadata (public, competition data mounted).
 - `writeup/figures/` — the five figures used in the writeup.
-- `outputs/discovery/` — frozen role, Combine linkage, weekly check, and audit outputs (gitignored).
-- `outputs/salary/` — salary panel, models, rent, and soccer outputs (gitignored).
+- `outputs/discovery/` — frozen playing-time, Combine linkage, weekly check, and audit outputs (gitignored).
+- `outputs/salary/` — salary panel, models, overpay, and soccer outputs (gitignored).
 - `docs/PREREGISTRATION_v2.md` — corrected regular-season preregistration (Yellow/pond primary; role, salary, and weekly analyses exploratory).
 - `docs/EXTERNAL_DATA.md` — external data sources, coverage, and limits.
 - `docs/SOCCER_DATA.md` — five-club soccer table sources and scope notes.
@@ -64,11 +64,11 @@ Competition data is CC BY-NC 4.0; it is not committed and must not be redistribu
 - [x] Position-specific performance residuals (DL/WR/TE/OL/DB)
 - [x] Yellow, Möbius, pond, market, replication, and price-vs-prediction audits
 - [x] 10 Hz Combine movement → performance linkage (positive)
-- [x] Role persistence, within-player validation, role-measure sensitivities
-- [x] Week-to-week role check (null performance coefficient; 4–6 week review)
+- [x] Playing-time persistence, within-player validation, playing-time-measure sensitivities
+- [x] Week-to-week playing-time check (null performance coefficient; 4–6 week review)
 - [x] Team-season salary panel (OTC, nflverse, archived OTC 2025 cap)
-- [x] Cost-efficiency models, QB premium, rent proxy, soccer table
-- [x] Figures and writeup (1,949 words, 5 figures, 3 tables)
+- [x] Cost-efficiency models, QB premium, overpay, soccer table
+- [x] Figures and writeup (1,997 words, 5 figures, 2 tables)
 - [x] Public notebook built and executed locally
 - [x] Notebook salary and weekly cells rebuilt and executed
 - [ ] Kaggle notebook published (requires explicit approval)

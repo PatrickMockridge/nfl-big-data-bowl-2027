@@ -12,18 +12,18 @@ https://www.kaggle.com/competitions/nfl-big-data-bowl-2027/writeups
 
 Click **Create Writeup** / **New Writeup**.
 
-Suggested title (52 characters):
+Suggested title (49 characters):
+
+**The testing is informative; the decisions are not**
+
+Alternate (52 characters):
 
 **The Allocation Gap: Combine Signal, Depth Chart, Cap**
-
-Alternate (51 characters):
-
-**The Combine Signal Is Real; the Allocation Is Blind**
 
 ## 2. Paste the body
 
 Open `writeup/kaggle_writeup.md` and paste the whole file into the Kaggle
-writeup editor. It is the same 1,949-word writeup as `writeup/submission.md`,
+writeup editor. It is the same 1,997-word writeup as `writeup/submission.md`,
 but the five image paths point at public raw GitHub URLs:
 
 - `combine_linkage.png`
@@ -67,13 +67,13 @@ container and the notebook is attached to it.
 
 ## Limits check
 
-- Words: 1,949 (limit: 2,000)
+- Words: 1,997 (limit: 2,000)
 - Figures: 5
-- Tables: 3
-- Total visuals: 8 (limit: fewer than 10)
+- Tables: 2
+- Total visuals: 7 (limit: fewer than 10)
 - Public notebook: yes
 - Combine sensor tracking → regular-season performance linkage: explicit in
-  "The signal is real" and "The depth chart doesn't use it"
+  Part 1 "What we found" and Part 2 "Combine linkages"
 
 ## Repo
 

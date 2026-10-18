@@ -1,102 +1,123 @@
-# The Allocation Gap: The Combine Signal Is Real; the Depth Chart and the Cap Ignore It
+# The testing is informative; the decisions are not
 
-**NFL Big Data Bowl 2027 — a multi-lens audit of 510 rookies**
+## Part 1 — For the boardroom
 
-## What is new
+The Combine tests tell you how a player moves: top speed, acceleration, time to the first yard, path efficiency. Playing time and contract decisions mostly do not reflect it. We studied the 2023–2025 draft classes: 543 player-years and 96 team-years.
 
-The 10 Hz Combine movement signal is real: it predicts context-adjusted regular-season performance at **+0.299 SD per SD** (n = 543). But the depth chart does not use it. The same composite does not predict role (**−0.019**, p = 0.83), and next-season role follows current role (**+0.606**) and draft capital (**+0.785**), not performance (**−0.011**). When the same player’s performance changes, role does not follow (**−0.095**, p = 0.11). The cap repeats the pattern: star/highlight-reel share is unrelated to wins per dollar (**−0.70**, p = 0.89), rookie snap share is negative (**−28.4**, p = 0.004), homegrown snap share is positive (**+9.2**, p = 0.001), and QB spending flattens at about **14% of payroll**. The binding constraint is not measurement; it is allocation. The public conversation stops at prediction; this entry tests the next link.
+### What we found
 
-## The question
+Compare Combine movement with how well he performs on Sundays, holding position, season, and draft range constant. Better movement goes with better performance. The relationship is modest: about one-third of the typical spread, roughly the 50th to 62nd percentile. Figure 1 shows the result: performance rises, playing time is flat.
 
-The competition asks whether Combine movement translates to regular-season performance. We ask the next question: once the signal is measured, does the organization act on it — in the depth chart and in the cap? The starting point was the Romeo–Juliet framework’s Yellow Square, a transition zone where failure was expected to concentrate. In a corrected regular-season panel, the Yellow signal was a wide null. That null moved the search from the measurement layer to the allocation layer.
+![Figure 1. Combine movement predicts performance, but not playing time.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/combine_linkage.png)
 
-## The signal is real
+The same movement score shows no detectable link to playing time. Next season's snaps follow this season's snaps and draft position; performance barely matters.
 
-The generic Combine movement composite — first-step acceleration, path efficiency, top speed, time to one yard — predicts context-adjusted regular-season performance: **+0.299 SD per SD** (95% CI 0.153 to 0.446, p < 0.001, n = 543). The sensor signal is not noise. The original Yellow Square lens was a wide null; the movement composite is the positive Combine-to-performance result the competition asks for.
+Spending a large share on star positions — quarterback, running back, receiver, tight end, and edge rusher — has no clear relationship with wins per $100 million. Teams that give a larger share of snaps to rookies average fewer wins per $100 million. That does not mean rookies cause losses; losing teams often play rookies. Teams that give more snaps to their own drafted players average more wins per $100 million. That may reflect winning teams keeping their players, not a causal effect. Figure 5 shows the quarterback detail: wins rise as quarterback spending rises, up to about 14% of the offense-and-defense cap, then level off, with a wide margin of error.
 
-![Combine movement predicts performance, not role](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/combine_linkage.png)
+![Figure 4. Star spending shows no clear link to wins per dollar; rookie-heavy teams win less, homegrown-heavy teams win more.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/salary_efficiency.png)
 
-*Figure 1. Combine movement predicts performance; it does not predict role or the role gap.*
+![Figure 5. Quarterback spending levels off near 14% of the cap, with a wide margin of error.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/qb_premium.png)
 
-## The depth chart doesn’t use it
+### Why it matters
 
-The same composite does not predict role: **−0.019** (95% CI −0.194 to 0.156, p = 0.83, n = 192). It does not predict the role gap: +0.012 (−0.049 to 0.073, p = 0.70). The sensor signal stops at the depth chart.
+Homegrown means a player ends the season with the team that drafted him; undrafted players who stay with their first team are not counted. Star spending is the share of offense-and-defense cap hits — not cash — going to five premium positions: quarterback, running back, receiver, tight end, and edge rusher. It is positional spending, not a judgment that the player is a star. Rookies are usually homegrown, but homegrown also includes drafted veterans, so the two findings are not a contradiction.
 
-Next-season role is explained by current role and draft capital, not performance. Current role **+0.606** (0.510 to 0.701), draft capital **+0.785** (0.347 to 1.222), performance **−0.011** (−0.119 to 0.097, p = 0.84). A performance-only model agrees: performance −0.096 (−0.226 to 0.034, p = 0.15), draft +1.454 (0.727 to 2.181). The null survives a team-mean-role control (−0.016), pass-play role (−0.078), and cohort role share (−0.060). Leave-one-player-out R² is **0.503**, and the performance coefficient stays between −0.038 and +0.026 across folds. The within-player test is the identification move: when the same player’s performance changes, role does not follow (**−0.095**, 95% CI −0.211 to 0.022, p = 0.11, n = 235).
+If a young player performs but sits, the team pays for a skill it is not using. If a veteran plays but does not perform, the team spends cap space on playing time that produces little. Contracts can lock in that mistake, because pay is often set by draft status and reputation, not just current production.
 
-![Role persists; performance does not](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/next_role_forest.png)
+### What a team should do
 
-*Figure 2. Next-season role by position. Current role and draft capital predict it; performance does not. DB performance is unidentifiable.*
+Run a review every four to six weeks, not every week. This week's snaps predict next week's snaps. Performance does not. One game is noise; four to six weeks shows whether a flag persists.
 
-![Role persists; within-player changes do not follow performance](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/persistence_within_player.png)
+Use two flags over the review window. First: a player in the bottom third of snaps at his position and the top third of performance. Second: a player in the top third of snaps and the bottom third of performance. Both are questions for the position coach and area scout, not instructions. Ask about assignment, health, scheme fit, and game script before changing a lineup.
 
-*Figure 3. Current role predicts next role; performance does not, within or between players.*
+Name one accountable person — the head coach with the scouting department — with analysts supplying evidence. No algorithm should set a lineup. The general manager and cap staff can use the same list for contract, extension, and free-agency planning.
 
-## The cap repeats the pattern
+At the league office, use the same numbers as a league-wide check. Look for persistent mismatches between performance and playing time. Ask whether the pattern reflects coaching, roster construction, or a flaw in the data. Do not use it for punishment or public rankings.
 
-If the allocation layer ignores measured performance, the cap should show a similar pattern. It does. Across 96 team-seasons, the star/highlight-reel share of offense-plus-defense cap spending is unrelated to wins per $100M: **−0.70** (95% CI −10.23 to +8.83, p = 0.89), or −0.05 wins per SD. The null holds for point differential, offensive EPA per dollar, and the 2025 OTC active-cap measure.
+### What this does not say
 
-The variables that move are age and continuity. Rookie snap share is negatively associated with wins: **−28.4** (95% CI −48.0 to −8.8, p = 0.004), or −2.8 wins per 10 percentage points. Homegrown snap share — snaps by players drafted by the team — is positively associated: **+9.2** (3.8 to 14.6, p = 0.001), or +0.9 wins per 10 points. The pattern holds for point differential (rookie −978, homegrown +363) and offensive EPA per play (rookie −0.60, homegrown +0.40). Adding star and youth shares leaves star at zero (−1.3, p = 0.77); homegrown remains +10.2 (p = 0.001). This is a correlation: bad teams play rookies, and good teams retain their own. But “play the kids” is not a free lunch, and “buy stars” is not a premium that pays.
+This is a pattern in the data, not a controlled experiment. It does not say that giving a player more snaps will make him perform, or that paying a quarterback less will win more games. It says the pattern is inconsistent with the goals teams state: winning and getting value from the cap. A flag is a reason to look, not a verdict.
 
-The quarterback market is the clearest case of diminishing returns. A quadratic model with payroll and season controls peaks at a QB share of about **14% of offense-plus-defense spending** (linear +42.4, quadratic −149.2, p ≈ 0.07). The 2025 top quartile of QB cap share does not win more: 8.31 wins versus 8.56 for the rest; point differential −5.5 versus +1.8. The estimate is suggestive, not decisive.
+The cap results describe where money went. They are not proof that a team intended to overpay. Contracts reflect timing, guarantees, and the market. The review is a decision aid, not a scoreboard.
 
-The rent proxy is the second layer. A pay model — log 2025 cap number on performance z, age, experience, and position — explains 44% of the variance. The residual is a cap-allocation residual, not a causal rent. Teams in the bottom efficiency quartile carry **$51M** of positive star-plus-underperformer residual per team; the top quartile carries **$31M**; Q4−Q1 is **−$20.5M** (bootstrap 95% CI −$40.9M to −$2.0M). Underperformer rent alone is −$6.3M (−$14.5M to −$0.2M); youth surplus is +$1.9M (+$0.1M to +$4.0M). Correlations with wins per $100M: −0.34 for underperformer rent, +0.35 for youth surplus; star rent is −0.31 but its CI crosses zero. A cash-pay sensitivity reproduces the signs.
+### The three Football Score questions
 
-![Star share is flat; rookie volume and homegrown continuity diverge](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/salary_efficiency.png)
+On week-to-week usability, the answer is no for a weekly decision rule and yes for a four-to-six-week review. On complexity, the comparison holds position, season, draft range, current snaps, and play situation constant, but not opponent, injuries, scheme, or game script; it needs Combine movement data, snaps, and public cap data, and one analyst can maintain it. Defensive backs are excluded; their performance measure is unreliable. Public draft models usually stop at predicting who will be good. To our knowledge, this is the next question: whether playing time and contract decisions use that prediction. The answer is that they mostly do not.
 
-*Figure 4. Star share is unrelated to wins per $100M. Rookie-heavy teams win less; homegrown-heavy teams win more.*
-
-![The perfect-QB premium flattens](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/qb_premium.png)
-
-*Figure 5. QB spending has diminishing returns; the top quartile of QB cap share does not win more.*
-
-## Football score: can a team use this?
-
-**Would a team use it week to week?** The season-level result is robust, but it is not a single-week trigger. A weekly check tells the operational story: next-week role is predicted by this-week role (**+0.753**, 95% CI 0.717 to 0.788), not by this-week performance (**−0.006**, −0.027 to 0.015, p = 0.59; 3,885 player-weeks, 249 players). Early-season performance also does not predict late-season role after controlling for early role (**+0.008**, −0.072 to 0.087, p = 0.85; 282 player-seasons, 180 players). A team should therefore run a rolling role review after weeks 4–6 and then every 2–3 weeks, not after every game. Inputs: snaps per game, the position-specific performance residual, draft/role expectation, and the role gap. Outputs: two flags — low role/high performance (review for more snaps) and high role/low performance (justify or reduce). The flag triggers a coach/scout review of depth-chart and snap allocation; it does not automate playing time. For the league office, the same flags aggregate into an allocation audit, not individual discipline.
-
-**Does the analysis account for football’s complexity?** The models control position group, season, draft capital, current role, team role environment, pass-play role and cohort role share as sensitivities, within-player changes, and play context in the performance residual (down, distance, coverage, pressure). The salary models add payroll and season. They do not control opponent quality, injuries or availability beyond games played, coaching/scheme changes, game script, contract timing, or unobserved health. Those omissions are why the flag is a review trigger, not a verdict.
-
-**Are the ideas unique?** Public notebooks often test whether Combine metrics correlate with performance. This entry tests whether the organization acts on the signal. The unique contribution is the **translation-to-allocation audit**: Combine → performance → role → cap. The within-player test is the identification move; the cap is an independent second test of the same gap. The RJF reversal is the method: the Yellow and Möbius lenses were nulls, so the analysis searched for where the system is not self-regulating and found the allocation layer. The signal is real; the allocation decision is where it is lost.
-
-## Limits
-
-This is observational; we make no causal claims about coaches, teams, schemes, injuries, or contracts. Role is snaps per appearance, not a full depth-chart share; pass-play role and cohort role share are sensitivities. The panel covers 401 of 510 players and 233 role-model player-seasons; quarterbacks, running backs, linebackers, and special-teamers are excluded from the role models. The dollar panel is 96 team-seasons; OTC positional spending is not a full cap ledger; the 2025 active-cap snapshot covers 99% of active-cap dollars, but the rent sample covers 69% because offensive linemen and specialists are excluded. The weekly check is exploratory and covers DL/WR/TE/OL; DB and LB samples are too thin. A five-club soccer comparison is in the repository appendix; it is illustrative, not an NFL test.
-
-## Table 1. Selected models
-
-| Model | Term | Coefficient (95% CI) | n |
-|:--|:--|:--|--:|
-| Combine movement → performance | Movement | +0.299*** (+0.153, +0.446) | 543 |
-| Combine movement → role | Movement | −0.019 (−0.194, +0.156) | 192 |
-| Next role | Current role | +0.606*** (+0.510, +0.701) | 233 |
-| Next role | Performance | −0.011 (−0.119, +0.097) | 233 |
-| Next role | Draft capital | +0.785*** (+0.347, +1.222) | 233 |
-| Within-player Δrole | ΔPerformance | −0.095 (−0.211, +0.022) | 235 |
-| Wins per $100M | Star share | −0.70 (−10.23, +8.83) | 96 |
-| Wins per $100M | Rookie snap share | −28.39** (−47.96, −8.82) | 96 |
-| Wins per $100M | Homegrown snap share | +9.21*** (+3.81, +14.62) | 96 |
-| Next-week role | Current-week role | +0.753*** (+0.717, +0.788) | 3,885 |
-| Next-week role | Current-week performance | −0.006 (−0.027, +0.015) | 3,885 |
-
-\* p < 0.05, \*\* p < 0.01, \*\*\* p < 0.001. Core models cluster by player; salary models cluster by team and include season fixed effects plus log payroll; weekly models cluster by player and include position, draft, week, and season controls.
-
-## Table 2. Rent decomposition by efficiency quartile (2025, $M per team)
-
-| Efficiency quartile | Teams | Star rent | Underperformer rent | Youth surplus | Wins per $100M |
-|:--|--:|--:|--:|--:|--:|
-| Q1 low | 8 | 43.9 | 7.3 | 0.8 | 1.80 |
-| Q2 | 8 | 67.2 | 2.2 | 0.5 | 3.29 |
-| Q3 | 8 | 56.0 | 1.7 | 2.2 | 4.24 |
-| Q4 high | 8 | 29.7 | 1.0 | 2.7 | 6.28 |
-
-Rent = positive residual from log 2025 cap number on performance z, age, experience, and position; a cap-allocation residual, not a causal rent. Sample: 909 players, 69% of active cap dollars; OL/specialists excluded.
-
-## Table 3. Football scorecard
+**Table 3. Football scorecard.**
 
 | Criterion | Evidence | Operational use | Caveat |
-|:--|:--|:--|:--|
-| Week-to-week | Next-week role follows this-week role (+0.753); performance −0.006 (p = 0.59); early performance does not predict late role (+0.008, p = 0.85) | 4–6 week rolling role review; two flags: low role/high performance, high role/low performance | Season-level evidence; weekly sample 3,885 player-weeks |
-| Complexity | Controls: position, season, draft, current role, team role environment, play context, within-player. Not: opponent, injuries, scheme/coaching, game script, contract timing | Review trigger, not an automated verdict | Public data cannot observe coaching intent or health |
-| Uniqueness | Translation-to-allocation audit: Combine → performance → role → cap; within-player test; cap replication; RJF nulls → allocation layer | New link and test, not another Combine metric | Observational; no causal claim |
+|---|---|---|---|
+| Week-to-week usability | Snaps this week strongly predict snaps next week; performance does not. Early performance does not predict late snaps. | Review every four to six weeks. Do not change the depth chart off one game. | Exploratory weekly check. Snaps are not depth-chart rank. Injuries and game script are unobserved. |
+| Complexity | One movement score, one performance score, public cap figures; 543 player-years and 96 team-years. | One analyst can maintain it. Output is a short review list. | No private data; performance measures differ by position; defensive backs are excluded. |
+| Uniqueness | Public draft models predict who will be good; this asks whether playing time and contract decisions use that prediction. | Ask whether the depth chart and cap sheet use the signal the testing shows. | A pattern in the data. No causal claim. Cap spending is an estimate, not proof of intent. |
 
-*Code, diagnostics, the core pipeline, and the formal appendix are in the public Kaggle notebook; the broader lens scan and source notes are in the repository. The notebook is a compact reproduction of the core pipeline; coefficients can differ with complete-case and feature-standardization choices.*
+The testing is informative; the decisions are not.
+
+## Part 2 — Method and evidence
+
+### Data
+
+The 2023–2025 Combine cohorts: 510 players; 401 with 722 regular-season player-seasons. Combine tracking is 10 Hz per player. Performance comes from Next Gen Stats `player_play` (get-off, separation, pressure allowed, pass result); snaps and games from nflverse. Salary data combine OverTheCap positional spending (96 team-seasons), archived 2025 OTC active-cap pages (32 teams; 99.3% of active-cap dollars match a 2025 snap on player ID and team), and a public contract snapshot used only for sensitivity.
+
+### Measures
+
+**Combine movement.** Attempt-level z-scores within drill and position group for max speed, first-step acceleration (0.5 s), time to 1 yard (reversed), and path efficiency. Attempt scores are averaged per player, the four components re-standardized across players, and their mean is the movement score.
+
+**Performance.** Position-specific play outcome, oriented higher-is-better, residualized (the part not explained by controls) against play context including down, distance, pressure, coverage, field position, motion, blitz, and season, using ridge regression and 5-fold grouped cross-validation by player. Player-seasons are empirical-Bayes shrunk (small samples pulled toward the group-season mean) and standardized within position group and season (mean 0, SD 1).
+
+**Playing time.** Snaps per appearance (snaps/games), standardized within position group and season. The playing-time gap is the residual from playing time regressed on performance, draft capital, draft-free prestige, position group, and season; positive means more snaps than comparable players.
+
+**Draft capital.** `B_draft` is a 0–1 percentile of overall pick within class and position subgroup; higher is an earlier pick; undrafted players are set to 0.
+
+**Cap measures.** Star share is quarterback, running back, receiver, tight end, and edge spending divided by offense plus defense spending; quarterback share uses the same denominator. Payroll is OTC offense plus defense spending. Rookie and homegrown shares are shares of team snaps; homegrown means draft team equals current team. Wins per $100M is wins divided by payroll in $100M.
+
+**Cap-allocation measure.** For 2025, log cap number (the season's salary-cap charge) is modeled on performance, age, experience, and position; the residual is dollars above or below the pay model. Positive values are cap dollars above the model, not evidence of intent. "Star" here means top-quartile 2025 cap number, not the star-share category. Underperformer means bottom-quartile performance with above-median snap share; young high performer means age ≤24 with top-quartile performance.
+
+### Models
+
+Models use ordinary least squares (OLS) with standard errors clustered by player (allowing within-player correlation); salary models cluster by team with season controls. Table 1 reports selected estimates.
+
+Combine linkages: performance and playing time on combine movement, draft capital, position group, and season. Performance +0.299 (95% CI 0.153 to 0.446, n=543); playing time −0.019 (−0.194 to 0.156, n=192); the playing-time gap (with current snaps) +0.012 (−0.049 to 0.073, n=192).
+
+Next-season playing time: current playing time +0.606 (0.510 to 0.701); performance −0.011 (−0.119 to 0.097); draft capital +0.785 (0.347 to 1.222); n=233. Within-player change in performance: −0.095 (−0.211 to 0.022, n=235).
+
+![Figure 2. Next-season playing time by position.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/next_role_forest.png)
+
+Week-to-week: next-week playing time on current-week playing time +0.753 (0.717 to 0.788); current-week performance −0.006 (−0.027 to 0.015, p=0.586); n=3,885 player-weeks, 249 players. Early-season (weeks 1–6) performance to late-season (weeks 7+) playing time +0.008 (−0.072 to 0.087, p=0.846); n=282 player-seasons, 180 players. Controls: current playing time, performance, draft capital, position group, season, week; early-late adds early playing time and performance.
+
+![Figure 3. Playing time persists; performance does not.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/persistence_within_player.png)
+
+Salary panel: wins on star share, payroll, and season: −0.70 (−10.23 to +8.83, p=0.886, n=96); the wins-per-$100M model is −0.40 (−5.20 to +4.39, p=0.869). Rookie snap share −28.39 (−47.96 to −8.82, p=0.004); homegrown +9.21 (+3.81 to +14.62, p=0.001); n=96. Quarterback quadratic on wins (OTC positional share, not the 2025 cap measure): linear +42.37 (−2.87 to +87.60), quadratic −149.17 (−309.99 to +11.64, p=0.069), fitted turning point 0.142, n=96; the vertex is not statistically identified.
+
+**Table 1. Selected models (coefficient, 95% CI, n).**
+
+| Model | Term | Coefficient (95% CI) | n |
+|---|---|---|---|
+| Combine → performance | Combine movement | +0.299 (0.153, 0.446) | 543 |
+| Combine → playing time | Combine movement | −0.019 (−0.194, 0.156) | 192 |
+| Next-season playing time | Current playing time | +0.606 (0.510, 0.701) | 233 |
+| Next-season playing time | Draft capital | +0.785 (0.347, 1.222) | 233 |
+| Within-player change | Δ performance | −0.095 (−0.211, 0.022) | 235 |
+| Next-week playing time | Current-week playing time | +0.753 (0.717, 0.788) | 3,885 |
+| Next-week playing time | Current-week performance | −0.006 (−0.027, 0.015) | 3,885 |
+| Early → late playing time | Early performance | +0.008 (−0.072, 0.087) | 282 |
+| Wins | Star share | −0.70 (−10.23, 8.83) | 96 |
+| Wins | Rookie snap share | −28.39 (−47.96, −8.82) | 96 |
+| Wins | Homegrown snap share | +9.21 (3.81, 14.62) | 96 |
+
+Efficiency quartiles are 2025 team wins per $100M. Cap residuals by quartile (Q1 low to Q4 high): total $51.2M, $69.4M, $57.7M, $30.7M; Q4−Q1 −$20.5M (95% CI −$40.9M to −$2.0M). Star −$14.2M (−$29.3M to +$0.7M); underperformer −$6.3M (−$14.5M to −$0.2M); youth +$1.9M (+$0.1M to +$4.0M). Star is not distinguishable from zero; the total is driven by underperformers. Positive = above-model cap dollars, not intent; total = star + underperformer. Sample: 909 players, 69% of active-cap dollars; OL and specialists excluded.
+
+### Validation and robustness
+
+Out-of-sample R² 0.503 is for next-season playing time, not the Combine coefficient; the performance coefficient stays between −0.038 and +0.026, n=233. 
+
+### Limits
+
+Observational; no causal claims. Playing time is snaps per appearance, not depth-chart rank or coaching intent. DB performance is unidentifiable and excluded from pooled models. Salary is a proxy: cap hits reflect proration, restructures, timing; the cap measure is descriptive. The weekly check is exploratory. Opponent, injuries, scheme, game script are unavailable. The review is a decision aid, not a verdict.
+
+### Code
+
+Public notebook: https://www.kaggle.com/code/patrickm/nfl-bdb-2027-the-allocation-gap
+
+Code: [Combine movement](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/features/combine_movement.py), [performance](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/features/performance.py), [role allocation](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/discovery/role_allocation.py), [Combine linkage](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/discovery/combine_linkage.py), [weekly role](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/discovery/weekly_role.py), [salary analysis](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/salary/analysis.py), [rent](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/salary/rents.py).

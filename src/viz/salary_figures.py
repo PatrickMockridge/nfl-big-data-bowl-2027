@@ -47,7 +47,7 @@ def persistence_within_player() -> Path:
 
     fig, axes = plt.subplots(1, 3, figsize=(12.6, 4.0))
     specs = [
-        (axes[0], d["role_z"], d["next_role"], "Current role (z)", BLUE),
+        (axes[0], d["role_z"], d["next_role"], "Current playing time (z)", BLUE),
         (axes[1], d["perf_z"], d["next_role"], "Performance (z)", ORANGE),
     ]
     for ax, x, y, label, color in specs:
@@ -55,11 +55,11 @@ def persistence_within_player() -> Path:
         coef = _fit(ax, x.to_numpy(), y.to_numpy(), color)
         ax.axhline(0, color=BASELINE, lw=0.8)
         ax.set_xlabel(label)
-        ax.set_title(f"{label.split(' (')[0]} → next role", loc="left", fontsize=10)
+        ax.set_title(f"{label.split(' (')[0]} → next season", loc="left", fontsize=10)
         ax.annotate(f"slope {coef[0]:+.2f}", (0.04, 0.92), xycoords="axes fraction",
                     fontsize=8, color=SECONDARY)
         ax.grid(alpha=0.7)
-    axes[0].set_ylabel("Next-season role (z)")
+    axes[0].set_ylabel("Next-season playing time (z)")
 
     ax = axes[2]
     ax.scatter(w["d_perf"], w["d_role"], s=18, c=GRAY, alpha=0.50,
@@ -68,13 +68,13 @@ def persistence_within_player() -> Path:
     ax.axhline(0, color=BASELINE, lw=0.8)
     ax.axvline(0, color=BASELINE, lw=0.8)
     ax.set_xlabel("Change in performance (z)")
-    ax.set_ylabel("Change in role (z)")
+    ax.set_ylabel("Change in playing time (z)")
     ax.set_title("Within-player change", loc="left", fontsize=10)
     ax.annotate(f"slope {coef[0]:+.3f} (n={len(w)})", (0.04, 0.92), xycoords="axes fraction",
                 fontsize=8, color=SECONDARY)
     ax.grid(alpha=0.7)
 
-    fig.suptitle("Role persists; performance does not", x=0.01, ha="left",
+    fig.suptitle("Playing time persists; performance does not", x=0.01, ha="left",
                  fontsize=12, color=INK)
     fig.tight_layout(rect=[0, 0, 1, 0.92])
     return _save(fig, "persistence_within_player.png")
@@ -135,7 +135,7 @@ def qb_premium() -> Path:
     inf = q.loc[q["outcome"].eq("wins_per_100m"), "inflection_qb_share"].dropna()
     if len(inf):
         ax.axvline(float(inf.iloc[0]), color=ORANGE, lw=1.0, linestyle="--")
-        ax.annotate(f"model peak ≈ {float(inf.iloc[0]):.0%}",
+        ax.annotate(f"fitted turning point ≈ {float(inf.iloc[0]):.0%}",
                     (float(inf.iloc[0]), ax.get_ylim()[1]), xytext=(6, -12),
                     textcoords="offset points", fontsize=7.5, color=ORANGE)
     ax.set_xlabel("QB share of offense+defense cap spending")
@@ -182,7 +182,7 @@ def qb_premium() -> Path:
     ax.set_title("2025 cross-section", loc="left", fontsize=10)
     ax.grid(alpha=0.7)
 
-    fig.suptitle("The perfect-QB premium flattens", x=0.01, ha="left",
+    fig.suptitle("Quarterback spending has a fitted turning point", x=0.01, ha="left",
                  fontsize=12, color=INK)
     fig.tight_layout(rect=[0, 0, 1, 0.94])
     return _save(fig, "qb_premium.png")

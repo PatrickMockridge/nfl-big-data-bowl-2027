@@ -32,19 +32,19 @@ RENT_B64 = base64.b64encode(zlib.compress(_rent_csv.encode())).decode()
 SOCCER_B64 = base64.b64encode(zlib.compress(_soccer_csv.encode())).decode()
 WEEKLY_B64 = base64.b64encode(zlib.compress(_weekly_csv.encode())).decode()
 
-md_intro = """# The Allocation Gap: The Combine Signal Is Real; the Depth Chart and the Cap Ignore It
+md_intro = """# The testing is informative; the decisions are not
 
 **NFL Big Data Bowl 2027 — public analysis notebook**
 
 **What is new**
 
-- The 10 Hz Combine signal predicts performance (**+0.299 SD/SD**) but not role (**−0.019**).
-- Next-season role follows current role (**+0.606**) and draft capital (**+0.785**), not performance (**−0.011**); the within-player change is **−0.095** (p = 0.11).
-- The weekly check: next-week role follows this-week role (**+0.753**); this-week performance does not (**−0.006**, p = 0.59).
+- The 10 Hz Combine signal predicts performance (**+0.299 SD/SD**) but not playing time (**−0.019**).
+- Next-season playing time follows current playing time (**+0.606**) and draft position (**+0.785**), not performance (**−0.011**); the within-player change is **−0.095** (p = 0.11).
+- The weekly check: next-week playing time follows this-week playing time (**+0.753**); this-week performance does not (**−0.006**, p = 0.59).
 - The cap repeats the pattern: star share **−0.70** (p = 0.89); rookie snap share **−28.4** (p = 0.004); homegrown **+9.2** (p = 0.001); QB spending flattens at about **14% of payroll**.
-- The binding constraint is not measurement; it is allocation.
+- The measurement is working; the decisions are not.
 
-The Yellow Square/Möbius lenses were wide nulls; the residual is the allocation layer. This notebook reproduces the robust core from the raw competition data plus a self-contained salary panel and a week-to-week check derived from public OverTheCap and nflverse data. It uses the 10 Hz Combine tracking and the tracking-derived Next Gen Stats in `player_play`. Competition data is CC BY-NC 4.0; do not redistribute.
+This notebook reproduces the core results from the raw competition data plus a self-contained salary panel and a week-to-week check derived from public OverTheCap and nflverse data. It uses the 10 Hz Combine tracking and the tracking-derived Next Gen Stats in `player_play`. Competition data is CC BY-NC 4.0; do not redistribute.
 """
 
 code_setup = r'''
@@ -371,7 +371,7 @@ fig.savefig(FIG/"combine_linkage.png",dpi=180,bbox_inches="tight"); plt.show()
 # Next-role forest.
 fig, ax = plt.subplots(figsize=(8, 4))
 yy = np.arange(len(pos_df))
-for key, label, color, off in [("role","Current role",BLUE,-.2),("perf","Performance",ORANGE,0),("draft","Draft capital",AQUA,.2)]:
+for key, label, color, off in [("role","Current playing time",BLUE,-.2),("perf","Performance",ORANGE,0),("draft","Draft position",AQUA,.2)]:
     coef = pos_df[key].to_numpy(); lo = pos_df[key+"_lo"].to_numpy(); hi = pos_df[key+"_hi"].to_numpy()
     mask = ~np.isnan(coef)
     ax.errorbar(coef[mask], (yy+off)[mask], xerr=[(coef-lo)[mask],(hi-coef)[mask]],
@@ -380,8 +380,8 @@ for key, label, color, off in [("role","Current role",BLUE,-.2),("perf","Perform
         for idx in np.where(~mask)[0]:
             ax.text(0.02, yy[idx]+off, "unidentifiable", fontsize=6.5, color=GRAY, va="center")
 ax.axvline(0, color=BASELINE, lw=.8); ax.set_yticks(yy); ax.set_yticklabels(pos_df["position"]); ax.invert_yaxis()
-ax.set_xlabel("Coefficient for next-season role (z; 95% CI)"); ax.legend(frameon=False, fontsize=7)
-ax.set_title("Role persists and follows draft capital, not performance", loc="left")
+ax.set_xlabel("Coefficient for next-season playing time (z; 95% CI)"); ax.legend(frameon=False, fontsize=7)
+ax.set_title("Current playing time and draft position predict next season — performance does not", loc="left", fontsize=9)
 fig.savefig(FIG/"next_role_forest.png",dpi=180,bbox_inches="tight"); plt.show()
 
 # Role-measure sensitivity.
@@ -400,14 +400,14 @@ fig.savefig(FIG/"role_sensitivity.png",dpi=180,bbox_inches="tight"); plt.show()
 
 # Role persistence vs performance.
 fig, axes = plt.subplots(1,2,figsize=(9,3.8),sharey=True)
-for ax,col,label,color in [(axes[0],"role_z","Current role (z)",BLUE),(axes[1],"perf_z","Performance (z)",ORANGE)]:
+for ax,col,label,color in [(axes[0],"role_z","Current playing time (z)",BLUE),(axes[1],"perf_z","Performance (z)",ORANGE)]:
     ax.scatter(base[col],base["next_role"],s=14,c=GRAY,alpha=.45,edgecolors=SURFACE,linewidths=.3)
     coef=np.polyfit(base[col],base["next_role"],1); xs=np.linspace(base[col].min(),base[col].max(),50)
     ax.plot(xs,np.polyval(coef,xs),color=color,lw=1.5); ax.axhline(0,color=BASELINE,lw=.8)
-    ax.set_xlabel(label); ax.set_title(label.split(" (")[0]+" to next role",loc="left")
+    ax.set_xlabel(label); ax.set_title(label.split(" (")[0]+" to next season",loc="left")
     ax.annotate(f"slope {coef[0]:+.2f}",(0.04,.92),xycoords="axes fraction",fontsize=8)
-axes[0].set_ylabel("Next-season role (z)")
-fig.suptitle("Role persists; performance does not",x=.01,ha="left")
+axes[0].set_ylabel("Next-season playing time (z)")
+fig.suptitle("Playing time persists; performance does not",x=.01,ha="left")
 fig.tight_layout(); fig.savefig(FIG/"role_persistence.png",dpi=180,bbox_inches="tight"); plt.show()
 
 # Within-player change.
@@ -415,7 +415,7 @@ fig,ax=plt.subplots(figsize=(6,4))
 ax.scatter(diff["d_perf"],diff["d_role"],s=16,c=GRAY,alpha=.5,edgecolors=SURFACE,linewidths=.3)
 coef=np.polyfit(diff["d_perf"],diff["d_role"],1); xs=np.linspace(diff["d_perf"].min(),diff["d_perf"].max(),50)
 ax.plot(xs,np.polyval(coef,xs),color=ORANGE,lw=1.5); ax.axhline(0,color=BASELINE,lw=.8); ax.axvline(0,color=BASELINE,lw=.8)
-ax.set_xlabel("Change in performance (z)"); ax.set_ylabel("Change in role (z)")
+ax.set_xlabel("Change in performance (z)"); ax.set_ylabel("Change in playing time (z)")
 ax.set_title("When performance changes, role does not",loc="left")
 fig.savefig(FIG/"within_player_change.png",dpi=180,bbox_inches="tight"); plt.show()
 
@@ -535,7 +535,7 @@ ax.plot(xs, np.polyval(c, xs), color=GRAY, lw=1.5)
 ax.axvline(-q.params["qb_share"]/(2*q.params[q2]), color=ORANGE, lw=1, linestyle="--")
 ax.set_xlabel("QB share of offense+defense cap spending")
 ax.set_ylabel("Wins per $100M")
-ax.set_title("The perfect-QB premium flattens", loc="left")
+ax.set_title("Quarterback spending has a fitted turning point", loc="left")
 ax.grid(alpha=.7); ax.legend(frameon=False, fontsize=7, title="Season")
 fig.tight_layout(); fig.savefig(FIG/"qb_premium.png", dpi=180, bbox_inches="tight"); plt.show()
 

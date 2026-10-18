@@ -121,9 +121,9 @@ def next_role_forest() -> Path:
     fig, ax = plt.subplots(figsize=(8.4, 5.0))
     y = np.arange(len(pos))
     specs = [
-        ("role", "Current role", BLUE, -0.20),
+        ("role", "Current playing time", BLUE, -0.20),
         ("perf", "Performance", ORANGE, 0.0),
-        ("draft", "Draft capital", AQUA, 0.20),
+        ("draft", "Draft position", AQUA, 0.20),
     ]
     for key, label, color, offset in specs:
         coef = pos[f"{key}_coef"]
@@ -144,9 +144,9 @@ def next_role_forest() -> Path:
     ax.set_yticklabels(pos["position_group"])
     ax.invert_yaxis()
     ax.grid(axis="x", alpha=0.7)
-    ax.set_xlabel("Coefficient for next-season role (z; 95% CI)")
-    ax.set_title("Role persists and follows draft capital — not performance",
-                 loc="left", fontsize=12, color=INK)
+    ax.set_xlabel("Coefficient for next-season playing time (z; 95% CI)")
+    ax.set_title("Current playing time and draft position predict next season — performance does not",
+                 loc="left", fontsize=11, color=INK)
     ax.legend(loc="lower right", fontsize=8)
     return _save(fig, "next_role_forest.png")
 
@@ -367,14 +367,15 @@ def combine_linkage_figure() -> Path:
                     fmt="o", color=color, ecolor=color, elinewidth=1.3,
                     capsize=0, markersize=7, markeredgecolor=SURFACE,
                     markeredgewidth=0.5)
-        labels.append(row["outcome"])
+        labels.append({"performance": "Performance", "role": "Playing time",
+                       "role gap": "Playing-time gap"}.get(row["outcome"], row["outcome"]))
         ax.annotate(f"n={int(row['n'])}", (row["ci_high"], i), xytext=(6, 0),
                     textcoords="offset points", va="center", fontsize=7, color=GRAY)
     ax.axvline(0, color=BASELINE, lw=0.9)
     ax.set_yticks(range(len(df)))
     ax.set_yticklabels(labels)
     ax.set_xlabel("Coefficient per SD of Combine movement (95% CI)")
-    ax.set_title("Combine movement predicts performance — but not role",
+    ax.set_title("Combine movement predicts performance — but not playing time",
                  loc="left", fontsize=12, color=INK)
     ax.grid(axis="x", alpha=0.7)
     return _save(fig, "combine_linkage.png")
