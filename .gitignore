@@ -2,6 +2,7 @@
 /outputs/
 /figures/
 /notebooks/figures/
+/implications/outputs/
 .venv/
 __pycache__/
 *.pyc
