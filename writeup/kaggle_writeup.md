@@ -12,25 +12,25 @@ We studied the 2023–2025 draft classes: 543 player-seasons with movement and p
 
 **The stopwatch is blind to pressure.** In the timed interior sample, the 40-yard dash and 10-yard split jointly explain pressure with p=0.998; the burst adds +0.049 R². Out of sample, by player, the stopwatch scores −0.113 for pressure and the burst +0.178. For sacks the stopwatch is positive (+0.120) and the burst adds only +0.007 R². The pure claim: the 10 Hz burst is a position-specific production signal; the stopwatch does not carry the pressure signal. Figure 1.
 
-![Figure 1. The stopwatch sees sacks, not pressure; the tracking burst sees pressure.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/pressure_signal.png?v=5)
+![Figure 1. The stopwatch sees sacks, not pressure; the tracking burst sees pressure.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/aff68a9/writeup/figures/pressure_signal.png)
 
 **The Combine signal is position-specific.** The movement composite predicts defensive-line performance (+0.734 raw; +0.42 SD per SD, 0.26 to 0.58, n=175), but not offensive line (+0.058) or tight end (+0.093); receiver is marginal (+0.366, p=0.084); interaction p=0.0004. The pooled +0.299 is a defensive-line result. The defensive-line outcome is get-off, so part is a validity check. Figure 2.
 
-![Figure 2. The Combine signal is real for defensive linemen, not universal.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/combine_linkage.png?v=5)
+![Figure 2. The Combine signal is real for defensive linemen, not universal.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/aff68a9/writeup/figures/combine_linkage.png)
 
 **The cap pays for performance.** On the full 909-player 2025 ledger, a standard deviation of measured performance is associated with +0.328 log points of cap charge (95% CI 0.264 to 0.392), controlling age, experience, and position. Adding playing time gives +0.143 (0.078 to 0.208). The salary measure is nflverse production, partly role-loaded (r≈0.5 with snaps), not the NGS residual. Figure 3.
 
-![Figure 3. The cap pays for performance; the 153-player fade is a rookie-scale subsample.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/net_rent.png?v=5)
+![Figure 3. The cap pays for performance; the 153-player fade is a rookie-scale subsample.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/aff68a9/writeup/figures/net_rent.png)
 
 **The depth chart does not detectably reward performance.** Current playing time (+0.606) and draft capital (+0.785) predict next-season playing time; the performance coefficient is −0.011 (95% CI −0.119 to 0.097, n=233). The concurrent estimate is −0.132 (p=0.031), marginal; a shuffle gives −0.10. The within-player estimate is −0.095 (p=0.11, n=235). This is absence of evidence, not proof of zero. Figure 4.
 
-![Figure 4. Current snaps and draft position predict next season; performance adds no detectable signal.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/next_role_forest.png?v=5)
+![Figure 4. Current snaps and draft position predict next season; performance adds no detectable signal.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/aff68a9/writeup/figures/next_role_forest.png)
 
 ### Tier 1 — What the pattern implies
 
 The cap pays for performance; the depth chart does not. The allocation problem is in playing time, not the cap. The performance-role gap by draft is +0.59 for late picks and undrafted players and −0.92 for early picks in the full 233-row sample (+0.28 and −0.93 in the reliable 192). The gap is about nine parts role to one part performance; the strict top/bottom quartile tail is 13 player-seasons (12 players), a review list. Figure 5.
 
-![Figure 5. The allocation gap is descriptive: early picks play above performance; late picks perform above role.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/allocation_gap.png?v=5)
+![Figure 5. The allocation gap is descriptive: early picks play above performance; late picks perform above role.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/aff68a9/writeup/figures/allocation_gap.png)
 
 ### Tier 2 — What reasonable assumptions add
 
@@ -38,7 +38,7 @@ Assume what is normal in a football building: coaches are risk-averse; draft sta
 
 A two-agent model calibrates the coach's role rule and the GM's pay rule to the observed equations. The coach weights performance at −0.13 (marginal; a within-position/season shuffle gives −0.10, p=0.10); the GM at +0.14. The wedge is +0.28. Aligning the coach's performance weight with the GM's raises the top-performance group's role by 0.32 SD and the strict tail's role by 0.33 SD in the model. Model-reproduced, not identified. Figure 6.
 
-![Figure 6. The cap and the depth chart weight performance differently.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/main/writeup/figures/agentic_allocation.png?v=5)
+![Figure 6. The cap and the depth chart weight performance differently.](https://raw.githubusercontent.com/PatrickMockridge/nfl-big-data-bowl-2027/aff68a9/writeup/figures/agentic_allocation.png)
 
 ### Tier 3 — What the perspectives add
 
