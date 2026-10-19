@@ -730,16 +730,30 @@ nb["metadata"]["kernelspec"] = {
 # Cost-risk rebuild overrides (keep the notebook consistent with the writeup)
 # ---------------------------------------------------------------------------
 FIG_NAMES = [
+    "pressure_signal.png",
     "combine_linkage.png",
     "net_rent.png",
     "next_role_forest.png",
-    "persistence_within_player.png",
     "allocation_gap.png",
+    "agentic_allocation.png",
 ]
-FIG_B64 = {
-    name: base64.b64encode((ROOT / "writeup" / "figures" / name).read_bytes()).decode()
-    for name in FIG_NAMES
-}
+import io as _io
+
+from PIL import Image as _Image
+
+
+def _fig_b64(name: str) -> str:
+    """Downscale the writeup figure for the notebook's embedded display."""
+    img = _Image.open(ROOT / "writeup" / "figures" / name).convert("RGB")
+    width, height = img.size
+    if width > 900:
+        img = img.resize((900, int(height * 900 / width)), _Image.LANCZOS)
+    buf = _io.BytesIO()
+    img.save(buf, format="PNG", optimize=True)
+    return base64.b64encode(buf.getvalue()).decode()
+
+
+FIG_B64 = {name: _fig_b64(name) for name in FIG_NAMES}
 
 def _csv_b64(path: Path) -> str:
     csv = pd.read_csv(path).to_csv(index=False)
@@ -750,17 +764,22 @@ PAY_NESTED_B64 = _csv_b64(SAL / "pay_model_nested.csv")
 PAY_FULL_B64 = _csv_b64(SAL / "pay_model_full.csv")
 GAP_GROUPS_B64 = _csv_b64(ROOT / "outputs" / "discovery" / "allocation_gap_groups.csv")
 GAP_TAILS_B64 = _csv_b64(ROOT / "outputs" / "discovery" / "allocation_gap_tails.csv")
+AGENT_MOMENTS_B64 = _csv_b64(ROOT / "outputs" / "discovery" / "agentic_allocation_moments.csv")
+AGENT_LEVERS_B64 = _csv_b64(ROOT / "outputs" / "discovery" / "agentic_allocation_levers.csv")
+AGENT_CONTROL_B64 = _csv_b64(ROOT / "outputs" / "discovery" / "agentic_allocation_control.csv")
 
-md_intro = """# The testing is informative for defensive linemen; the decisions are not
+md_intro = """# The Combine's pressure signal is real; the allocation gap is the lever
 
 **NFL Big Data Bowl 2027 — public analysis notebook**
 
-This notebook reproduces the core competition-data results: the 10 Hz Combine movement composite, position-specific performance models, role persistence, and the week-to-week check. The cost-risk tables are derived public-data aggregates embedded for self-containment; the writeup and repository carry the full derivation.
+This notebook reproduces the core competition-data results: the 10 Hz Combine movement composite, position-specific performance models, role persistence, and the week-to-week check. The pressure, cost-risk, and agent-model tables are derived aggregates embedded for self-containment; the writeup and repository carry the full derivation. The argument is tiered: pure data, data plus principle, data plus assumptions, perspective.
 
-- **The Combine signal is position-specific.** DL +0.734 (95% CI 0.461–1.007), WR +0.366 (p=0.084), OL +0.058, TE +0.093; interaction p=0.0004. The pooled +0.299 is a defensive-line result; the standardized effect is 0.185, not one-third.
-- **Playing time is sticky and draft-driven.** Next-season role follows current role (+0.606) and draft capital (+0.785), not performance (−0.011); the within-player change is −0.095 (p=0.11).
-- **The cap pays for performance.** On the full 909-player ledger, performance enters at +0.328 (95% CI 0.264–0.392) and +0.143 (0.078–0.208) with role. The 153-player draft-matched model fades to +0.040; it is a rookie-scale sensitivity, not the headline. The salary performance measure is nflverse public production, not the NGS residual.
-- **The allocation gap is systematic.** Performance minus role: late picks/UDFAs +0.59, early picks −0.92 in the full 233-row sample; the strict top-performance/bottom-role quartile tail is 13 player-seasons.
+- **The pure data:** a 10 Hz burst predicts interior pressure (+0.354 SD/SD, 0.143–0.565, n=64) and sacks (+0.317, 0.083–0.550); the stopwatch does not carry the pressure signal (joint p=0.998; out-of-sample −0.113 versus +0.178 for the burst).
+- **The Combine signal is position-specific.** DL +0.734 (95% CI 0.461–1.007), WR +0.366 (p=0.084), OL +0.058, TE +0.093; interaction p=0.0004. The pooled +0.299 is a defensive-line result.
+- **Playing time is sticky and draft-driven.** Next-season role follows current role (+0.606) and draft capital (+0.785); performance is −0.011 (95% CI −0.119–0.097); the concurrent estimate is −0.132 (p=0.031), marginal.
+- **The cap pays for performance.** On the full 909-player ledger, performance enters at +0.328 (0.264–0.392) and +0.143 (0.078–0.208) with role. The 153-player draft-matched model fades to +0.040; it is a rookie-scale sensitivity, not the headline.
+- **The allocation gap is descriptive.** Late picks/UDFAs +0.59, early picks −0.92 in the full 233-row sample; the strict top/bottom quartile tail is 13 player-seasons.
+- **The agent model** calibrates the coach role rule and the GM pay rule: coach performance weight −0.13 (marginal), GM +0.14; the lever is aligning them. Model-reproduced, not identified.
 - **All analyses are exploratory/post-hoc.** The preregistered RJF/Yellow Square null pattern is in the repository appendix. Competition data is CC BY-NC 4.0; do not redistribute.
 
 Self-contained reconstruction: Combine +0.295 (p<0.001), role −0.034 (n=195); full pipeline +0.299 and −0.019 (n=192). The small differences come from the reconstruction's role-standardization universe, not sampling variation.
@@ -775,9 +794,9 @@ for name, b64 in FIG_B64.items():
     display(Image(data=base64.b64decode(b64)))
 """
 
-md_cost_risk = """## Cost-risk layer: the cap model and the allocation gap
+md_cost_risk = """## Cost-risk and agent model
 
-The 2025 cap ledger is modeled on performance, age, experience, and position on the full 909 players; adding playing time gives the role-controlled model. The 153-player draft-matched model adds draft capital as a rookie-scale sensitivity. The allocation gap is performance z minus role z. These are derived public-data aggregates embedded for self-containment; the full derivation is in `src/discovery/cost_risk.py` and `src/salary/rents.py`. All analyses are exploratory.
+The 2025 cap ledger is modeled on performance, age, experience, and position on the full 909 players; adding playing time gives the role-controlled model. The 153-player draft-matched model adds draft capital as a rookie-scale sensitivity. The allocation gap is performance z minus role z. The agent model calibrates the coach role rule and the GM pay rule; the wedge is the lever. These are derived public-data aggregates embedded for self-containment; the full derivation is in `src/discovery/cost_risk.py`, `src/framework/agentic_allocation.py`, and `src/salary/rents.py`. All analyses are exploratory.
 """
 
 code_cost_risk = f"""
@@ -788,6 +807,9 @@ pay_full = _load("{PAY_FULL_B64}")
 pay_nested = _load("{PAY_NESTED_B64}")
 gap_groups = _load("{GAP_GROUPS_B64}")
 gap_tails = _load("{GAP_TAILS_B64}")
+agent_moments = _load("{AGENT_MOMENTS_B64}")
+agent_levers = _load("{AGENT_LEVERS_B64}")
+agent_control = _load("{AGENT_CONTROL_B64}")
 print("Full-ledger cap model (performance coefficient):")
 print(pay_full.round(3).to_string(index=False))
 print("\\nDraft-matched sensitivity (n=153):")
@@ -796,6 +818,12 @@ print("\\nAllocation gap by draft quartile:")
 print(gap_groups.round(2).to_string(index=False))
 print("\\nAllocation gap tails:")
 print(gap_tails.round(2).to_string(index=False))
+print("\\nAgent model moments:")
+print(agent_moments.round(3).to_string(index=False))
+print("\\nAgent model control:")
+print(agent_control.round(3).to_string(index=False))
+print("\\nAgent model lever:")
+print(agent_levers.round(3).to_string(index=False))
 """
 
 md_salary_appendix = """## Cost-risk appendix: sources and limits
@@ -803,7 +831,7 @@ md_salary_appendix = """## Cost-risk appendix: sources and limits
 - **OTC positional spending** (2023–2025) and the archived 2025 OTC active-roster cap pages are the salary sources; nflverse supplies snaps, rosters, stats, and schedules.
 - The 2025 cap snapshot matches 99.3% of active-cap dollars to a 2025 snap on player ID and team. The 909-player rent sample covers 68.7% of active-cap dollars; offensive linemen and specialists are excluded.
 - **Cap model.** The full 909-player model is the headline; the 153-player draft-matched model is a rookie-scale sensitivity. The residual is descriptive, not a causal rent: cap hits reflect proration, restructures, timing, and expected future performance. Draft capital is partly the rookie wage scale.
-- The allocation gap is descriptive; the strict tail is 12 players. The salary performance measure is nflverse public production, not the NGS `player_play` residual.
+- The allocation gap is descriptive; the strict tail is 12 players. The salary performance measure is nflverse public production, not the NGS `player_play` residual. The agent model is a consistency check: the coach's performance weight is marginal; model-reproduced, not identified.
 - **Soccer** uses UEFA 2025, Deloitte Money League 2025, club annual reports, and official league tables; accounting scopes and season windows differ. The table is illustrative, not a natural experiment.
 
 Full source notes: `docs/EXTERNAL_DATA.md` and `docs/SOCCER_DATA.md`.
@@ -818,7 +846,7 @@ md_appendix = """## Formal appendix: what is identified
 
 - **Combine linkage:** the 10 Hz movement composite is tested against the tracking-derived performance residual. The pooled coefficient is positive, but position-specific models show it is a defensive-line result: DL +0.734, WR +0.366 (p=0.084), OL +0.058, TE +0.093; interaction p=0.0004. The DL outcome is get-off.
 - **Role persistence:** next-season role is modeled as a function of current role, the performance residual, draft capital, position, and season, with cluster-robust standard errors. The performance coefficient is near zero; role and draft capital are positive. Leave-one-player-out R² and within-player changes are reported as validation.
-- **Cost-risk:** the full-ledger cap model and the performance-role gap are exploratory; the 153-player draft-matched model is a rookie-scale sensitivity. The predictability lens does not survive role controls.
+- **Cost-risk:** the full-ledger cap model and the performance-role gap are exploratory; the 153-player draft-matched model is a rookie-scale sensitivity. The agent model is a consistency check, not an identification. The predictability lens does not survive role controls.
 - **What is not identified:** causal effects of coaches, teams, schemes, injuries, or contracts. Role is snaps per appearance, not full depth-chart share. The role gap is a diagnostic. DB performance is unidentifiable and excluded from pooled models.
 """
 

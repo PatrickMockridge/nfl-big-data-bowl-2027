@@ -28,6 +28,7 @@ from .figures import (
     TICK_SIZE,
     WRITEUP_FIG,
     _boot_ci,
+    _cluster_boot_ci,
     _figure_title,
     _save_both,
 )
@@ -230,10 +231,137 @@ def allocation_gap() -> Path:
     return _save(fig, "allocation_gap.png")
 
 
+def pressure_signal() -> Path:
+    """Figure 1: the tracking burst sees pressure; the stopwatch sees sacks."""
+    d = pd.read_parquet(DISC / "interior_burst_players.parquet")
+    i = d[(d["position_subgroup"] == "INTERIOR") & d["pressure_rate"].notna()].copy()
+    i["third"] = pd.qcut(i["burst_z"], 3, labels=["Bottom", "Middle", "Top"])
+    val = pd.read_csv(DISC / "interior_burst_validation.csv")
+    oof = val[val["check"].eq("oof_r2")].copy()
+
+    fig, axes = plt.subplots(1, 3, figsize=(11.0, 4.2))
+    for ax, rate, title, color in [
+        (axes[0], "pressure_rate", "Pressure rate (%)", BLUE),
+        (axes[1], "sack_rate", "Sack rate (%)", ORANGE),
+    ]:
+        means, los, his = [], [], []
+        for g in ["Bottom", "Middle", "Top"]:
+            sub = i[i["third"] == g]
+            means.append(sub[rate].mean())
+            lo, hi = _cluster_boot_ci(sub, rate)
+            los.append(lo)
+            his.append(hi)
+        x = np.arange(3)
+        ax.bar(x, means, color=color, width=0.6, edgecolor=SURFACE, linewidth=1.5, zorder=2)
+        ax.errorbar(
+            x, means,
+            yerr=[np.array(means) - np.array(los), np.array(his) - np.array(means)],
+            fmt="none", ecolor=color, elinewidth=1.2, capsize=0, zorder=3,
+        )
+        for xi, m in zip(x, means):
+            ax.annotate(f"{m:.2f}", (xi, m), xytext=(0, 5), textcoords="offset points",
+                        ha="center", fontsize=ANNOT_SIZE, color=INK)
+        ax.set_xticks(x)
+        ax.set_xticklabels(["Bottom", "Middle", "Top"], fontsize=TICK_SIZE)
+        ax.set_title(title, loc="left", fontsize=10.5, color=INK, pad=8)
+        ax.set_ylabel("Per 100 snaps")
+        ax.grid(axis="y", alpha=0.7)
+        ax.tick_params(labelsize=TICK_SIZE)
+    axes[0].set_ylim(0, 5.2)
+    axes[1].set_ylim(0, 1.05)
+    p_bottom = float(i.loc[i["third"] == "Bottom", "pressure_rate"].mean())
+    p_top = float(i.loc[i["third"] == "Top", "pressure_rate"].mean())
+    s_bottom = float(i.loc[i["third"] == "Bottom", "sack_rate"].mean())
+    s_top = float(i.loc[i["third"] == "Top", "sack_rate"].mean())
+    axes[0].text(0.02, 0.96, f"+{p_top - p_bottom:.1f} pp top-bottom", transform=axes[0].transAxes,
+                 ha="left", va="top", fontsize=8.5, color=SECONDARY)
+    axes[1].text(0.02, 0.96, f"{s_top / s_bottom:.1f}x top/bottom", transform=axes[1].transAxes,
+                 ha="left", va="top", fontsize=8.5, color=SECONDARY)
+
+    ax = axes[2]
+    models = [("M_trad", GRAY, "Stopwatch"), ("M_burst", BLUE, "Burst"), ("M_both", AQUA, "Both")]
+    width = 0.25
+    for j, (model, color, label) in enumerate(models):
+        vals = []
+        for outcome in ["pressure_rate_z", "sack_rate_z"]:
+            r = oof[(oof["outcome"] == outcome) & (oof["model"] == model)]
+            vals.append(float(r["value"].iloc[0]) if len(r) else np.nan)
+        ax.bar(np.arange(2) + (j - 1) * width, vals, width=width, color=color,
+               label=label, edgecolor=SURFACE, linewidth=0.8, zorder=2)
+    ax.axhline(0, color=BASELINE, lw=1.0, zorder=1)
+    ax.set_xticks([0, 1])
+    ax.set_xticklabels(["Pressure", "Sacks"], fontsize=TICK_SIZE)
+    ax.set_ylabel("Out-of-sample R2")
+    ax.set_title("The stopwatch is blind to pressure", loc="left", fontsize=10.5, color=INK, pad=8)
+    ax.legend(loc="lower right", fontsize=8.5, frameon=False)
+    ax.grid(axis="y", alpha=0.7)
+    ax.tick_params(labelsize=TICK_SIZE)
+    _figure_title(
+        fig,
+        "The stopwatch sees sacks, not pressure; the tracking burst sees pressure.",
+        "Interior defensive line; burst terciles and GroupKFold-by-player out-of-sample R2; 95% bootstrap CI.",
+    )
+    return _save(fig, "pressure_signal.png")
+
+
+def agentic_model() -> Path:
+    """Figure 6: the performance-weight wedge and the role-allocation lever."""
+    moments = pd.read_csv(DISC / "agentic_allocation_moments.csv")
+    levers = pd.read_csv(DISC / "agentic_allocation_levers.csv")
+    coach = moments[(moments["agent"].eq("coach")) & (moments["term"].eq("performance"))].iloc[0]
+    gm = moments[(moments["agent"].eq("gm")) & (moments["term"].eq("performance"))].iloc[0]
+
+    fig, axes = plt.subplots(1, 2, figsize=(9.6, 4.3))
+    ax = axes[0]
+    for i, (label, row, color) in enumerate(
+        [("Coach\n(role)", coach, ORANGE), ("GM\n(pay)", gm, BLUE)]
+    ):
+        ax.plot([row["ci_low"], row["ci_high"]], [i, i], color=color, lw=1.8, zorder=2)
+        ax.plot(row["coef"], i, "o", color=color, markersize=8,
+                markeredgecolor=SURFACE, markeredgewidth=0.8, zorder=3)
+        ax.annotate(f"{row['coef']:+.3f}", (row["ci_high"], i), xytext=(8, 0),
+                    textcoords="offset points", va="center", fontsize=ANNOT_SIZE, color=color)
+    ax.axvline(0, color=BASELINE, lw=1.0, zorder=1)
+    ax.set_yticks([0, 1])
+    ax.set_yticklabels(["Coach\n(role)", "GM\n(pay)"], fontsize=TICK_SIZE)
+    ax.set_xlabel("Performance weight (per SD)")
+    ax.set_xlim(-0.32, 0.26)
+    ax.set_ylim(-0.6, 1.6)
+    ax.set_title("The performance-weight wedge", loc="left", fontsize=10.5, color=INK, pad=8)
+    ax.grid(axis="x", alpha=0.7)
+    ax.tick_params(labelsize=TICK_SIZE)
+
+    ax = axes[1]
+    ax.plot(levers["value"], levers["top_perf_role"], color=BLUE, lw=2.0,
+            marker="o", markersize=4, label="Top-performance role")
+    ax.plot(levers["value"], levers["strict_tail_gain"], color=ORANGE, lw=2.0,
+            marker="o", markersize=4, label="Strict-tail gain")
+    ax.axvline(float(coach["coef"]), color=GRAY, lw=1.0, ls="--", zorder=1)
+    ax.axvline(float(gm["coef"]), color=GRAY, lw=1.0, ls=":", zorder=1)
+    ax.annotate("observed", (float(coach["coef"]), 0.30), xytext=(4, 0),
+                textcoords="offset points", fontsize=8.5, color=SECONDARY)
+    ax.annotate("cap-aligned", (float(gm["coef"]), 0.30), xytext=(-4, 0),
+                textcoords="offset points", ha="right", fontsize=8.5, color=SECONDARY)
+    ax.axhline(0, color=BASELINE, lw=1.0, zorder=1)
+    ax.set_xlabel("Coach performance weight")
+    ax.set_ylabel("Role (SD)")
+    ax.set_title("The lever: align the weights", loc="left", fontsize=10.5, color=INK, pad=8)
+    ax.legend(loc="lower right", fontsize=8.5, frameon=False)
+    ax.grid(axis="y", alpha=0.7)
+    ax.tick_params(labelsize=TICK_SIZE)
+    _figure_title(
+        fig,
+        "The cap and the depth chart weight performance differently.",
+        "Two-agent model calibrated to the observed role and pay equations; model-reproduced, not identified; the coach weight is marginal.",
+    )
+    return _save(fig, "agentic_allocation.png")
+
+
 def main() -> None:
     print(combine_by_position())
     print(net_rent())
     print(allocation_gap())
+    print(agentic_model())
 
 
 if __name__ == "__main__":
