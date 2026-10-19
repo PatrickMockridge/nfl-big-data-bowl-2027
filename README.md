@@ -28,7 +28,7 @@ The entry is honest about what is not identified: no causal claims about coaches
 - `docs/SOCCER_DATA.md` — five-club soccer table sources and scope notes.
 - `docs/gate_decision.md` — DL audit-gate decision.
 - `docs/APPENDIX.md` — broader exploratory lens scan, salary and weekly appendices, and what was cut after review.
-- `implications/` — a separate, GitHub-only extension: a transparent dollar-value, adoption, and outreach analysis for one team. It is not part of the judged entry and is not published on Kaggle.
+- `implications/` — a separate, GitHub-only extension: a transparent dollar-value, adoption, and messaging analysis for one team. It is not part of the judged entry and is not published on Kaggle.
 
 ## AI-assisted development
 

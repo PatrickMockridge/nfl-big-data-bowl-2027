@@ -69,7 +69,7 @@ def build() -> Path:
 
 **Status:** extension to the 2027 NFL Big Data Bowl entry, not part of it. GitHub only; not published on Kaggle. Date-stamped 2026-10-19.
 
-The competition entry is frozen at `c652424`. This notebook extends its logic — the three pricing mechanisms, the dollar value to one team, a low-political-cost adoption chunk, team fit, and outreach — and changes none of the judged artifacts.
+The competition entry is frozen at `c652424`. This notebook extends its logic — the three pricing mechanisms, the dollar value to one team, a low-political-cost adoption chunk, team fit, and messaging — and changes none of the judged artifacts.
 
 **Every dollar figure here is an inference, not a measurement.** The measured coefficients are cited with their source files; the valuation assumptions are explicit and ranged. The base case is **${b.loc['Base','gross_m']:.1f}M gross per year**, **${b.loc['Base','net_m']:.1f}M net** after implementation cost, and **${b.loc['Base','ev_m']:.1f}M expected** at {vm.BASE.adoption_prob:.0%} adoption. The high case reaches $11M net; the low case is $0.9M net.
 """
@@ -253,7 +253,7 @@ The chunk is not "fire the coach" or "reallocate every snap." It is:
 
 **Who loses:** the low-burst veteran loses snaps; the coach loses some discretionary authority; the incumbent scout loses the comfort of the stopwatch. That is why this is **Pareto-adjacent**, not strictly Pareto efficient.
 
-Team archetypes (staffing as of 2026-10-19; source: Wikipedia's current NFL general manager and head coach lists; verify before any outreach):
+Team archetypes (staffing as of 2026-10-19; source: Wikipedia's current NFL general manager and head coach lists; verify before quoting the table):
 
 | Team | GM | Head coach | Why the structure fits | Caveat |
 |---|---|---|---|---|
@@ -267,33 +267,43 @@ Team archetypes (staffing as of 2026-10-19; source: Wikipedia's current NFL gene
 **First-mover caveat:** this is a transition rent, not a permanent edge. If every team adopts the principle, the market re-prices and the surplus flows to players. The window is plausibly 2–5 years.
 """
 
-    md_outreach = """## Outreach
+    md_messaging = """## Messaging
 
-Target roles, not personal addresses:
+**The roof:** *The stopwatch is blind to pressure; the depth chart is blind to performance; the cap is not.*
 
-| Audience | Example titles | Why | Ask |
-|---|---|---|---|
-| Club football research / analytics | Director of Football Research, Senior Data Scientist | They read this for a living and can test the signal on their own board. | 15 minutes of feedback; a pointer to the right person. |
-| Cap / contract staff | Salary Cap Analyst, Manager of Football Administration | The role-controlled coefficient is a contract argument. | Whether the valuation matches their model. |
-| Tracking vendors | Product/research lead, football analytics | The burst-versus-stopwatch result is their product thesis. | Whether the metric is adoptable. |
-| League office | Football operations / management council analyst | The rookie-scale and role-pipeline question is system-level. | Whether the allocation gap is a policy question. |
-| Analytics media | The Athletic, ESPN analytics, PFF | They can cite public work after the competition. | A conversation after the deadline. |
+**Three pillars:**
 
-Use LinkedIn or public team contact routes; do not scrape personal emails. A warm introduction is worth more than ten cold emails.
+1. **Measurement.** The 10 Hz burst predicts interior pressure at +0.354 SD/SD (0.143–0.565, n=64); the 40 and 10-yard split add nothing (joint p=0.998; OOS −0.113 vs +0.178). The signal is position-specific: DL +0.734, OL/TE null; interaction p=0.0004.
+2. **Allocation.** Next-season role: current role +0.606, draft +0.785, performance −0.011 (−0.119–0.097). The gap is +0.59 for late/UDFA and −0.92 for early picks; the group-mean decomposition is 31.7:1 role-to-performance in the full sample and 10.4:1 in the reliable sample.
+3. **Value.** Base $6.6M gross / $5.6M net / $2.3M EV per year; range $0.9M–$11.1M net. It is a first-mover transition rent, not a permanent edge.
 
-**Template (under 150 words):**
+| Audience | Lead with | Do not lead with |
+|---|---|---|
+| Club analytics | Burst versus stopwatch, position-specific, out of sample. | The dollar figure or the "emperor" framing. |
+| Cap / contract | Role-controlled +0.143 versus raw +0.328; exp≥4 +0.443/+0.217. | A promise of cap savings. |
+| Coaching / personnel | Weekly stickiness (+0.753 role, −0.006 performance); the low-political-cost chunk. | "The depth chart is a status market." |
+| League office | The rookie-scale and role-pipeline question. | Club-specific blame. |
+| Analytics media | The three pricing mechanisms; "stopwatch blind to pressure." | The Tier 2 wedge as if it were identified. |
+| General / portfolio | The tiers; measured versus inferred. | A single big number without a range. |
 
-> Subject: 10 Hz Combine burst predicts interior pressure; the stopwatch doesn't
->
-> I'm an independent researcher; this is a 2027 Big Data Bowl entry. Three findings:
-> 1. The 10 Hz burst predicts interior pressure (+0.354 SD/SD, n=64); the 40 and 10-yard split do not (OOS R² −0.113 vs +0.178).
-> 2. The cap pays performance (+0.328, +0.143 with role); next-season playing time does not detectably (+0.606 current role, +0.785 draft, −0.011 performance).
-> 3. The performance-role gap is mostly role; the strict tail is a 12-player review list.
->
-> Writeup: [link]. Repo/notebook: [link].
-> If this is useful, I'd value 15 minutes of feedback or a pointer to the right person on your research or cap team.
+**Three lengths.**
 
-**What not to do:** no mass email; no personal addresses; no causal claims; no promised savings; no claim of team endorsement; no raw data; no Kaggle publication during the competition; no "Pareto efficient" without naming who loses.
+- **One sentence:** the 10 Hz burst sees the pressure the stopwatch misses, the cap pays performance, the depth chart does not detectably, and the gap is mostly role.
+- **Three sentences:** the burst predicts interior pressure where the stopwatch does not. The cap pays performance; next-season playing time follows prior role and draft status. The gap is mostly role, and the first team to reallocate the chunk captures a transition rent of roughly $5–6M a year, with a high case above $10M.
+- **One paragraph:** the entry measures three pricing mechanisms. The stopwatch prices sacks, not pressure; the burst prices pressure, but only for interior defensive linemen. The depth chart prices status and prior role; its performance coefficient is −0.011. The cap prices performance at +0.328, or +0.143 with playing time. The gap is mostly role; under normal assumptions, the first team to act captures a transition rent, and the market re-prices once the principle is adopted.
+
+**Objection handling.**
+
+| Objection | Response |
+|---|---|
+| "The sample is small." | 64 interior player-seasons; the strict tail is 13. It is a screen, not a tool; the team-fixed-effects estimate is +0.298 (p=0.089). |
+| "Coaches know more." | The claim is about information, not intelligence; performance is noisy, status is cheap. |
+| "The cap already pays performance." | Yes: +0.328 raw, +0.143 with role. The gap is in playing time. |
+| "This is sociology." | The Tier 0 result is football-specific; the structural reading is labelled. |
+| "The number is made up." | It is an inference with an assumptions table, a range, and a zero case. |
+| "Teams already do this." | Then the market is priced and the surplus is smaller. |
+
+**What not to say.** No "proves coaches are biased"; no "Pareto efficient" without naming who loses; no "nine parts role to one part performance"; no "emperor has no clothes" in a club room; no promised savings; no causal claim; no raw data; no Kaggle publication during the competition.
 """
 
     md_not = """## What this is not
@@ -340,7 +350,7 @@ jupyter nbconvert --execute --to notebook --inplace implications/code/implicatio
         nbf.v4.new_code_cell(code_mc),
         nbf.v4.new_markdown_cell(md_zero),
         nbf.v4.new_markdown_cell(md_adoption),
-        nbf.v4.new_markdown_cell(md_outreach),
+        nbf.v4.new_markdown_cell(md_messaging),
         nbf.v4.new_markdown_cell(md_not),
         nbf.v4.new_markdown_cell(md_repro),
     ]

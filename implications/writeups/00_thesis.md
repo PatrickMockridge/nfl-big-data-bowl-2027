@@ -28,7 +28,7 @@ The structural reading is: **the allocation technology is status-legible; the pr
 | The allocation gap is mostly role | Descriptive decomposition | `allocation_gap_groups.csv`, `allocation_gap.parquet` |
 | The two-agent wedge is a decision-weight difference | Model-reproduced, not identified | `agentic_allocation_moments.csv`, `agentic_allocation_levers.csv` |
 | The dollar value to one team | Inference | `implications/code/value_model.py` |
-| The team fits and the outreach map | Reading, date-stamped | `02_adoption.md`, `03_outreach.md` |
+| The team fits and the audience framings | Reading, date-stamped | `02_adoption.md`, `03_messaging.md` |
 
 The allocation gap is descriptive. Late picks and UDFAs sit at **+0.59 SD** performance-minus-role; early picks sit at **−0.92 SD** in the full 233-row sample (+0.28 and −0.93 in the reliable 192-row sample). The group means show why: across draft quartiles, the role spread is **1.462 SD** versus a performance spread of **0.046 SD** in the full sample; in the reliable sample, the role spread is **1.104** versus **0.106**. The gap is mostly role, not a late-pick performance advantage. The strict top-performance/bottom-role quartile is 13 player-seasons (12 players); its current role is −0.82 SD and its next-season role is −0.57 SD, a +0.25 SD recovery that is still below the mean and consistent with mean reversion.
 

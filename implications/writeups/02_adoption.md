@@ -1,6 +1,6 @@
 # A low-political-cost chunk, six team fits, and the first-mover clock
 
-**Status:** extension to the 2027 NFL Big Data Bowl entry, not part of it. GitHub only; not published on Kaggle. Staffing is date-stamped **2026-10-19** and must be re-verified before any outreach. Team fit here is structural — roster state, regime tenure, cap position — not a claim about any executive's personal analytics views.
+**Status:** extension to the 2027 NFL Big Data Bowl entry, not part of it. GitHub only; not published on Kaggle. Staffing is date-stamped **2026-10-19** and must be re-verified before quoting the table. Team fit here is structural — roster state, regime tenure, cap position — not a claim about any executive's personal analytics views.
 
 ## The chunk
 
