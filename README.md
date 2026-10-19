@@ -55,6 +55,12 @@ python scripts/16_build_notebook.py
 jupyter nbconvert --execute --to notebook --inplace notebooks/02_final_public.ipynb
 ```
 
+## License
+
+Code is MIT (`LICENSE`). Competition data is CC BY-NC 4.0 (`DATA_LICENSE.md`)
+and is not redistributed. External data sources are documented in
+`docs/EXTERNAL_DATA.md`.
+
 ## Data
 
 Competition data is CC BY-NC 4.0; it is not committed and must not be redistributed. External data sources, coverage, and licenses are documented in `docs/EXTERNAL_DATA.md`. See `DATA_LICENSE.md`.
