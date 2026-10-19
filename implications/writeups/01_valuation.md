@@ -79,7 +79,7 @@ The annual net value is most sensitive to the inputs that govern the contract an
 | Role-reallocation saving | 4.59 | 6.34 | 1.75 |
 | Implementation cost | 6.14 | 4.64 | 1.50 |
 | Reallocation efficiency | 5.04 | 5.94 | 0.90 |
-| Hit-rate lift / picks / market | — | — | 0.75–0.79 |
+| Selection inputs (market, hit lift, picks) | 5.11–5.34 | 5.90–6.09 | 0.75–0.79 |
 
 ![Figure 2. Tornado: the pricing correction and contract portfolio dominate.](figures/sensitivity.png)
 
