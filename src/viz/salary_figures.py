@@ -204,7 +204,7 @@ def persistence_within_player() -> Path:
         ax.set_xticklabels(["1", "2", "3", "4", "5"])
         ax.set_xlabel(xlabel)
         ax.set_ylabel(ylabel)
-        ax.set_ylim(-0.6, 1.5)
+        ax.set_ylim(-1.1, 1.5)
         ax.set_title(title, loc="left", fontsize=10.5, color=INK, pad=8)
         ax.grid(axis="y", alpha=0.7)
         ax.tick_params(labelsize=TICK_SIZE)

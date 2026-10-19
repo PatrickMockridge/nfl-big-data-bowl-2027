@@ -12,18 +12,18 @@ https://www.kaggle.com/competitions/nfl-big-data-bowl-2027/writeups
 
 Click **Create Writeup** / **New Writeup**.
 
-Suggested title (49 characters):
+Suggested title (70 characters):
 
-**The testing is informative; the decisions are not**
+**The testing is informative for defensive linemen; the decisions are not**
 
-Alternate (52 characters):
+Alternate (50 characters):
 
-**The Allocation Gap: Combine Signal, Depth Chart, Cap**
+**The testing is informative for defensive linemen**
 
 ## 2. Paste the body
 
 Open `writeup/kaggle_writeup.md` and paste the whole file into the Kaggle
-writeup editor. It is the same 1,979-word writeup as `writeup/submission.md`,
+writeup editor. It is the same 1,964-word writeup as `writeup/submission.md`,
 but the five image paths point at public raw GitHub URLs:
 
 - `combine_linkage.png`
@@ -70,7 +70,7 @@ container and the notebook is attached to it.
 
 ## Limits check
 
-- Words: 1,979 (limit: 2,000)
+- Words: 1,964 (limit: 2,000)
 - Figures: 5
 - Tables: 2
 - Total visuals: 7 (limit: fewer than 10)

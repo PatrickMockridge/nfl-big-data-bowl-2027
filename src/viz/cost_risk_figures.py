@@ -85,7 +85,7 @@ def combine_by_position() -> Path:
     ax.set_yticks(y)
     ax.set_yticklabels([labels[p] for p in rows["position_group"]], fontsize=TICK_SIZE)
     ax.set_xlabel("Performance (SD per SD of Combine movement)")
-    ax.set_xlim(-0.12, 0.62)
+    ax.set_xlim(-0.22, 0.62)
     ax.set_ylim(-0.6, len(rows) - 0.2)
     ax.grid(axis="x", alpha=0.7)
     ax.tick_params(labelsize=TICK_SIZE)
@@ -98,55 +98,58 @@ def combine_by_position() -> Path:
 
 
 def net_rent() -> Path:
-    """Figure 4: signed net rent and the nested pay model."""
-    groups = pd.read_csv(SAL / "net_rent_groups.csv")
+    """Figure 2: the cap pays for performance; the 153-player fade is a rookie-scale subsample."""
+    full = pd.read_csv(SAL / "pay_model_full.csv")
     nested = pd.read_csv(SAL / "pay_model_nested.csv")
-    cap = groups[groups["grouping"].eq("cap_quartile")].copy()
-    cap["group"] = pd.Categorical(cap["group"], ["Q1", "Q2", "Q3", "Q4"], ordered=True)
-    cap = cap.sort_values("group")
+    full = full[full["term"].eq("perf_z")].copy()
+    full["model"] = pd.Categorical(full["model"], ["base_full", "role_full"], ordered=True)
+    full = full.sort_values("model")
     perf = nested[nested["term"].eq("perf_z")].copy()
     perf["model"] = pd.Categorical(perf["model"], ["base", "role", "role_draft"], ordered=True)
     perf = perf.sort_values("model")
 
     fig, axes = plt.subplots(1, 2, figsize=(9.6, 4.2))
     ax = axes[0]
-    colors = [GRAY if v < 0 else ORANGE for v in cap["mean_m"]]
-    ax.bar(np.arange(len(cap)), cap["mean_m"], color=colors, width=0.6,
-           edgecolor=SURFACE, linewidth=1.5, zorder=2)
-    for i, v in enumerate(cap["mean_m"]):
-        ax.annotate(f"{v:+.1f}", (i, v), xytext=(0, 5 if v >= 0 else -12),
-                    textcoords="offset points", ha="center", fontsize=9.5,
-                    color=INK if v >= 0 else SECONDARY)
-    ax.axhline(0, color=BASELINE, lw=1.0, zorder=1)
-    ax.set_xticks(np.arange(len(cap)))
-    ax.set_xticklabels(["Q1\nlowest cap", "Q2", "Q3", "Q4\nhighest cap"])
-    ax.set_ylabel("$M per player above the pay model")
-    ax.set_ylim(-2.0, 7.6)
-    ax.set_title("Signed net rent by cap quartile", loc="left", fontsize=10.5, color=INK, pad=8)
-    ax.grid(axis="y", alpha=0.7)
+    x = np.arange(len(full))
+    ax.plot(full["coef"], x, "o", color=BLUE, markersize=8,
+            markeredgecolor=SURFACE, markeredgewidth=0.8, zorder=3)
+    for i, (_, r) in enumerate(full.iterrows()):
+        ax.plot([r["ci_low"], r["ci_high"]], [i, i], color=BLUE, lw=1.8, zorder=2)
+        ax.annotate(f"{r['coef']:+.3f}", (r["ci_high"], i), xytext=(8, 0),
+                    textcoords="offset points", va="center", fontsize=ANNOT_SIZE, color=BLUE)
+    ax.axvline(0, color=BASELINE, lw=1.0, zorder=1)
+    ax.set_yticks(x)
+    ax.set_yticklabels(["Base", "+ role"], fontsize=TICK_SIZE)
+    ax.set_xlabel("Performance coefficient (log cap per SD)")
+    ax.set_xlim(-0.02, 0.46)
+    ax.set_ylim(-0.6, len(full) - 0.2)
+    ax.set_title("Full 909-player ledger", loc="left", fontsize=10.5, color=INK, pad=8)
+    ax.grid(axis="x", alpha=0.7)
     ax.tick_params(labelsize=TICK_SIZE)
 
     ax = axes[1]
     x = np.arange(len(perf))
-    ax.plot(perf["coef"], x, "o", color=BLUE, markersize=8,
+    ax.plot(perf["coef"], x, "o", color=ORANGE, markersize=8,
             markeredgecolor=SURFACE, markeredgewidth=0.8, zorder=3)
     for i, (_, r) in enumerate(perf.iterrows()):
-        ax.plot([r["ci_low"], r["ci_high"]], [i, i], color=BLUE, lw=1.8, zorder=2)
+        ax.plot([r["ci_low"], r["ci_high"]], [i, i], color=ORANGE, lw=1.8, zorder=2)
         ax.annotate(f"{r['coef']:+.3f}", (r["ci_high"], i), xytext=(8, 0),
-                    textcoords="offset points", va="center", fontsize=ANNOT_SIZE, color=BLUE)
+                    textcoords="offset points", va="center", fontsize=ANNOT_SIZE, color=ORANGE)
     ax.axvline(0, color=BASELINE, lw=1.0, zorder=1)
     ax.set_yticks(x)
     ax.set_yticklabels(["Base", "+ role", "+ role & draft"], fontsize=TICK_SIZE)
     ax.set_xlabel("Performance coefficient (log cap per SD)")
     ax.set_xlim(-0.06, 0.28)
     ax.set_ylim(-0.6, len(perf) - 0.2)
-    ax.set_title("The performance gradient fades", loc="left", fontsize=10.5, color=INK, pad=8)
+    ax.set_title("Draft-matched subsample (n=153)", loc="left", fontsize=10.5, color=INK, pad=8)
+    ax.text(0.98, 0.04, "rookie-scale sensitivity,\nnot the headline", transform=ax.transAxes,
+            ha="right", va="bottom", fontsize=8.5, color=SECONDARY)
     ax.grid(axis="x", alpha=0.7)
     ax.tick_params(labelsize=TICK_SIZE)
     _figure_title(
         fig,
-        "The cap pays for status; measured performance fades once role and draft enter.",
-        "2025 OTC cap ledger; signed residual (not a positive-part sum); 95% CI; 909 players.",
+        "The cap pays for performance; the 153-player fade is a rookie-scale subsample.",
+        "2025 OTC cap ledger; team-clustered 95% CI; the full ledger is the headline.",
     )
     return _save(fig, "net_rent.png")
 
@@ -157,8 +160,8 @@ def allocation_gap() -> Path:
     groups = pd.read_csv(DISC / "allocation_gap_groups.csv")
     tails = pd.read_csv(DISC / "allocation_gap_tails.csv")
     rel = players[players["sample"].eq("reliable_192")].copy()
-    tail = rel[(rel["perf_t"].eq("high")) & (rel["role_t"].eq("low"))]
-    opp = rel[(rel["perf_t"].eq("low")) & (rel["role_t"].eq("high"))]
+    tail = rel[(rel["perf_q"].eq("P4")) & (rel["role_q"].eq("R1"))]
+    opp = rel[(rel["perf_q"].eq("P1")) & (rel["role_q"].eq("R4"))]
 
     fig, axes = plt.subplots(1, 2, figsize=(9.6, 4.4))
     ax = axes[0]
@@ -166,17 +169,17 @@ def allocation_gap() -> Path:
                edgecolors=SURFACE, linewidths=0.3, zorder=1)
     ax.scatter(tail["perf_z"], tail["role_z"], s=32, c=ORANGE, alpha=0.95,
                edgecolors=SURFACE, linewidths=0.5, zorder=3,
-               label=f"top performance / bottom role (n={len(tail)})")
+               label=f"top-quartile performance / bottom-quartile role (n={len(tail)})")
     ax.scatter(opp["perf_z"], opp["role_z"], s=32, c=BLUE, alpha=0.9,
                edgecolors=SURFACE, linewidths=0.5, zorder=3,
-               label=f"bottom performance / top role (n={len(opp)})")
+               label=f"bottom-quartile performance / top-quartile role (n={len(opp)})")
     lim = (-2.6, 2.9)
     ax.plot(lim, lim, color=BASELINE, lw=1.0, ls="--", zorder=1)
     ax.set_xlim(lim)
     ax.set_ylim(lim)
     ax.set_xlabel("Performance (SD, within position and season)")
     ax.set_ylabel("Playing time (SD, within position and season)")
-    ax.set_title("Above the line: performs more than he plays", loc="left",
+    ax.set_title("Below the line: performance exceeds playing time", loc="left",
                  fontsize=10.5, color=INK, pad=8)
     ax.legend(loc="upper left", fontsize=8.5, frameon=False)
     ax.grid(alpha=0.6)
@@ -216,11 +219,13 @@ def allocation_gap() -> Path:
     ax.tick_params(labelsize=TICK_SIZE)
     strict = tails[(tails["sample"].eq("reliable_192")) &
                    (tails["tail"].str.contains("quartile"))].iloc[0]
+    current_role = float(tail["role_z"].mean())
     _figure_title(
         fig,
-        "The depth chart is not allocated to measured performance.",
-        f"Top-quartile performance in the bottom role quartile: n={int(strict['n'])}; "
-        f"next-season role {strict['next_role']:+.2f} SD; 95% bootstrap CI.",
+        "The allocation gap is descriptive: early picks play above performance; late picks perform above role.",
+        f"Strict top-quartile performance / bottom-quartile role tail: n={int(strict['n'])}; "
+        f"current role {current_role:+.2f} SD, next role {strict['next_role']:+.2f} SD "
+        f"({strict['next_role'] - current_role:+.2f} recovery); 95% bootstrap CI.",
     )
     return _save(fig, "allocation_gap.png")
 

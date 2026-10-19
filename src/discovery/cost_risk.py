@@ -217,6 +217,25 @@ def net_rent() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
             nested.append(_row(fit, "B_draft", model=name, n_terms=int(len(fit.params))))
     nested = pd.DataFrame(nested)
 
+    # Full 909-player ledger: the headline pay model. The draft-matched
+    # 153-player model above is a rookie-scale sensitivity.
+    full_nested = []
+    for name, formula in [
+        ("base_full", "logcap ~ perf_z + age_start + years_exp + C(pos_group)"),
+        ("role_full", "logcap ~ perf_z + snap_share + age_start + years_exp + C(pos_group)"),
+    ]:
+        fit = _fit(formula, rent, cluster="team")
+        full_nested.append(
+            _row(
+                fit,
+                "perf_z",
+                model=name,
+                n_terms=int(len(fit.params)),
+                note="full 909-player ledger",
+            )
+        )
+    pd.DataFrame(full_nested).to_csv(SAL / "pay_model_full.csv", index=False)
+
     # Team signed net rent.
     team = (
         rent.groupby("team")

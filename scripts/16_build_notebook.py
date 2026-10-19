@@ -69,10 +69,16 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.metrics import r2_score
 
 KAGGLE = Path("/kaggle/input/nfl-big-data-bowl-2027")
-LOCAL = Path("data/raw")
+def _local_data():
+    for p in [Path.cwd(), *Path.cwd().parents]:
+        cand = p / "data" / "raw"
+        if cand.exists():
+            return cand
+    return None
+LOCAL = _local_data()
 if KAGGLE.exists():
     DATA = KAGGLE
-elif LOCAL.exists():
+elif LOCAL is not None:
     DATA = LOCAL
 else:
     import kagglehub
@@ -741,10 +747,11 @@ def _csv_b64(path: Path) -> str:
 
 NET_RENT_B64 = _csv_b64(SAL / "net_rent_groups.csv")
 PAY_NESTED_B64 = _csv_b64(SAL / "pay_model_nested.csv")
+PAY_FULL_B64 = _csv_b64(SAL / "pay_model_full.csv")
 GAP_GROUPS_B64 = _csv_b64(ROOT / "outputs" / "discovery" / "allocation_gap_groups.csv")
 GAP_TAILS_B64 = _csv_b64(ROOT / "outputs" / "discovery" / "allocation_gap_tails.csv")
 
-md_intro = """# The testing is informative; the decisions are not
+md_intro = """# The testing is informative for defensive linemen; the decisions are not
 
 **NFL Big Data Bowl 2027 — public analysis notebook**
 
@@ -752,7 +759,7 @@ This notebook reproduces the core competition-data results: the 10 Hz Combine mo
 
 - **The Combine signal is position-specific.** DL +0.734 (95% CI 0.461–1.007), WR +0.366 (p=0.084), OL +0.058, TE +0.093; interaction p=0.0004. The pooled +0.299 is a defensive-line result; the standardized effect is 0.185, not one-third.
 - **Playing time is sticky and draft-driven.** Next-season role follows current role (+0.606) and draft capital (+0.785), not performance (−0.011); the within-player change is −0.095 (p=0.11).
-- **The cap pays for status.** Signed net rent: stars about +$6.3M, young high performers −$1.1M; the nested pay model's performance coefficient falls from +0.128 to +0.040 once role and draft enter.
+- **The cap pays for performance.** On the full 909-player ledger, performance enters at +0.328 (95% CI 0.264–0.392) and +0.143 (0.078–0.208) with role. The 153-player draft-matched model fades to +0.040; it is a rookie-scale sensitivity, not the headline. The salary performance measure is nflverse public production, not the NGS residual.
 - **The allocation gap is systematic.** Performance minus role: late picks/UDFAs +0.59, early picks −0.92 in the full 233-row sample; the strict top-performance/bottom-role quartile tail is 13 player-seasons.
 - **All analyses are exploratory/post-hoc.** The preregistered RJF/Yellow Square null pattern is in the repository appendix. Competition data is CC BY-NC 4.0; do not redistribute.
 
@@ -768,22 +775,22 @@ for name, b64 in FIG_B64.items():
     display(Image(data=base64.b64decode(b64)))
 """
 
-md_cost_risk = """## Cost-risk layer: signed net rent and the allocation gap
+md_cost_risk = """## Cost-risk layer: the cap model and the allocation gap
 
-The 2025 cap ledger is modeled on performance, age, experience, and position. We report the **signed** residual — dollars above or below the model, netted across over- and under-payments — not a positive-part sum. The nested model adds snap share and draft capital. The allocation gap is performance z minus role z, both within position and season. These are derived public-data aggregates embedded for self-containment; the full derivation is in `src/discovery/cost_risk.py` and `src/salary/rents.py`. All analyses are exploratory.
+The 2025 cap ledger is modeled on performance, age, experience, and position on the full 909 players; adding playing time gives the role-controlled model. The 153-player draft-matched model adds draft capital as a rookie-scale sensitivity. The allocation gap is performance z minus role z. These are derived public-data aggregates embedded for self-containment; the full derivation is in `src/discovery/cost_risk.py` and `src/salary/rents.py`. All analyses are exploratory.
 """
 
 code_cost_risk = f"""
 import base64, zlib, io
 def _load(b64):
     return pd.read_csv(io.StringIO(zlib.decompress(base64.b64decode(b64)).decode()))
-net_rent = _load("{NET_RENT_B64}")
+pay_full = _load("{PAY_FULL_B64}")
 pay_nested = _load("{PAY_NESTED_B64}")
 gap_groups = _load("{GAP_GROUPS_B64}")
 gap_tails = _load("{GAP_TAILS_B64}")
-print("Signed net rent by group ($M):")
-print(net_rent.round(2).to_string(index=False))
-print("\\nNested pay model (performance coefficient):")
+print("Full-ledger cap model (performance coefficient):")
+print(pay_full.round(3).to_string(index=False))
+print("\\nDraft-matched sensitivity (n=153):")
 print(pay_nested.round(3).to_string(index=False))
 print("\\nAllocation gap by draft quartile:")
 print(gap_groups.round(2).to_string(index=False))
@@ -795,7 +802,7 @@ md_salary_appendix = """## Cost-risk appendix: sources and limits
 
 - **OTC positional spending** (2023–2025) and the archived 2025 OTC active-roster cap pages are the salary sources; nflverse supplies snaps, rosters, stats, and schedules.
 - The 2025 cap snapshot matches 99.3% of active-cap dollars to a 2025 snap on player ID and team. The 909-player rent sample covers 68.7% of active-cap dollars; offensive linemen and specialists are excluded.
-- **Net rent** is the signed residual from log 2025 cap number on performance, age, experience, and position. It is an accounting residual, not a causal rent: cap hits reflect proration, restructures, timing, and expected future performance. The nested model adds snap share and draft capital; draft capital is partly the rookie wage scale.
+- **Cap model.** The full 909-player model is the headline; the 153-player draft-matched model is a rookie-scale sensitivity. The residual is descriptive, not a causal rent: cap hits reflect proration, restructures, timing, and expected future performance. Draft capital is partly the rookie wage scale.
 - The allocation gap is descriptive; the strict tail is 12 players. The salary performance measure is nflverse public production, not the NGS `player_play` residual.
 - **Soccer** uses UEFA 2025, Deloitte Money League 2025, club annual reports, and official league tables; accounting scopes and season windows differ. The table is illustrative, not a natural experiment.
 
@@ -811,7 +818,7 @@ md_appendix = """## Formal appendix: what is identified
 
 - **Combine linkage:** the 10 Hz movement composite is tested against the tracking-derived performance residual. The pooled coefficient is positive, but position-specific models show it is a defensive-line result: DL +0.734, WR +0.366 (p=0.084), OL +0.058, TE +0.093; interaction p=0.0004. The DL outcome is get-off.
 - **Role persistence:** next-season role is modeled as a function of current role, the performance residual, draft capital, position, and season, with cluster-robust standard errors. The performance coefficient is near zero; role and draft capital are positive. Leave-one-player-out R² and within-player changes are reported as validation.
-- **Cost-risk:** signed net rent and the performance-role gap are exploratory. The predictability lens does not survive role controls.
+- **Cost-risk:** the full-ledger cap model and the performance-role gap are exploratory; the 153-player draft-matched model is a rookie-scale sensitivity. The predictability lens does not survive role controls.
 - **What is not identified:** causal effects of coaches, teams, schemes, injuries, or contracts. Role is snaps per appearance, not full depth-chart share. The role gap is a diagnostic. DB performance is unidentifiable and excluded from pooled models.
 """
 
