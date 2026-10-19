@@ -1,9 +1,11 @@
-# The testing is informative for defensive linemen; the decisions are not
+# The Combine's pressure signal is real; the allocation gap is the lever
 
 Entry for the [NFL Big Data Bowl 2027](https://www.kaggle.com/competitions/nfl-big-data-bowl-2027). We test whether the 10 Hz Combine movement signal predicts regular-season performance, whether teams reward that performance with playing time, and whether the salary cap rewards it.
 
 ## Headline findings
 
+- **The pressure signal is the pure finding.** A 10 Hz Combine burst predicts interior pressure (**+0.354 SD/SD**, 95% CI 0.143–0.565, n=64) and sacks (**+0.317**, 0.083–0.550, n=63); the 40-yard dash and 10-yard split do not carry the pressure signal (joint p=0.998; out-of-sample R² −0.113 versus +0.178 for the burst). Edge rushers show a smaller pressure signal.
+- **The allocation lever is the model's wedge.** A two-agent model calibrated to the role and pay equations puts the coach's performance weight at −0.13 (marginal) and the GM's at +0.14; aligning them raises the top-performance group's role by 0.32 SD. Model-reproduced, not identified.
 - **The Combine signal is position-specific.** Movement predicts defensive-line performance (**+0.734**, 95% CI 0.461 to 1.007, n=175; standardized 0.42) but is marginal for receivers (+0.366, p=0.084) and undetectable for offensive linemen (+0.058) and tight ends (+0.093); interaction p=0.0004. The pooled +0.299 (standardized 0.185) is a defensive-line result. The defensive-line outcome is get-off, a movement-adjacent measure.
 - **The cap pays for performance.** On the full 909-player 2025 ledger, performance enters at **+0.328** log points per SD (95% CI 0.264 to 0.392) and **+0.143** (0.078 to 0.208) with playing time added. A 153-player draft-matched subsample — mostly rookie contracts, no quarterback or running back — fades to +0.040 with role and draft; it is a rookie-scale sensitivity, not the headline. The salary performance measure is nflverse public production, not the NGS `player_play` residual.
 - **Playing time is sticky and draft-driven.** Next-season playing time follows current playing time (+0.606) and draft position (+0.785); the performance coefficient is −0.011 (95% CI −0.119 to 0.097), an absence-of-evidence result, not proof of zero. Leave-one-player-out R² = 0.503. The within-player test gives **−0.095** (p=0.11, n=235). The weekly check is +0.753 for current snaps and −0.006 for current performance; no tested review cadence follows.
@@ -15,10 +17,10 @@ The entry is honest about what is not identified: no causal claims about coaches
 
 ## Deliverables
 
-- `writeup/submission.md` — 1,964 words, 5 figures, 2 tables (the Football scorecard and selected models), within the competition limits.
+- `writeup/submission.md` — 1,946 words, 6 figures, 2 tables (the Football scorecard and selected models), within the competition limits.
 - `notebooks/02_final_public.ipynb` — public Kaggle notebook with the Combine, role, cost-risk, and weekly checks.
 - `notebooks/kernel-metadata.json` — Kaggle push metadata (public, competition data mounted).
-- `writeup/figures/` — the five writeup figures: position-specific Combine, cap model, next-role forest, persistence, and allocation gap.
+- `writeup/figures/` — the six writeup figures: pressure signal, position-specific Combine, cap model, next-role forest, allocation gap, and agent model.
 - `outputs/discovery/` — frozen role, Combine, weekly, cost-risk, and audit outputs (gitignored).
 - `outputs/salary/` — salary panel, models, signed net rent, and soccer outputs (gitignored).
 - `docs/PREREGISTRATION_v2.md` — corrected regular-season preregistration (Yellow/pond primary; role, salary, and weekly analyses exploratory).
@@ -45,7 +47,9 @@ python scripts/08_replicate_positions.py
 python scripts/12_price_prediction.py
 python -c "import sys; sys.path.insert(0,'src'); from features import combine_movement; combine_movement.main()"
 python -c "import sys; sys.path.insert(0,'src'); from discovery import role_allocation, combine_linkage, weekly_role; role_allocation.main(); combine_linkage.main(); weekly_role.main()"
+python -c "import sys; sys.path.insert(0,'src'); from discovery import interior_burst; interior_burst.main()"
 python -c "import sys; sys.path.insert(0,'src'); from discovery import cost_risk; cost_risk.main()"
+python -c "import sys; sys.path.insert(0,'src'); from framework import agentic_allocation; agentic_allocation.main()"
 python -c "import sys; sys.path.insert(0,'src'); from viz import cost_risk_figures; cost_risk_figures.main()"
 python -c "import sys; sys.path.insert(0,'src'); from viz import figures; figures.main()"
 python scripts/17_build_salary_panel.py
