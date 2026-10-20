@@ -23,11 +23,18 @@ The role premium is the raw `perf_z` coefficient minus the role-controlled one.
 | 2024 active APY | 0.388 | 0.359 | +0.029 (−0.169, 0.227) | 132 |
 | **2025 cap ledger** | 0.328 | 0.143 | **+0.185 (0.094, 0.276)** | 909 |
 | 2026 APY, draft-matched | 0.399 | 0.248 | **+0.151 (0.016, 0.286)** | 306 |
+| 2026 APY, + years | 0.238 | 0.162 | +0.076 (−0.079, 0.232) | 306 |
+| 2026 APY, + guarantee share | 0.496 | 0.346 | +0.150 (−0.012, 0.313) | 253 |
+| 2026 APY, + years + guarantee share | 0.238 | 0.189 | +0.049 (−0.093, 0.191) | 253 |
 | 2025 APY, team FE | 0.315 | 0.216 | +0.099 (−0.036, 0.234) | 461 |
 
 The 2026 APY gap is close to the 2025 cap-ledger gap: **0.179 vs 0.185**. That
 is the central reconciliation between the contract-term evidence and the
-existing cap model.
+existing cap model. Adding contract length and guarantee share as commitment
+controls reduces the gap: years alone +0.076, guarantee share alone +0.150, both
++0.049. These are post-treatment contract-term controls, not a forward-role
+measure; the 2026 class has no next-season role. The premium is not robust to
+contract-structure controls.
 
 ![Role-premium estimates across samples.](figures/fa_role_premium.png) The 2025 active APY cross-check is smaller and its CI
 crosses zero; the 2024 sample is null. The premium is not a stable fact in every

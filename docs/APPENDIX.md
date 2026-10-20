@@ -57,7 +57,7 @@ repository but are no longer in the writeup. The soccer comparison table now
 lives in `docs/SOCCER_DATA.md`; only a one-line pointer remains in the writeup.
 The Football scorecard table replaced the soccer table in the body. The
 role-gap tails remain descriptive: high-role/low-performance 9 player-seasons
-across 7 players; low-role/high-performance 13 across 11; next-role difference
+across 7 players; low-role/high-performance 13 across 12; next-role difference
 1.04 (player-clustered 95% CI 0.53 to 1.49).
 
 ## What was cut after adversarial review

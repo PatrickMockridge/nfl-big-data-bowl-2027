@@ -15,7 +15,8 @@ The answer is uneven, and that is the point:
 
 - **The measurement link does not travel.** The task-matched drill signal has a
   positive pressure coefficient for interior and edge defensive linemen, but it
-  adds no out-of-sample R² over the stopwatch (interior −0.027, edge +0.015),
+  is Holm-borderline after correction (p=0.054–0.061) and adds no
+  out-of-sample R² over the stopwatch (interior −0.027, edge +0.015),
   and it is weak for receivers. Tight ends and offensive linemen fail the
   measurement-reliability gates; defensive backs have no usable performance
   residual. The DL positive control reproduces the entry: `burst_z` → pressure

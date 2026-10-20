@@ -24,18 +24,21 @@ This report asks the player-level version of the question:
 ## The answer
 
 **The market is large, but the old estimate was an upper-tail team.** The
-actual 2026 signing class implies a median-team annual role premium of
-**$7.05M** (net **$6.05M** after a $1M implementation cost). The mean team is
-**$10.7M**, the distribution runs from near zero to about $39M, and the old
-$24.9M sits at the **90.6th percentile**. The conservative subset — only
-positions whose cap-ledger gap CI is above zero (EDGE, S, CB) — is **$1.38M
-gross / $0.38M net** for the median team. The low case is near zero.
+actual 2026 signing class implies a median-team uncut annual role premium of
+**$7.05M**; at the 0.40 capture assumption the annual capture is **$2.82M gross
+/ $1.82M net** after a $1M implementation cost. The mean team is **$10.7M**,
+the distribution runs from near zero to about $39M, and the old $24.9M sits at
+the **90.6th percentile**. The conservative subset — only positions whose
+cap-ledger gap CI is above zero (EDGE, S, CB) — is **$1.38M uncut / $0.55M
+gross / −$0.45M net** for the median team. The low case is **$1.38M uncut /
+$0.21M gross / −$0.29M net**.
 
 This is not a rejection of the free-agency lever. It is a correction of its
 scale: the contract market is still the largest single market in the portfolio
-($6.05M base versus $2.45M for the DL anchor's selection + role), but it is not
-an order of magnitude larger for a typical team. The synthetic portfolio was a
-big-spending team's renewal wave, not the median team's.
+($6.05M uncut / $1.82M capture base versus $2.45M for the DL anchor's selection
++ role), but it is not an order of magnitude larger for a typical team. The
+synthetic portfolio was a big-spending team's renewal wave, not the median
+team's.
 
 ## What is measured, what is inferred
 

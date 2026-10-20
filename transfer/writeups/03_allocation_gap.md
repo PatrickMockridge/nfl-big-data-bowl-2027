@@ -25,6 +25,11 @@ current role and draft are rewarded, in each position group?
 | TE | +0.712 | +0.034 (−0.260, 0.328) | +0.388 | 27 |
 | DB | +0.335 | unidentifiable | +1.748 | 69 |
 
+The DB row is from the discovery role panel (n=69); the transfer gap panel has
+0 usable DB rows because the performance residual has no variance. TE is 27 in
+the transfer gap panel after the merge; the discovery panel has 29 rows before
+the merge.
+
 Current role and draft are positive everywhere; performance is null everywhere.
 This is the same allocation pattern as the pooled entry, position by position.
 The one positive point estimate is OL (+0.190), and its CI includes zero.

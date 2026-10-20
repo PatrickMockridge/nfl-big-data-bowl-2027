@@ -69,9 +69,9 @@ players to owners. The union's central fights are over the split, guarantees,
 and eligibility.
 
 **The findings cited.** The allocation gap (+0.59 SD for late picks and UDFAs,
-−0.92 SD for early picks); the role premium ($7.05M gross / $6.05M net for a
-median team); the implementation cost and adoption language; the "savings"
-framing.
+−0.92 SD for early picks); the role premium ($7.05M uncut / $1.82M capture net
+for a median team); the implementation cost and adoption language; the
+"savings" framing.
 
 **The steelman.** The league's own data shows that playing time — the gateway
 to pay, starts, and career length — is allocated by draft status, not

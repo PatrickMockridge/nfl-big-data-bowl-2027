@@ -1,22 +1,23 @@
-# The NFL free-agent market pays about $6M a year for role
+# The NFL free-agent market carries about $7M a year of uncut role premium
 
-Role is playing time: snaps, routes, coverage assignments. A median team's 2026 free-agent class carries about **$7.0M a year** of modeled role premium — pay that tracks role beyond measured performance. After a **$1M** implementation cost, the modeled difference is **$6.0M a year**.
+Role is prior-season snap share in this model. A median team's 2026 free-agent class carries about **$7.0M a year** of uncut modeled role premium — pay that tracks role beyond measured performance. At the base **0.40** capture assumption, the modeled annual capture is about **$2.8M gross / $1.8M net** after a **$1M** implementation cost.
 
-The judged entry established the chain: a 10 Hz Combine burst predicts interior pressure while the stopwatch does not; the depth chart does not reward measured performance; the cap does.
+The judged entry established the chain: a 10 Hz Combine burst predicts interior pressure while the stopwatch does not; the depth chart does not detectably reward measured performance; the cap does.
 
-![Median team: $7.0M a year of role premium from the actual 2026 free-agent class; 32 teams sorted.](implications/free_agency/writeups/figures/fa_headline.png)
+![Median team: $7.0M a year of uncut role premium from the actual 2026 free-agent class; 32 teams sorted.](implications/free_agency/writeups/figures/fa_headline.png)
 
 ## The finding
 
 | Measure | Value | Details |
 |---|---:|---|
-| Median team, annual role premium | **$7.05M** | [valuation](implications/free_agency/writeups/04_valuation.md) |
-| After a $1M implementation cost | **$6.05M** | [valuation](implications/free_agency/writeups/04_valuation.md) |
-| Team distribution (P10 / P50 / P90) | $1.81M / $7.05M / $22.51M | [valuation](implications/free_agency/writeups/04_valuation.md) |
-| Conservative: only EDGE/S/CB | $1.38M before cost / $0.38M after | [valuation](implications/free_agency/writeups/04_valuation.md) |
-| Low case | $0.52M before cost / $0.02M after | [valuation](implications/free_agency/writeups/04_valuation.md) |
+| Median team, uncut annual role premium | **$7.05M** | [valuation](implications/free_agency/writeups/04_valuation.md) |
+| Capture at 0.40, gross | **$2.82M** | [valuation](implications/free_agency/writeups/04_valuation.md) |
+| Capture at 0.40, net after $1M | **$1.82M** | [valuation](implications/free_agency/writeups/04_valuation.md) |
+| Team distribution (P10 / P50 / P90) | $1.81M / $7.05M / $22.51M | uncut premium, 32 teams |
+| Conservative: only EDGE/S/CB | $1.38M uncut / −$0.45M net at 0.40 capture | [valuation](implications/free_agency/writeups/04_valuation.md) |
+| Low: only EDGE/S/CB | $1.38M uncut / −$0.29M net at 0.15 capture | [valuation](implications/free_agency/writeups/04_valuation.md) |
 
-- The regression estimate of the role premium is **+0.179 log points** (95% CI 0.022–0.336, n=306). The 2025 cap ledger gives **+0.185** (0.094–0.276, n=909). [Pricing details](implications/free_agency/writeups/02_pricing.md), [model code](implications/free_agency/code/pricing.py).
+- The regression estimate of the role premium is **+0.179 log points** (95% CI 0.022–0.336, n=306). The 2025 cap ledger gives **+0.185** (0.094–0.276, n=909). Adding contract length and guarantee share as commitment controls reduces the gap to **+0.049** (−0.093 to 0.191, n=253); the premium is not robust to contract-structure controls. [Pricing details](implications/free_agency/writeups/02_pricing.md), [model code](implications/free_agency/code/pricing.py).
 - The cross-checks are weaker: 2025 active APY +0.105 (CI crosses zero); 2024 +0.029 (null); draft-matched 2026 +0.151 (0.016–0.286). [Pricing details](implications/free_agency/writeups/02_pricing.md).
 - Role is also priced in guarantees: guarantee share rises from 0.46 to 0.60 across snap-share quintiles. [Guarantee model](implications/free_agency/writeups/02_pricing.md).
 - The premium is concentrated: the top 10% of contracts carry **51%** of it. [Surplus details](implications/free_agency/writeups/03_surplus.md), [code](implications/free_agency/code/surplus.py).
@@ -30,12 +31,14 @@ The dollar figures are inferences from the 2026 class, not forecasts or causal e
 
 ## What the judged entry found
 
-- Burst → pressure **+0.354** (0.143–0.565, n=64); sacks **+0.317** (0.083–0.550, n=63). The 40/10 joint test is p=0.998; out-of-sample R² is −0.113 for the stopwatch and +0.178 for the burst.
-- Position-specific: DL **+0.734** (0.461–1.007); WR +0.366 (p=0.084); OL +0.058; TE +0.093; interaction p=0.0004.
+- Burst → pressure **+0.354** (0.143–0.565, n=64); sacks **+0.317** (0.083–0.550, n=63). The 40/10 joint test is p=0.998; out-of-sample R² is −0.113 for the stopwatch and +0.178 for the burst. The stopwatch is the stronger out-of-sample sack model, and the sack outcome is below the 0.50 reliability gate.
+- Concentrated in interior linemen: DL **+0.734** (0.461–1.007); WR +0.366 (p=0.084); OL +0.058; TE +0.093. The Combine-movement interaction is p=0.0004; the burst-pressure interaction is p=0.137 and is not significant.
 - Cap pays performance: **+0.328** raw (0.264–0.392); **+0.143** with role (0.078–0.208).
 - Next-season role: current role **+0.606**, draft **+0.785**, performance **−0.011** (−0.119 to 0.097).
 - Allocation gap: **+0.59 SD** for late picks/UDFAs, **−0.92 SD** for early picks.
-- The two-agent wedge (+0.28), the Yellow Square fallback (wide null), and the weekly check are in the entry.
+- The two-agent cross-construct difference (+0.28; not a behavioral weight), the Yellow Square fallback (wide null), and the weekly check are in the entry.
+
+**Data ethics.** The Combine tracking data are league-provided; this work does not collect new biometric data and does not recommend expanding collection. It is a validity check on measurements the league already takes.
 
 Full text: [`writeup/submission.md`](writeup/submission.md) (Tier 0/1/2), [`docs/APPENDIX.md`](docs/APPENDIX.md) (exploratory cuts). Public notebook: [`notebooks/02_final_public.ipynb`](notebooks/02_final_public.ipynb). Code: [`interior_burst.py`](src/discovery/interior_burst.py), [`combine_movement.py`](src/features/combine_movement.py), [`role_allocation.py`](src/discovery/role_allocation.py), [`cost_risk.py`](src/discovery/cost_risk.py), [`agentic_allocation.py`](src/framework/agentic_allocation.py).
 
@@ -44,9 +47,9 @@ Full text: [`writeup/submission.md`](writeup/submission.md) (Tier 0/1/2), [`docs
 The brief asked for a non-obvious, actionable linkage between 10 Hz Combine tracking and NFL performance, focused on one position group, and usable by coaches, scouts, and front offices. The work followed that order:
 
 1. **Non-obvious:** compare the 10 Hz burst with the stopwatch. The burst carries the pressure signal; the stopwatch does not.
-2. **One position:** DL. The cross-position check showed the measurement is position-specific, so the allocation side is what travels.
+2. **One position:** DL. The cross-position check showed the measurement is concentrated in interior linemen, so the allocation side is what travels.
 3. **Actionable:** a signal that does not change who plays is not useful. The depth chart does not reward performance; the cap does.
-4. **Dollar:** the contract market is where the role premium has a price. The median team's 2026 class is $7.05M a year, or $6.05M after a $1M implementation cost.
+4. **Dollar:** the contract market is where the role premium has a price. The median team's 2026 class carries $7.05M uncut a year; at the 0.40 capture assumption the annual capture is $2.82M gross / $1.82M net after a $1M implementation cost.
 
 The judging dimensions reported for the event are Innovation, Accuracy, Impact, and Clarity; the official weighted rubric is not public. The NFL [announcement](https://media.nfl.com/news-and-releases/consumer-products/national-football-league-announces-ninth-annual-big-data-bowl-po) states the brief's focus.
 

@@ -34,7 +34,7 @@ The allocation gap is descriptive. Late picks and UDFAs sit at **+0.59 SD** perf
 
 ## The lid
 
-The strongest version of the argument is already in the outputs but not in one sentence: the burst is essentially uncorrelated with draft capital (**+0.034, 95% CI −0.044 to 0.111**). The market does not price the signal that predicts pressure; the depth chart then suppresses the players who have it; the cap would pay them if they played. That is the chain from measurement blind spot to draft mispricing to role suppression to the cap/role gap.
+The strongest version of the argument is already in the outputs but not in one sentence: the burst has no detectable correlation with draft capital (**+0.034, 95% CI −0.044 to 0.111**). The market does not detectably price the signal that predicts pressure; the allocation pattern is consistent with the depth chart not using it; the cap would pay them if they played. That is the chain from measurement blind spot to a draft-capital proxy that does not detect the signal to role persistence to the cap/role gap.
 
 It is a structural claim, not a moral one. The coach is not foolish to weight a noisy performance signal less than a stable prior role. The GM is not foolish to weight performance in a cap model. The two are optimising different objectives with different information. The gap is the cost of that difference.
 

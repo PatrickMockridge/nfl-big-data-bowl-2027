@@ -65,8 +65,8 @@ change:
   guaranteed portion reduces the cash saving.
 - **The agent responds.** A holdout, franchise tag, or extension threat can
   claw back the correction. The flat 40% adoption is a placeholder.
-- **The sample is thin.** 302 non-rookie veterans with performance in the 2026
-  class; the per-position cells are exploratory.
+- **The sample is thin.** 306 players with a usable APY and performance in the
+  2026 class; 301 in the role model; the per-position cells are exploratory.
 
 ## Team fit
 

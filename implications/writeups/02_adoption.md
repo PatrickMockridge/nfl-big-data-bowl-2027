@@ -10,22 +10,22 @@ The finding does not require a club to abandon its draft board or its coaching p
 2. **In obvious pass-rush sub-packages, reallocate 10–15% of snaps** from a low-burst, high-cap veteran to a high-burst, low-cost interior lineman. The veteran loses pass-rush snaps, not starting status or pay.
 3. **Price the next interior-DL contract on role-controlled performance** (+0.143) rather than the raw performance coefficient (+0.328).
 
-**Who loses:** the low-burst veteran loses snaps; the coach loses some discretionary authority; the incumbent scout loses the comfort of the stopwatch. That is why this is **Pareto-adjacent**, not strictly Pareto efficient. A strict Pareto improvement would require no one to lose anything, and a snap reallocation cannot meet that test. The claim is that the losses are small, concentrated, and politically manageable relative to the gain.
+**Who loses:** the low-burst veteran loses snaps; the coach loses some discretionary authority; the incumbent scout loses the comfort of the stopwatch. That is why this is **Pareto-adjacent**, not strictly Pareto efficient. A strict Pareto improvement would require no one to lose anything, and a snap reallocation cannot meet that test. The losses are concentrated; whether they are politically manageable is a judgment, not a finding.
 
 ## Team archetypes
 
-The natural reader is a GM or analytics director with roster authority, a rebuild or a cap reset, and a coach he can plausibly align or challenge. Current staffing (Wikipedia's current NFL general manager and head coach lists, retrieved 2026-10-19):
+The natural reader is a GM or analytics director with roster authority, a rebuild or a cap reset, and a coach they can plausibly align or challenge. The archetypes are described without naming current executives:
 
-| Team | GM | Head coach | Why the structure fits | Caveat |
-|---|---|---|---|---|
-| **Titans** | Mike Borgonzi | Robert Saleh | New regime, defensive coach, rebuild, high draft capital; interior pressure is a live need. | GM and coach may be aligned, which lowers the "challenge the coach" tension but raises the ability to act together. |
-| **Browns** | Andrew Berry | Todd Monken | Analytics-native GM; cap reset; the cap-versus-role frame is directly salient. | Ownership and the Watson contract constrain a clean reallocation. |
-| **Jaguars** | James Gladstone | Liam Coen | Young, analytics-forward regime with a draft-and-develop mandate. | Not a full rebuild; pressure to win now. |
-| **Falcons** | Ian Cunningham | Kevin Stefanski | New regime; roster and cap reset; authority to re-price roles. | Both are new together, so the two-agent wedge is a design choice, not a live conflict. |
-| **Dolphins** | Jon-Eric Sullivan | Jeff Hafley | New regime, defensive coach, clean slate. | The teardown may take precedence over fine-grained role allocation. |
-| **Cardinals** | Monti Ossenfort | Mike LaFleur | Patient, draft-heavy GM; new coach; young roster. | The fit is structural, not a claim about personal analytics views. |
+| Archetype | Why the structure fits | Caveat |
+|---|---|---|
+| New regime, defensive coach, high draft capital | Interior pressure is a live need; the regime can act together. | GM and coach may be aligned, which lowers the "challenge the coach" tension but raises the ability to act together. |
+| Analytics-native GM, cap reset | The cap-versus-role frame is directly salient. | Ownership and a large guaranteed contract can constrain a clean reallocation. |
+| Young, analytics-forward, draft-and-develop | The regime has a mandate to develop and re-price roles. | Not a full rebuild; pressure to win now. |
+| New regime, roster and cap reset | Authority to re-price roles. | Both are new together, so the two-agent wedge is a design choice, not a live conflict. |
+| New regime, defensive coach, clean slate | The teardown creates room for a role review. | The teardown may take precedence over fine-grained role allocation. |
+| Patient, draft-heavy GM, new coach, young roster | Long horizon; role review fits the development plan. | The fit is structural, not a claim about personal analytics views. |
 
-The obvious "smart" teams — Ravens, Eagles, Steelers, 49ers, Rams — are poor fits for this specific piece: they are stable or contending, the coach has authority, and there is no allocation crisis to solve. This is a **transition-regime document**, not a contender document.
+Stable or contending teams are poor fits for this specific piece: the coach has authority, and there is no allocation crisis to solve. This is a **transition-regime document**, not a contender document.
 
 ## Implementation sequence
 

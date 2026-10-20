@@ -113,23 +113,28 @@ def portfolio_bridge() -> None:
     p = p.sort_values("base_portfolio_net_m")
     fig, ax = plt.subplots(figsize=(7.8, 4.6))
     y = np.arange(len(p))
-    ax.barh(y - 0.18, p["base_portfolio_net_m"], height=0.34,
-            color=BLUE, label="Base")
-    ax.barh(y + 0.18, p["conservative_portfolio_net_m"], height=0.34,
-            color=AQUA, label="Conservative (uncertain gaps zeroed)")
+    ax.barh(y - 0.22, p["base_portfolio_net_m"], height=0.22,
+            color=BLUE, label="Base, uncut")
+    ax.barh(y, p["base_portfolio_capture_m"], height=0.22,
+            color=ORANGE, label="Base, capture (0.40)")
+    ax.barh(y + 0.22, p["conservative_portfolio_net_m"], height=0.22,
+            color=AQUA, label="Conservative, uncut")
     ax.axvline(0, color=BASELINE, linewidth=1)
     ax.set_yticks(y)
     ax.set_yticklabels(p["label"])
     ax.set_xlabel("Portfolio net ($M/year)")
-    ax.set_title("Portfolio net by market", loc="left", fontsize=11.5, pad=10)
-    ax.legend(frameon=False, fontsize=8.5, loc="lower right")
+    ax.set_title("Uncut and capturable portfolio by market",
+                 loc="left", fontsize=11.5, pad=10)
+    ax.legend(frameon=False, fontsize=8.0, loc="lower right")
     total = _read("portfolio.csv").query("market == 'TOTAL'").iloc[0]
     ax.text(
         0.99, 0.98,
-        f"Total base ${total['base_portfolio_net_m']:.1f}M; "
-        f"conservative ${total['conservative_portfolio_net_m']:.1f}M; "
-        f"low ${total['low_portfolio_net_m']:.1f}M",
-        transform=ax.transAxes, ha="right", va="top", fontsize=8.2,
+        f"Uncut ${total['base_portfolio_net_m']:.1f}M; "
+        f"capture ${total['base_portfolio_capture_m']:.1f}M. "
+        f"Conservative uncut ${total['conservative_portfolio_net_m']:.1f}M; "
+        f"capture ${total['conservative_portfolio_capture_m']:.1f}M. "
+        f"Low capture ${total['low_portfolio_capture_m']:.1f}M.",
+        transform=ax.transAxes, ha="right", va="top", fontsize=7.4,
         color=SECONDARY,
     )
     _save(fig, "market_portfolio_bridge.png")

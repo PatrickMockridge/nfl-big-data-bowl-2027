@@ -93,6 +93,8 @@ def evaluate_market(market: Market, scenario: str) -> dict:
         cost = float(o["implementation_cost_m"])
         net = float(o["net_m"])
         ev = float(o["ev_m"])
+        capture_net = float(o.get("capture_net_m", net))
+        capture_ev = float(o.get("capture_ev_m", ev))
         cons = market.valuation_override.get("conservative", {})
         return {
             "selection_m": 0.0,
@@ -102,9 +104,13 @@ def evaluate_market(market: Market, scenario: str) -> dict:
             "implementation_cost_m": cost,
             "net_m": net,
             "ev_m": ev,
+            "capture_net_m": capture_net,
+            "capture_ev_m": capture_ev,
             "share_of_cap": net / 280.0,
             "portfolio_net_m": net,
             "portfolio_ev_m": ev,
+            "portfolio_capture_net_m": capture_net,
+            "portfolio_capture_ev_m": capture_ev,
             "anchor_net_m": np.nan,
             "contract_conservative_m": float(cons.get("gross_m", gross)),
         }
@@ -126,8 +132,12 @@ def evaluate_market(market: Market, scenario: str) -> dict:
     pnet, pev, anchor_net = _portfolio_net(market, scenario, base, contract)
     return {
         **base,
+        "capture_net_m": pnet,
+        "capture_ev_m": pev,
         "portfolio_net_m": pnet,
         "portfolio_ev_m": pev,
+        "portfolio_capture_net_m": pnet,
+        "portfolio_capture_ev_m": pev,
         "anchor_net_m": anchor_net if market.key == "dl_anchor" else np.nan,
         "contract_conservative_m": contract_conservative,
     }
@@ -156,9 +166,13 @@ def valuations(markets: list[Market]) -> pd.DataFrame:
                     "implementation_cost_m": r["implementation_cost_m"],
                     "net_m": r["net_m"],
                     "ev_m": r["ev_m"],
+                    "capture_net_m": r["capture_net_m"],
+                    "capture_ev_m": r["capture_ev_m"],
                     "share_of_cap": r["share_of_cap"],
                     "portfolio_net_m": r["portfolio_net_m"],
                     "portfolio_ev_m": r["portfolio_ev_m"],
+                    "portfolio_capture_net_m": r["portfolio_capture_net_m"],
+                    "portfolio_capture_ev_m": r["portfolio_capture_ev_m"],
                     "anchor_net_m": r["anchor_net_m"],
                     "in_free_agency_total": bool(
                         m.contract_components and m.key != "free_agency"
@@ -325,10 +339,10 @@ def monte_carlo(markets: list[Market], n: int = DRAWS, seed: int = SEED) -> pd.D
         net = gross - draws["implementation_cost"]
         ev = net * draws["adoption_prob"]
         # Portfolio net excludes display-only contract for position markets.
-        if m.key in {"edge", "wr", "te", "ol"}:
+        if m.key in {"edge", "wr", "ol"}:
             net = selection + role - draws["implementation_cost"]
             ev = net * draws["adoption_prob"]
-        elif m.key == "db":
+        elif m.key in {"db", "te"}:
             net = np.zeros(n)
             ev = np.zeros(n)
         elif m.key == "dl_anchor":
@@ -392,8 +406,12 @@ def portfolio(markets: list[Market]) -> pd.DataFrame:
                 sub.loc["base", "contract_conservative_m"]
                 - sub.loc["base", "implementation_cost_m"]
             )
+            conservative_capture = float(
+                m.valuation_override["conservative"]["capture_net_m"]
+            )
         else:
             conservative = sub.loc["base", "portfolio_net_m"]
+            conservative_capture = sub.loc["base", "portfolio_capture_net_m"]
         rows.append(
             {
                 "market": m.key,
@@ -404,6 +422,15 @@ def portfolio(markets: list[Market]) -> pd.DataFrame:
                 "conservative_portfolio_net_m": conservative,
                 "base_portfolio_ev_m": sub.loc["base", "portfolio_ev_m"],
                 "low_portfolio_ev_m": sub.loc["low", "portfolio_ev_m"],
+                "base_portfolio_capture_m": sub.loc["base", "portfolio_capture_net_m"],
+                "low_portfolio_capture_m": sub.loc["low", "portfolio_capture_net_m"],
+                "conservative_portfolio_capture_m": conservative_capture,
+                "base_portfolio_capture_ev_m": sub.loc[
+                    "base", "portfolio_capture_ev_m"
+                ],
+                "low_portfolio_capture_ev_m": sub.loc[
+                    "low", "portfolio_capture_ev_m"
+                ],
                 "notes": m.notes,
             }
         )
@@ -419,7 +446,18 @@ def portfolio(markets: list[Market]) -> pd.DataFrame:
                 "conservative_portfolio_net_m": out["conservative_portfolio_net_m"].sum(),
                 "base_portfolio_ev_m": out["base_portfolio_ev_m"].sum(),
                 "low_portfolio_ev_m": out["low_portfolio_ev_m"].sum(),
-                "notes": "Position selection+role plus free-agency contract; no double counting.",
+                "base_portfolio_capture_m": out["base_portfolio_capture_m"].sum(),
+                "low_portfolio_capture_m": out["low_portfolio_capture_m"].sum(),
+                "conservative_portfolio_capture_m": out[
+                    "conservative_portfolio_capture_m"
+                ].sum(),
+                "base_portfolio_capture_ev_m": out[
+                    "base_portfolio_capture_ev_m"
+                ].sum(),
+                "low_portfolio_capture_ev_m": out[
+                    "low_portfolio_capture_ev_m"
+                ].sum(),
+                "notes": "Uncut premium total and haircut-adjusted capture total; position selection+role plus free-agency contract.",
             }
         ]
     )

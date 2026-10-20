@@ -99,7 +99,7 @@ are written to `implications/markets/outputs/`.
 | nflverse draft picks | `github.com/nflverse/nflverse-data/releases/download/draft_picks/draft_picks.csv` | 12,927 rows, 1980–2026; career outcomes from PFR | Public; cite nflverse/PFR |
 | Coaching tenure | Derived from `data/external/games.csv` (`home_coach`, `away_coach`) | 893 team-seasons, 1999–2026; first/last game proxy | Public nflverse; cite |
 | Hire/fire dates | PFR `pro-football-reference.com/coaches/` or Wikipedia | Optional; not downloaded by default | Cite; no bulk redistribution |
-| Historical contracts | Local `data/external/historical_contracts.csv.gz` | 31,893 contracts, 1983–2022; APY/guarantee | Apache-2.0 per the contract snapshot |
+| Historical contracts | Local `data/external/historical_contracts.csv.gz` | 31,893 raw contracts, 1983–2022; 30,769 after dropping `year_signed=0`; APY/guarantee | Apache-2.0 per the contract snapshot |
 | Special teams stats | Local `data/external/stats_player_week_2023/24/25.csv` | Weekly kicking/punting/return stats | Public nflverse; cite |
 
 **Notes and limits.**

@@ -27,10 +27,10 @@ composite?
 | WR | route drill | separation residual | 149 / 82 | +0.053 (−0.174, 0.280) | 0.747 | 0.675 | −0.012 | **weak** |
 | TE | route drill | separation residual | 63 / 33 | −0.008 (−0.262, 0.245) | 0.671 | 0.449 | −0.240 | unidentifiable |
 | OL | pass-set drill | pressure-allowed residual | 156 / 89 | −0.084 (−0.211, 0.043) | 0.448 | 0.553 | +0.007 | unidentifiable |
-| DL interior | entry `burst_z` (benchmark) | pressure | 64 / 42 | **+0.368 (0.149, 0.587)** | — | 0.953 | +0.050 | supported |
-| DL interior | pass-rush drill | pressure | 64 / 42 | **+0.271 (0.025, 0.517)** | 0.781 | 0.953 | −0.027 | supported |
-| DL edge | entry `burst_z` (benchmark) | pressure | 113 / 56 | **+0.155 (0.010, 0.300)** | — | 0.953 | −0.007 | supported |
-| DL edge | pass-rush drill | pressure | 113 / 56 | **+0.166 (0.029, 0.303)** | 0.781 | 0.953 | +0.015 | supported |
+| DL interior | entry `burst_z` (benchmark) | pressure | 64 / 42 | **+0.368 (0.149, 0.587)** | — | 0.953 | +0.050 | benchmark |
+| DL interior | pass-rush drill | pressure | 64 / 42 | **+0.271 (0.025, 0.517)** | 0.781 | 0.953 | −0.027 | borderline after Holm |
+| DL edge | entry `burst_z` (benchmark) | pressure | 113 / 56 | **+0.155 (0.010, 0.300)** | — | 0.953 | −0.007 | benchmark |
+| DL edge | pass-rush drill | pressure | 113 / 56 | **+0.166 (0.029, 0.303)** | 0.781 | 0.953 | +0.015 | borderline after Holm |
 | DB | back-pedal drill | coverage residual | 161 / 90 | — | 0.092 | 0.121 | — | unidentifiable |
 
 The DL positive control reproduces the entry's result: +0.368 (0.149, 0.587)

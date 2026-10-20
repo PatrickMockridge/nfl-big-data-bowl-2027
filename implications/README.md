@@ -4,7 +4,7 @@
 
 This folder extends the entry's logic beyond the competition: the three pricing mechanisms (stopwatch, depth chart, cap), a transparent dollar value for one team, a low-political-cost adoption chunk, team fit, and messaging. Every dollar figure is an **inference**, not a measurement; the measured coefficients are cited with their source files.
 
-The headline: for one team that adopts a Pareto-adjacent chunk, the base case is **$6.6M gross per year**, **$5.6M net** after implementation cost, and **$2.3M expected** at 40% adoption. The range is **$0.9M to $11.1M net**. The value is a first-mover transition rent, not a permanent edge.
+The headline: for one team that adopts a Pareto-adjacent chunk, the base case is **$6.6M gross per year**, **$5.6M net** after implementation cost, and **$2.3M expected** at 40% adoption. The route decomposition is selection **$0.79M** + role **$2.10M** + contract **$3.75M**. The routes are not causally additive, so the total is a scenario, not a sum of independent gains. The range is **$0.9M to $11.1M net**. The value is a first-mover transition rent, not a permanent edge.
 
 ## Map
 
@@ -44,7 +44,7 @@ unchanged.
 
 [`free_agency/`](free_agency/) is a player-level deep dive that supersedes the
 market portfolio's top-down free-agency section. It finds a median-team annual
-role premium of $7.05M gross / $6.05M net, with the old $24.9M at the 90.6th
+role premium of $7.05M uncut / $1.82M capture net, with the old $24.9M at the 90.6th
 percentile of the team distribution.
 
 ## Reproduce

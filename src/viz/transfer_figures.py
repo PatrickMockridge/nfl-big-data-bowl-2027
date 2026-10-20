@@ -34,6 +34,7 @@ RED = "#e34948"
 
 STATUS_COLORS = {
     "supported": AQUA,
+    "borderline": ORANGE,
     "weak": ORANGE,
     "null": GRAY,
     "unidentifiable": "#d9d8d0",
@@ -98,6 +99,10 @@ def link_matrix() -> None:
     for area in areas:
         position = "DL" if area.startswith("DL_") else area
         l1_row = l1[l1["area"] == area]
+        if "role" in l1_row.columns:
+            primary = l1_row[l1_row["role"].eq("primary")]
+            if len(primary):
+                l1_row = primary
         l1_status = l1_row["status"].iloc[0] if len(l1_row) else "unidentifiable"
         l2_status = (
             l2_primary.loc[position, "interpretation"]
@@ -137,7 +142,7 @@ def link_matrix() -> None:
                           facecolor=color, edgecolor="none", alpha=0.85)
             )
             ax.text(x + 0.5, yy + 0.5, status, ha="center", va="center",
-                    fontsize=8.5, color="white" if status in {"supported", "weak", "negative"} else INK)
+                    fontsize=8.5, color="white" if status in {"supported", "borderline", "weak", "negative"} else INK)
     fig.suptitle(
         "What transfers: the unpriced-signal and allocation links; measurement is position-specific",
         x=0.01, y=1.02, ha="left", fontsize=11.5, color=INK,

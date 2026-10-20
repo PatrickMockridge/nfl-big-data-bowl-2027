@@ -68,6 +68,16 @@ def headline() -> None:
     p90 = float(values.quantile(0.90))
     colors = [BLUE if v >= median else "#9bb9e0" for v in values]
 
+    summary = _read("valuation_summary.csv").set_index("scenario")
+    if "capture_net_m" in summary.columns:
+        capture_gross = float(summary.loc["base", "capture_gross_m"])
+        capture_net = float(summary.loc["base", "capture_net_m"])
+        cons_net = float(summary.loc["conservative", "capture_net_m"])
+    else:
+        capture_gross = median * 0.40
+        capture_net = capture_gross - 1.0
+        cons_net = -0.45
+
     fig, ax = plt.subplots(figsize=(9.4, 5.2))
     y = np.arange(len(d))
     ax.barh(y, values, color=colors, height=0.82)
@@ -75,15 +85,19 @@ def headline() -> None:
     ax.axvline(p90, color=GRAY, linewidth=1.0, linestyle=":")
     ax.set_yticks([])
     ax.set_ylabel("32 teams, sorted")
-    ax.set_xlabel("Annual role premium per team ($M/year)")
+    ax.set_xlabel("Uncut annual role premium per team ($M/year)")
     ax.set_xlim(0, values.max() * 1.08)
     fig.suptitle(
-        f"Median team: \\${median:.1f}M a year of role premium",
+        f"Median team: \\${median:.1f}M a year of uncut role premium",
         x=0.01, y=1.03, ha="left", fontsize=14.0,
     )
+    cons_label = (
+        f"{'-' if cons_net < 0 else ''}\\${abs(cons_net):.1f}M net"
+    )
     ax.set_title(
-        "Actual 2026 free-agent class. After a \\$1M implementation cost: "
-        f"\\${median-1.0:.1f}M. Conservative EDGE/S/CB: \\$0.38M.",
+        "Actual 2026 free-agent class. Capture at 0.40: "
+        f"\\${capture_gross:.1f}M gross / \\${capture_net:.1f}M net. "
+        f"Conservative EDGE/S/CB: {cons_label}.",
         loc="left", fontsize=9.0, color=SECONDARY, pad=8,
     )
     box = dict(facecolor=SURFACE, edgecolor="none", pad=2)
@@ -140,6 +154,9 @@ def role_premium() -> None:
         "apy_2024": "2024 active APY",
         "cap_ledger_2025": "2025 cap ledger",
         "fa_2026_draft_matched": "2026 APY, draft-matched",
+        "fa_2026_years": "2026 APY, + years",
+        "fa_2026_guarantee": "2026 APY, + guarantee",
+        "fa_2026_expected_role": "2026 APY, + years + guarantee",
         "apy_2025_team_fe": "2025 APY, team FE",
     }
     d = d.sort_values("gap")

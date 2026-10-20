@@ -14,8 +14,9 @@ role, not the stopwatch.
    draft in WR, OL, and DL.
 3. **The dollars are a contract-pricing inference.** The contract market is
    still the largest single lever, but the median team's actual 2026 class is
-   $6.05M net; the old $24.9M was a 90th-percentile synthetic portfolio. The
-   conservative view is $0.38M.
+   $6.05M uncut / $1.82M capture net; the old $24.9M was a 90th-percentile
+   synthetic portfolio. The conservative view is $0.38M uncut / −$0.45M
+   capture.
 
 **Foundation:** the tiers. Measurement is measured; allocation is descriptive;
 the contract gap is a measured association; the dollars are inference; the team
@@ -41,8 +42,9 @@ is unrewarded in next-season role, and the gap follows the draft in WR, OL, and
 DL. The market portfolio prices that structure. The largest lever is the
 free-agency contract correction — reprice the next renewal wave on
 role-controlled performance. Position selection is small and mostly DL/EDGE.
-The conservative portfolio is about $5.4M/year, the base is about $11M, and the
-low case is about −$0.7M; the free-agency component is $6.05M base / $0.38M
+The uncut portfolio is about $11M base / $5.4M conservative / $0.2M low; the
+capture total is about $6.8M / $4.5M / −$1.0M. The free-agency component is
+$6.05M uncut / $1.82M capture base and $0.38M uncut / −$0.45M capture
 conservative. Every figure is an inference, and the contract gap is an
 association, not a causal effect.
 
@@ -51,7 +53,7 @@ association, not a causal effect.
 | Audience | Lead with | Do not lead with | The ask |
 |---|---|---|---|
 | GM / roster | The allocation gap and the contract correction; DL is the measured case. | A universal "Combine signal" or a win-total promise. | Reprice the next renewal wave; pilot one EDGE sub-package. |
-| Cap / contract | Role-controlled vs raw performance by position; EDGE/S/CB gaps have CIs excluding zero. | The $11M base without the $5.4M conservative and −$0.7M low; the free-agency component is $6.05M/$0.38M. | Model the renewal portfolio with the role-controlled coefficient. |
+| Cap / contract | Role-controlled vs raw performance by position; EDGE/S/CB gaps have CIs excluding zero. | The $11M uncut base without the $5.4M conservative and $0.2M low, or the $6.8M/$4.5M/−$1.0M capture totals; the free-agency component is $6.05M uncut / $1.82M capture. | Model the renewal portfolio with the role-controlled coefficient. |
 | Coach / personnel | Role stickiness and the performance null; the chunk protects the coach. | "The depth chart is a status market." | Review the largest role gaps; keep the starting lineup intact. |
 | Analytics | The transfer matrix and the reliability gates. | The DL signal as a WR/DB result. | Re-run the reliability and out-of-sample checks in the team's own data. |
 | League office | The rookie-scale/role-pipeline question; the measurement is position-specific. | Club-specific blame or a causal claim. | Ask whether the role pipeline uses the signals the testing shows. |
@@ -69,8 +71,8 @@ association, not a causal effect.
 | Performance→role null in DL/WR/OL/TE | descriptive | `outputs/discovery/role_allocation_positions.csv` |
 | EDGE/S/CB pricing gaps 0.326/0.331/0.224 | measured association | `implications/markets/outputs/position_pricing.csv` |
 | Free-agency APY role premium +0.179 (0.022, 0.336) | measured association | `implications/free_agency/outputs/role_premium.csv` |
-| Free-agency contract $6.05M base / $0.38M conservative | inference | `implications/free_agency/outputs/valuation_summary.csv` |
-| Portfolio $11.03M base / $5.37M conservative / −$0.68M low | inference | `implications/markets/outputs/portfolio.csv` |
+| Free-agency contract $6.05M uncut / $1.82M capture base; $0.38M uncut / −$0.45M capture conservative | inference | `implications/free_agency/outputs/valuation_summary.csv` |
+| Portfolio uncut $11.03M / $5.37M / $0.18M; capture $6.80M / $4.54M / −$0.99M | inference | `implications/markets/outputs/portfolio.csv` |
 | Coaching retention 0.52 → 0.97 by wins quartile | descriptive | `implications/markets/outputs/coaching_descriptive.csv` |
 | ST reliability K 0.11 / P 0.46 / RET 0.78 | descriptive | `implications/markets/outputs/st_reliability.csv` |
 
@@ -79,7 +81,7 @@ association, not a causal effect.
 | Objection | Response |
 |---|---|
 | "The Combine signal is real; why not use it everywhere?" | It is real for DL, borderline for EDGE, weak for WR, and unidentifiable for TE/OL/DB. Use it only where it passes the reliability gate. |
-| "The portfolio is dominated by one number." | The contract correction is still the largest single market ($6.05M), but it is no longer dominant; the old $24.9M was an upper-tail team. The conservative and low cases are reported alongside the base. |
+| "The portfolio is dominated by one number." | The contract correction is still the largest single market ($6.05M uncut / $1.82M capture), but it is no longer dominant; the old $24.9M was an upper-tail team. The conservative and low capture cases are reported alongside the base. |
 | "The pricing gap is not causal." | Correct. It is a measured association plus a haircut assumption. The market model is an inference. |
 | "You are double-counting role and contract." | No. Position markets count selection + role; the free-agency row is the dedicated bottom-up report; the position contract rows are legacy top-down display only. The low-case convention covers shared drivers. |
 | "Coaching and special teams are missing." | They are descriptive: retention tracks wins; ST fails the reliability gate. They carry no dollar claim. |
@@ -89,8 +91,9 @@ association, not a causal effect.
 
 1. Not "the DL burst predicts WR/DB/OL performance." The measurement is
    position-specific.
-2. Not "the portfolio proves $11M." It is an inference with a conservative
-   $5.4M view and a −$0.7M low case; the free-agency component is $6.05M/$0.38M.
+2. Not "the portfolio proves $11M." It is an inference with an uncut $5.4M
+   conservative and $0.2M low; the capture total is $6.8M/$4.5M/−$1.0M; the
+   free-agency component is $6.05M uncut / $1.82M capture.
 3. Not "the pricing correction causes lower pay." It is an association plus an
    assumption.
 4. Not "the depth chart is irrational." The pattern is about information and

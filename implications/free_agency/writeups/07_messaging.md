@@ -9,12 +9,14 @@ role. Price the role.
 
 1. **The APY role premium is measurable, but fragile.** +0.179 log points in the
    2026 class (0.022 to 0.336); +0.185 in the 2025 cap ledger; +0.105 in the
-   2025 active APY cross-check; +0.029 in 2024.
+   2025 active APY cross-check; +0.029 in 2024. Adding contract length and
+   guarantee share reduces the 2026 gap to +0.049 (−0.093 to 0.191, n=253); the
+   premium is not robust to contract-structure controls.
 2. **Role is priced in guarantees and length.** A higher snap share predicts a
    higher guarantee share (0.46 → 0.60 across quintiles) and more years.
 3. **The dollars are concentrated and the old estimate was upper-tail.** The top
    10% of contracts carry 51% of the positive role premium; the median team is
-   $7.05M annual, the old top-down $24.9M is the 90.6th percentile.
+   $7.05M uncut, the old top-down $24.9M is the 90.6th percentile.
 
 **Foundation:** the tiers. The 2026 APY gap is a measured association; the
 guarantee/length links are measured associations; the team and dollar values
@@ -23,16 +25,18 @@ order is explicit.
 
 ## Three lengths
 
-**One sentence.** The free-agent market pays a measurable role premium, but it
-is concentrated in a small high-APY tail; a median team's actual renewal wave is
-about $6M net per year, not the $25M the synthetic portfolio implied.
+**One sentence.** The free-agent market shows a measurable role premium, but it
+is concentrated in a small high-APY tail; a median team's actual renewal wave
+carries about $7M uncut, or about $1.8M net at the 0.40 capture assumption, not
+the $25M the synthetic portfolio implied.
 
 **Three sentences.** The 2026 free-agent APY role premium is +0.179 log points
-(0.022 to 0.336), close to the 2025 cap-ledger gap of 0.185. Role also predicts
-guarantees and contract length, so the correction is not only headline APY. But
-the premium is concentrated: the top 10% of contracts carry 51% of it, and the
-old $24.9M is a 90th-percentile team; the median team is about $7.05M gross /
-$6.05M net.
+(0.022 to 0.336), close to the 2025 cap-ledger gap of 0.185, but it falls to
++0.049 when contract length and guarantee share are added as commitment
+controls. Role also predicts guarantees and contract length, so the correction
+is not only headline APY. The premium is concentrated: the top 10% of contracts
+carry 51% of it, and the old $24.9M is a 90th-percentile team; the median team
+is about $7.05M uncut / $1.82M capture net.
 
 **One paragraph.** The market portfolio's free-agency number was top-down: a
 coefficient difference multiplied by a synthetic portfolio. The player-level
@@ -40,18 +44,19 @@ investigation uses the actual 2026 signing class. The APY role premium is +0.179
 (0.022 to 0.336, n=306), close to the cap-ledger 0.185; the 2025 cross-check is
 0.105 and the 2024 sample is null. Role predicts guarantees and length. The
 premium is concentrated: 16 contracts carry half of it, and the median team is
-$7.05M annual. The old $24.9M is the 90.6th percentile; the conservative
-EDGE/S/CB subset is $1.38M gross / $0.38M net. The honest message is: price the
-role, target the tail, and do not sell a median team the top-decile number.
+$7.05M uncut / $1.82M capture net. The old $24.9M is the 90.6th percentile; the
+conservative EDGE/S/CB subset is $1.38M uncut / −$0.45M capture net. The honest
+message is: price the role, target the tail, and do not sell a median team the
+top-decile number.
 
 ## Audience framings
 
 | Audience | Lead with | Do not lead with | The ask |
 |---|---|---|---|
-| GM / roster | The role premium and the concentrated tail; median team ~$6M net. | The old $24.9M as the typical case. | Price the next renewal wave on role-controlled performance. |
+| GM / roster | The role premium and the concentrated tail; median team ~$7M uncut / ~$1.8M capture net. | The old $24.9M as the typical case. | Price the next renewal wave on role-controlled performance. |
 | Cap manager | APY, guarantees, and length together; role predicts guarantees. | APY alone, or a promise of cash savings. | Model the team's own renewal ledger; target the top decile. |
 | Analytics | The 2026 APY gap, the 2025 cross-check, the 2024 null, the draft-matched 0.151. | A single coefficient without the sample and robustness. | Re-run the model in the team's own data. |
-| Agent / player | The market pays performance; role is part of the price. | "Players are overpaid"; the model is not a verdict. | Negotiate on role and guarantees, not only APY. |
+| Agent / player | The market pays performance; role is part of the price. The model is symmetric; an agent can use the same coefficient to argue role is underpriced. | "Players are overpaid"; the model is not a verdict. | Negotiate on role and guarantees, not only APY. |
 | League office | The contract-market role premium; the concentration. | Club-specific blame. | Ask whether the renewal market prices role consistently. |
 | Media / portfolio | The measured association, the distribution, the upper-tail correction. | A single big number. | Keep the measured/descriptive/inferred separation explicit. |
 
@@ -74,7 +79,7 @@ role, target the tail, and do not sell a median team the top-decile number.
 
 | Objection | Response |
 |---|---|
-| "The old report said $24.9M." | That was a synthetic upper-tail team. The actual median team's 2026 class is $7.05M gross / $6.05M net; the old number is the 90.6th percentile. |
+| "The old report said $24.9M." | That was a synthetic upper-tail team. The actual median team's 2026 class is $7.05M uncut / $1.82M capture net; the old number is the 90.6th percentile. |
 | "The 2025 cross-check is only 0.105." | Correct. The 2026 event sample is the appropriate pre-signing sample and is larger; the 2025 active-contract sample is a cross-check, not the primary. |
 | "The 2024 sample is null." | It is thin (n=132) and uses concurrent performance; it is a sensitivity, not a rejection. |
 | "Draft capital absorbs the gap." | It absorbs part: 0.179 → 0.151 in the draft-matched sample. The gap survives, but smaller. |

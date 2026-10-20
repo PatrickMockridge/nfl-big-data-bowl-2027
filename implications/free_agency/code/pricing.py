@@ -277,6 +277,16 @@ def main() -> None:
         row, m = role_premium(d, sample, year_fe=year_fe)
         premiums.append(row)
         models.append(m)
+    # Expected-role / commitment sensitivity: contract length and guarantee
+    # share are proxies for the role the team expects to buy.
+    for label, extra in [
+        ("fa_2026_years", " + years"),
+        ("fa_2026_guarantee", " + guarantee_share"),
+        ("fa_2026_expected_role", " + years + guarantee_share"),
+    ]:
+        row, m = role_premium(fa, label, extra=extra, min_n=60)
+        premiums.append(row)
+        models.append(m)
     cap_row, cap_models = cap_ledger_models()
     premiums.append(cap_row)
     models.append(cap_models)

@@ -281,6 +281,12 @@ def l1_table(
     out["p_holm"] = np.nan
     if valid.any():
         out.loc[valid, "p_holm"] = holm_adjust(out.loc[valid, "p"])
+    borderline = (
+        out["p_holm"].notna()
+        & out["p_holm"].gt(0.05)
+        & out["status"].eq("supported")
+    )
+    out.loc[borderline, "status"] = "borderline"
     return out
 
 

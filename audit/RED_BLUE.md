@@ -51,7 +51,7 @@ the dates the repo records:
 | 2026-10-19 | `docs/AGENT_MODEL_PROTOCOL.md` | Two-agent allocation model as Tier 2 support | Model-reproduced |
 | 2026-10-20 | `implications/` | One-team dollar model: $6.6M gross / $5.6M net / $2.3M EV | Inference |
 | 2026-10-20 | `implications/markets/` | Top-down portfolio $24.9M, then bottom-up override $11.03M total | Inference |
-| 2026-10-20 | `implications/free_agency/` | Bottom-up role premium $7.05M gross / $6.05M net | Inference |
+| 2026-10-20 | `implications/free_agency/` | Bottom-up role premium $7.05M uncut / $1.82M capture net | Inference |
 | 2026-10-20 | `README.md` | Headline moves to the free-agent role premium | Inference |
 
 The preregistered novelty check said public notebooks already cover DL bend,
@@ -784,14 +784,19 @@ class; the free-agent sample is selected (only signed players with a prior
 performance row); APY is not cash; performance is noisy and role is reliable, so
 attenuation can manufacture part of the gap; prior snap share is a proxy for
 expected role, not a measure of unearned role. The model cannot distinguish
-"teams pay for role" from "teams pay for unmeasured productivity."
-**Blue.** The association is close to the 2025 cap-ledger gap (+0.185), the
-draft-matched gap survives (+0.151), and the repo labels the estimate a measured
-association, not causal.
-**Verdict.** Survives with label: "conditional association in one class; not an
-unearned-role or causal estimate." **Residual risk:** High.
-**What would settle it.** Errors-in-variables correction and an expected-role
-control.
+"teams pay for role" from "teams pay for unmeasured productivity." Adding
+contract length and guarantee share as commitment controls reduces the gap to
+**+0.049** (−0.093 to 0.191, n=253); years alone gives +0.076, guarantee share
+alone +0.150. The premium is not robust to contract-structure controls.
+**Blue.** The unconditional association is close to the 2025 cap-ledger gap
+(+0.185), the draft-matched gap survives (+0.151), and the repo labels the
+estimate a measured association, not causal.
+**Verdict.** Downgrade: the unconditional gap is +0.179; the
+commitment-controlled gap is +0.049 (CI crosses zero). Report both. **Residual
+risk:** High.
+**What would settle it.** A forward-role measure (not available for the 2026
+class), an errors-in-variables correction, and a pre-registered test of the
+contract-structure controls.
 
 #### F2. 2025 cap-ledger +0.185
 
@@ -1258,10 +1263,13 @@ numbers are stable across the writeups.
 | F1 | How much of the role premium is attenuation? | Errors-in-variables correction. |
 | F1 | How much is expected role? | A forward-role or contract-length control. |
 
-## 6. Remediation register (not applied)
+## 6. Remediation register
 
-These are the changes the audit would make if the decision were not "audit
-only." Each is a recommendation; the public files are unchanged.
+These are the original recommendations. A first remediation pass has applied
+the dual-dollar presentation, the transfer Holm status, the count fixes, and
+the frozen-entry erratum; the applied/remaining status for each finding is in
+[scorecard.csv](scorecard.csv). The judged entry is unchanged; its corrections
+are in [ERRATUM.md](ERRATUM.md).
 
 | Location | Current | Recommended |
 |---|---|---|

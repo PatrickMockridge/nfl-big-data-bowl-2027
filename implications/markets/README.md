@@ -20,22 +20,32 @@ supports, and carry every number's evidence tier.
 | OL | $0.89M | $0.89M | −$0.33M | allocation only |
 | DB (CB/S) | $0.00M | $0.00M | $0.00M | legacy contract display; free agency is bottom-up |
 | TE | $0.00M | $0.00M | $0.00M | unidentifiable / thin |
-| Free agency / contract | $6.05M | $0.38M | $0.02M | dedicated bottom-up report |
-| **Portfolio total** | **$11.03M** | **$5.37M** | **−$0.68M** | inference |
+| Free agency / contract | $6.05M uncut / $1.82M capture | $0.38M uncut / −$0.45M capture | $0.88M uncut / −$0.29M capture | dedicated bottom-up report |
+| **Portfolio total (uncut)** | **$11.03M** | **$5.37M** | **$0.18M** | inference |
 
-- The portfolio base is **$11.0M/year**, the conservative view is **$5.4M**,
-  and the low case is **−$0.7M**. The expected value at the base adoption
-  probabilities is **$4.4M**.
+**Dual totals.**
+
+| Total | Base | Conservative | Low |
+|---|---:|---:|---:|
+| Uncut premium | **$11.03M** | **$5.37M** | **$0.18M** |
+| Capturable at the scenario haircut | **$6.80M** | **$4.54M** | **−$0.99M** |
+
+- The uncut total is **$11.03M base / $5.37M conservative / $0.18M low**. The
+  capturable total is **$6.80M / $4.54M / −$0.99M**. The low stress case is the
+  capturable **−$0.99M**, not the uncut $0.18M. The uncut EV is **$4.41M**;
+  the capture EV is **$2.72M**.
 - The conservative and low columns are different stress axes: conservative
-  zeroes the pricing gaps whose CI includes zero; low uses the low assumptions
-  throughout. Neither is a confidence interval.
-- The contract market is still the largest single market: **$6.05M base /
-  $0.38M conservative**, versus about **$5.0M** for all position selection +
-  role. It is no longer an order of magnitude larger. The dedicated
+  zeroes the pricing gaps whose CI includes zero in the contract/free-agency
+  market; low uses the low assumptions throughout. Position-market nets have no
+  pricing-gap leg, so their conservative equals base. Neither column is a
+  confidence interval.
+- The contract market is still the largest single market: **$6.05M uncut /
+  $1.82M capture base; $0.38M uncut / −$0.45M capture conservative**, versus
+  about **$5.0M** for all position selection + role. The dedicated
   [`free_agency/`](../free_agency/) report found the old **$24.9M** was a
   90.6th-percentile synthetic portfolio, not the median team's actual 2026
   signing class.
-- The DL anchor's full package still reconciles to **$6.6M gross / $5.6M net**;
+- The DL anchor's legacy one-team package still reconciles to **$6.6M gross / $5.6M net**;
   the portfolio counts its selection + role ($2.45M). Its contract route is
   part of the legacy top-down estimate and is **superseded** by the dedicated
   [`free_agency/`](../free_agency/) bottom-up report; it is not counted

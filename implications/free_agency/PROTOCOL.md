@@ -32,7 +32,7 @@ and the report says so.
 | 2025 OTC cap ledger (`rent_players.csv`) | 909 with `perf_z` | cap-number reconciliation, cash robustness | one season; cap hit not APY |
 | 2025 active APY contracts (`contract_players.csv`, season 2025) | 932; 496 with `perf_z` | APY cross-check | ~48% of 2025 snaps |
 | 2026 free-agent class (`player_contracts.csv`, `start == 2026`) | 1,046 signings; ~594 with 2025 performance | primary pre-signing event sample | no signing dates; type inferred |
-| Historical contracts (`historical_contracts.csv.gz`) | 31,893, 1983–2022 | positional value, guarantees, age trends | no performance link |
+| Historical contracts (`historical_contracts.csv.gz`) | 31,893 raw; 30,769 after dropping `year_signed=0`, 1983–2022 | positional value, guarantees, age trends | no performance link |
 | 2024 contracts | 430 active rows | sensitivity | thin |
 
 **Primary pre-signing model:** 2026 signings with a 2025 performance row,
@@ -41,12 +41,13 @@ excluding rookie deals and players without prior-season performance. The full
 
 **Data audit correction (2026-10-20).** The first panel build found 1,086
 contract rows / 1,043 players in the 2026 class, 696 with 2025 snaps, **307 with
-a 2025 performance row**, and **302 non-rookie veterans with non-null
-`perf_z`** (115 re-sign, 187 team-change). The "~594 with performance" figure in
-the samples table counted a performance row, not a non-null `perf_z`. The
-primary 2026 model therefore uses n=302; the pooled 2025+2026 APY model (with a
-sample dummy) is the larger cross-check. This is a sample-size correction, not a
-gate change.
+a 2025 performance row**, and **306 with a usable APY and non-null `perf_z`**
+(one of the 307 has no usable APY). The 306 are non-rookie; the role model uses
+**n=301** because five lack a non-missing `snap_share`. The "~594 with
+performance" figure in the samples table counted a performance row, not a
+non-null `perf_z`. The primary 2026 model therefore uses n=306; the pooled
+2025+2026 APY model (with a sample dummy) is the larger cross-check. This is a
+sample-size correction, not a gate change.
 
 **Primary cross-check:** 2025 active APY contracts with 2025 performance.
 

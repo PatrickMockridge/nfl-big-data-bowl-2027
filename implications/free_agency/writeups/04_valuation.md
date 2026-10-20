@@ -3,24 +3,30 @@
 ## The estimate
 
 The one-team estimate is the **median team's annual role premium** in the 2026
-signing class. The league total is context; the mean is reported because the
-distribution is skewed.
+signing class. The uncut premium is the market attribution. The capture is the
+part a team can realize at the scenario haircut, after implementation cost. The
+league total is context; the mean is reported because the distribution is
+skewed.
 
-| Scenario | Gross $M/yr | Contract-total median $M | Cost $M | Net $M/yr | EV $M/yr |
-|---|---:|---:|---:|---:|---:|
-| Low (supported positions, 0.15 haircut) | 0.52 | 0.42 | 0.50 | 0.02 | 0.00 |
-| **Base (all positions, 0.40)** | **7.05** | **5.80** | **1.00** | **6.05** | **2.42** |
-| Conservative (EDGE/S/CB, 0.40) | 1.38 | 1.13 | 1.00 | 0.38 | 0.15 |
-| High (all positions, 0.60) | 10.57 | 8.70 | 2.00 | 8.57 | 5.14 |
+| Scenario | Positions | Uncut annual | Haircut | Capture gross | Cost | Capture net | Capture EV | Contract-total median |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| Low | EDGE/S/CB | 1.38 | 0.15 | 0.21 | 0.50 | **−0.29** | −0.06 | 0.42 |
+| **Base** | all | **7.05** | **0.40** | **2.82** | **1.00** | **1.82** | **0.73** | **5.80** |
+| Conservative | EDGE/S/CB | 1.38 | 0.40 | 0.55 | 1.00 | **−0.45** | −0.18 | 1.13 |
+| High | all | 7.05 | 0.60 | 4.23 | 2.00 | **2.23** | 1.34 | 8.70 |
 
-The **base** is $7.05M gross / $6.05M net / $2.42M expected at 40% adoption.
-The **conservative** view keeps only the positions whose cap-ledger role-premium
-CI is above zero (EDGE, S, CB) and is $1.38M gross / $0.38M net. The **low**
-case is near zero.
+The **base** is $7.05M uncut / $2.82M gross / $1.82M net at the 0.40 capture
+assumption, or $0.73M expected at 40% adoption. The **conservative** view keeps
+only the positions whose cap-ledger role-premium CI is above zero (EDGE, S, CB)
+and is $1.38M uncut / $0.55M gross / **−$0.45M net**: the capture does not cover
+the $1M implementation cost. The **low** case is $1.38M uncut / $0.21M gross /
+**−$0.29M net**. The conservative and low capture cases are negative; the uncut
+premium stays positive.
 
 The base covers the median team's 9 contracts with observed APY, performance,
 role, age, and team. The contract-total median ($5.80M) multiplies the APY
-premium by contract years and the 0.40 haircut.
+premium by contract years and the 0.40 haircut; it is multi-year and is not
+comparable to the annual capture.
 
 ## Team distribution
 
@@ -47,12 +53,13 @@ $10.73M; the top decile starts at $22.5M. The **old top-down $24.91M sits at the
 | Old top-down base | 24.91 | synthetic one-team portfolio |
 | Old top-down conservative | 13.97 | CI-supported positions |
 | Old top-down low | 5.33 | low assumptions |
-| New median team annual | 7.05 | actual 2026 signings |
-| New mean team annual | 10.73 | distribution mean |
+| New median team annual | 7.05 | actual 2026 signings; uncut |
+| New median team capture net | 1.82 | uncut × 0.40 − $1M |
+| New mean team annual | 10.73 | distribution mean; uncut |
 | New median team contract total | 5.80 | APY premium × years × 0.40 |
 | New league annual | 343.37 | all 32 teams; context only |
 | Old base percentile | 90.6% | share of teams below $24.9M |
-| New supported median annual | 1.38 | EDGE/S/CB only |
+| New supported median annual | 1.38 | EDGE/S/CB only; uncut |
 
 The difference is not one error. It is the combination of:
 
@@ -75,8 +82,9 @@ The difference is not one error. It is the combination of:
 
 The honest conclusion: **the free-agency lever is real, but the old $24.9M was
 an upper-tail team's synthetic portfolio, not the median team's actual
-renewal wave.** The median team's bottom-up base is about $6M net per year; the
-CI-supported subset is about $0.4M.
+renewal wave.** The median team's uncut premium is $7.05M; the capture at 0.40
+is $1.82M net. The CI-supported subset is $1.38M uncut and **−$0.45M net**: at
+the base haircut it does not cover the implementation cost.
 
 ![Top-down vs bottom-up and the team distribution.](figures/fa_valuation.png)
 
@@ -87,21 +95,26 @@ CI-supported subset is about $0.4M.
 
 | Population | Net P10 | Net P50 | Net P90 | EV P50 | P(net > 0) |
 |---|---:|---:|---:|---:|---:|
-| All positions | 3.35 | 5.96 | 9.23 | 2.32 | 1.00 |
-| EDGE/S/CB only | −0.69 | 0.09 | 0.87 | 0.03 | 0.56 |
+| All positions, uncut | 3.35 | 5.96 | 9.23 | 2.32 | 1.00 |
+| All positions, capture at 0.40 | 0.58 | 1.69 | 3.04 | 0.65 | 0.98 |
+| EDGE/S/CB only, uncut | −0.69 | 0.09 | 0.87 | 0.03 | 0.56 |
+| EDGE/S/CB, capture at 0.40 | −1.16 | −0.65 | −0.19 | −0.25 | 0.03 |
 
-The all-position case is positive across the draws; the CI-supported subset is
-a coin flip. That is why the report leads with both.
+The all-position uncut case is positive across the draws; the CI-supported
+capture is negative in 97% of draws. That is why the report leads with both the
+uncut premium and the capture.
 
 ## Portfolio update
 
 The market portfolio now uses this report's bottom-up summary:
 
-- Free agency: **$6.05M base / $0.38M conservative / $0.02M low**.
-- Portfolio total: **$11.03M base / $5.37M conservative / −$0.68M low**.
-- The free-agency market is still the largest single market ($6.05M versus
-  $2.45M for the DL anchor's selection + role), but no longer an order of
-  magnitude larger.
+- Free agency: **$6.05M uncut / $1.82M capture base; $0.38M uncut / −$0.45M
+  capture conservative; $0.88M uncut / −$0.29M capture low**.
+- Portfolio uncut total: **$11.03M base / $5.37M conservative / $0.18M low**.
+  Portfolio capture total: **$6.80M base / $4.54M conservative / −$0.99M low**.
+- The free-agency market is still the largest single market ($6.05M uncut /
+  $1.82M capture versus $2.45M for the DL anchor's selection + role), but no
+  longer an order of magnitude larger.
 - The old top-down components remain in `contract_components.csv` as a
   `legacy_top_down` cross-check; they are not added to the portfolio.
 

@@ -80,25 +80,32 @@ def summary(d: pd.DataFrame) -> pd.DataFrame:
         teams = team_table(sub, cfg["positions"])
         median_annual = float(teams["annual_role_premium_m"].median())
         median_total = float(teams["contract_total_m"].median())
-        # The annual role premium is measured at the 0.40 haircut; scale it to
-        # the scenario haircut for comparability with the contract-total view.
-        gross = median_annual * (cfg["haircut"] / 0.40)
+        # The uncut annual premium is the market fact. The capture is the part
+        # a team can realize at the scenario haircut, after implementation cost.
+        gross = median_annual
         net = gross - cfg["cost"]
+        capture_gross = median_annual * cfg["haircut"]
+        capture_net = capture_gross - cfg["cost"]
         rows.append(
             {
                 "scenario": scenario,
+                "uncut_annual_m": median_annual,
                 "gross_m": gross,
+                "capture_gross_m": capture_gross,
                 "contract_total_median_m": median_total,
                 "implementation_cost_m": cfg["cost"],
                 "net_m": net,
+                "capture_net_m": capture_net,
                 "ev_m": net * cfg["adoption"],
+                "capture_ev_m": capture_net * cfg["adoption"],
                 "method": "bottom_up",
                 "n_contracts": int(teams["n"].median()),
                 "n_teams": int(len(teams)),
                 "positions": cfg["positions"],
                 "haircut": cfg["haircut"],
                 "notes": (
-                    "Median team, annual role premium. "
+                    "Median team. uncut=annual role premium; "
+                    "capture=uncut*haircut-cost. "
                     f"positions={cfg['positions']}; haircut={cfg['haircut']}."
                 ),
             }
@@ -142,7 +149,13 @@ def bridge(d: pd.DataFrame) -> pd.DataFrame:
         {
             "measure": "new_median_team_annual_m",
             "value": float(annual.median()),
-            "note": "actual 2026 signings; median team",
+            "note": "actual 2026 signings; median team; uncut",
+        },
+        {
+            "measure": "new_median_team_capture_net_m",
+            "value": float(annual.median()) * SCENARIOS["base"]["haircut"]
+            - SCENARIOS["base"]["cost"],
+            "note": "median team; uncut annual x 0.40 minus $1M",
         },
         {
             "measure": "new_mean_team_annual_m",
@@ -186,11 +199,14 @@ def monte_carlo(d: pd.DataFrame, n: int = 20000, seed: int = SEED) -> pd.DataFra
             haircut = rng.triangular(0.15, 0.40, 0.60)
             cost = rng.triangular(0.5, 1.0, 2.0)
             adoption = rng.triangular(0.2, 0.4, 0.6)
-            gross = float(np.median(sample) * (haircut / 0.40))
-            net = gross - cost
-            draws.append((net, net * adoption))
+            uncut = float(np.median(sample))
+            net = uncut - cost
+            capture_net = uncut * haircut - cost
+            draws.append((net, net * adoption, capture_net, capture_net * adoption))
         draws = np.array(draws)
-        for i, metric in enumerate(["net_m", "ev_m"]):
+        for i, metric in enumerate(
+            ["net_m", "ev_m", "capture_net_m", "capture_ev_m"]
+        ):
             values = draws[:, i]
             rows.append(
                 {

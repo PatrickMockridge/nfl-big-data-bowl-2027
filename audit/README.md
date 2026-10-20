@@ -6,14 +6,29 @@ on Kaggle. Date-stamped **2026-10-20**.
 
 **Contents:** [RED_BLUE.md](RED_BLUE.md) — the red/blue audit ·
 [COOPTATION.md](COOPTATION.md) — external readings and insider threat ·
+[RECEPTION.md](RECEPTION.md) — practical/values objections ·
+[ERRATUM.md](ERRATUM.md) — corrections to the frozen entry ·
 [scorecard.csv](scorecard.csv) — all 68 findings, one row each.
 
-> **Audit only.** The public README and the extension writeups have not been
-> changed. Where a verdict is *downgrade* or *concede*, the remediation register
-> at the end of [RED_BLUE.md](RED_BLUE.md) records the recommended wording and
-> the line it would replace. The public summaries therefore still carry the
-> stronger claim. This document exists so the gap is visible, not so it can be
-> hidden.
+> **Audit and remediation.** The audit itself did not change the judged entry.
+> A first remediation pass has now corrected the extensions and the root README;
+> the judged entry is unchanged, and its corrections are recorded in
+> [ERRATUM.md](ERRATUM.md). The remediation status of each finding is in
+> [scorecard.csv](scorecard.csv). This document exists so the gap is visible,
+> not so it can be hidden.
+
+**Remediation status (2026-10-20).** Closed by the first pass: the uncut/capture
+dual presentation (F10/F11/F17), the negative conservative/low capture
+(F12/F13), the transfer Holm status (T4), the count reconciliation (X13), the
+"does not detectably" wording (X1), and the erratum for the frozen entry
+(J4/J9 and the other frozen-entry claims). Partially closed: the portfolio dual
+totals (M4/X8; the overlap remains), and the one-table dollar reconciliation
+(X9; legacy numbers remain in the extension writeups). The expected-role check
+downgraded F1/F19 and is reported: the premium falls from +0.179 to +0.049 with
+contract-term controls. Open: the haircut judgment (F15), the attenuation
+check, the joint overlap model, and the identification critiques. See
+[RECEPTION.md](RECEPTION.md) for the practical/values objections and the
+remaining irreducible dismissals.
 
 ## Bottom line
 
@@ -27,8 +42,8 @@ allocation gap is descriptive, not structural. The transfer template is not
 established outside defensive line. The market portfolio is a scenario, not a
 valuation, and its base is an arithmetic sum of non-additive routes. The
 free-agency role premium is a conditional association, not an unearned premium;
-its dollar value depends on judgment parameters, and the annual headline is not
-haircut-adjusted.
+its dollar value depends on judgment parameters, and the headline now shows the
+uncut premium and the haircut-adjusted capture side by side.
 
 The most serious problems are:
 
@@ -39,8 +54,10 @@ The most serious problems are:
 - the sack claim, whose outcome reliability is below the repo's own gate;
 - the Tier 2 wedge, which is relabeled regressions rather than behavioral
   evidence;
-- the uncut annual dollar headline;
-- four different headline dollar numbers across four READMEs.
+- the dollar's judgment parameters (haircut, cost, adoption), now shown in the
+  dual presentation;
+- four different dollar numbers across the artifacts, now reconciled in the
+  dual table but still present in the extension writeups.
 
 None of these makes the work worthless. Several make the public headline
 stronger than the evidence. The co-optation risk in
@@ -86,14 +103,15 @@ evidence); *moderate* (partial answer; caveat needed); *weak* (attack lands);
 | I — original implications | 6 | 1 | 5 | 1 |
 | T — transfer | 9 | 0 | 3 | 0 |
 | M — market portfolio | 9 | 1 | 3 | 1 |
-| F — free agency | 19 | 3 | 4 | 1 |
+| F — free agency | 19 | 3 | 6 | 1 |
 | X — cross-cutting | 13 | 2 | 9 | 1 |
-| **Total** | **68** | **9** | **31** | **4** |
+| **Total** | **68** | **9** | **33** | **4** |
 
-Verdict distribution: 5 survive, 26 survive with label, 26 downgrade, 5 concede,
+Verdict distribution: 5 survive, 24 survive with label, 28 downgrade, 5 concede,
 4 unresolved, 2 out of scope. The skew toward "survives with label" is the
 finding: the repo already labels most of its claims, but the labels do not
-travel to the headline.
+travel to the headline. The expected-role check moved F1 and F19 from "survives
+with label" to "downgrade."
 
 **Read by scope.** The verdicts are not equally important. The public headline
 depends on a small set: F10/F11 (the uncut annual dollar), J1–J4 (the pressure
@@ -104,9 +122,10 @@ measured core survives on its own.
 
 ## The ten most dangerous findings
 
-1. **The annual headline is not haircut-adjusted** (F10/F11). The $6.05M net is
-   the uncut premium minus $1M. At the base 0.40 haircut, the annual capture is
-   about $2.8M gross / $1.8M net.
+1. **The annual headline is not haircut-adjusted** (F10/F11). *Closed by the
+   dual presentation.* The $6.05M net was the uncut premium minus $1M; the
+   README now shows $7.05M uncut and about $2.8M gross / $1.8M net at the base
+   0.40 capture assumption.
 2. **"Nine parts role" is contradicted by the repo's own decomposition and
    banned by its own messaging guide** (J9).
 3. **"Position-specific" fails the entry's own go/no-go** (J4). EDGE pressure
@@ -123,7 +142,8 @@ measured core survives on its own.
 8. **Four different headline dollar numbers** (X9). $6.6M, $24.9M, $7.05M, and
    $11.03M in four READMEs.
 9. **The allocation and contract levers are substitutes, not additive** (M4/X8).
-   The base $11.03M assumes independence; the low case is −$0.68M.
+   The base $11.03M assumes independence; the capturable low is −$0.99M, the
+   uncut low is $0.18M, and the overlap remains open.
 10. **Co-optation and insider threat** (X12, [COOPTATION.md](COOPTATION.md)).
     The work arms external critiques and gives insiders reasons to reject it
     regardless of merit.
@@ -139,7 +159,7 @@ measured core survives on its own.
 | 2025 cap gap (+0.185) | Survives with label | Cap hit, not APY or cash. |
 | Draft-matched gap (+0.151) | Survives with label | Smaller; still model-dependent. |
 | Transfer nulls (TE/OL/DB) | Survives | Unidentifiable for measurement reasons, not no effect. |
-| Portfolio low case (−$0.68M) | Survives (as disclosure) | The honest stress case; the headline total is still a downgrade. |
+| Portfolio capture low (−$0.99M) | Survives (as disclosure) | The honest stress case; the uncut low is $0.18M; the headline total is still a downgrade. |
 | Tier discipline | Survives | The repo separates measured, descriptive, inferred, and normative claims. |
 
 ## Read this in order
