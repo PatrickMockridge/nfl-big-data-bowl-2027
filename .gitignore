@@ -4,6 +4,7 @@
 /notebooks/figures/
 /implications/outputs/
 /implications/markets/outputs/
+/implications/free_agency/outputs/
 .venv/
 __pycache__/
 *.pyc
