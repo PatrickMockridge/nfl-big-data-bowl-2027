@@ -34,3 +34,22 @@ alignment_blue_min: 0.70    # Blue: A > 0.70
 mobius_flip_rate_threshold: 0.25
 mobius_dwell_threshold: 12
 mobius_yellow_count_threshold: 10
+
+# Transfer extension (docs/TRANSFER_PROTOCOL.md). Tier 1 descriptive only.
+transfer:
+  seed: 20261020
+  signal_reliability_gate: 0.50
+  outcome_reliability_gate: 0.50
+  min_players_primary: 60
+  min_players_exploratory: 40
+  fdr_q: 0.10
+  pricing_unpriced_max: 0.20
+  pricing_priced_min: 0.30
+  bootstrap_draws: 5000
+  # One signal-outcome pair per position; see the protocol for definitions.
+  primary_signals:
+    WR: route_burst
+    TE: route_burst
+    DB: transition_quick
+    OL: pass_set_quick
+    DL: pass_rush_burst
