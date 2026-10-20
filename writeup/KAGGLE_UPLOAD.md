@@ -28,7 +28,7 @@ Alternate (56 characters):
 ## 2. Paste the body
 
 Open `writeup/kaggle_writeup.md` and paste the whole file into the Kaggle
-writeup editor. It is the same 1,814-word writeup as `writeup/submission.md`,
+writeup editor. It is the same 1,819-word writeup as `writeup/submission.md`,
 but the five image paths point at public raw GitHub URLs:
 
 - `measurement_panel.png`
@@ -56,9 +56,14 @@ publicly available and free" (Tom Bliss, discussion 751037).
 
 ## 3. Attach the public notebook
 
-In the writeup's notebook/link field, attach or link:
+In the writeup's notebook/link field, attach or link the **v2** notebook:
 
-https://www.kaggle.com/code/patrickm/nfl-bdb-2027-the-allocation-gap
+https://www.kaggle.com/code/patrickm/nfl-bdb-2027-the-allocation-gap-v2
+
+The v1 notebook remains at
+`https://www.kaggle.com/code/patrickm/nfl-bdb-2027-the-allocation-gap` as the
+original record. Publish `notebooks/03_final_public_v2.ipynb` under the v2
+slug; if the slug is taken, use the published URL and update the writeup.
 
 This satisfies the competition's "attached Public Kaggle Notebook" pass/fail
 requirement.
@@ -83,11 +88,11 @@ container and the notebook is attached to it.
 
 ## Limits check
 
-- Words: 1,814 (limit: 2,000)
+- Words: 1,819 (limit: 2,000)
 - Figures: 5 (three composites + `fa_headline` + `fa_role_premium`)
 - Tables: 4 (dollar scenarios, football scorecard, selected models, robustness)
 - Total visuals: 9 (limit: fewer than 10)
-- Public notebook: yes
+- Public notebook: yes (v2; v1 remains as the original record)
 - Combine sensor tracking → regular-season performance linkage: explicit in
   Part 1 Tier 0 and Part 2 "Models"
 - External salary data: public and free; host confirmed (discussion 751037)

@@ -149,7 +149,7 @@ def net_rent() -> Path:
     ax.tick_params(labelsize=TICK_SIZE)
     _figure_title(
         fig,
-        "The cap pays for performance; the 153-player fade is a rookie-scale subsample.",
+        "Cap charge is associated with performance; the 153-player fade is a rookie-scale subsample.",
         "2025 OTC cap ledger; team-clustered 95% CI; the full ledger is the headline.",
     )
     return _save(fig, "net_rent.png")
