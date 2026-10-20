@@ -17,18 +17,11 @@ distribution runs from $1.81M at P10 to $22.51M at P90.
 | Measure | Value | Note |
 |---|---:|---|
 | **Median team, annual role premium** | **$7.05M** | actual 2026 signings |
-| **After a $1M implementation cost** | **$6.05M** | base |
+| **After a $1M implementation cost** | **$6.05M** | median team |
 | Team distribution (P10 / P50 / P90) | $1.81M / $7.05M / $22.51M | 32 teams |
 | Mean team, annual role premium | $10.73M | distribution is skewed |
 | Conservative: only EDGE/S/CB | $1.38M before cost / $0.38M after | cap-ledger gap CI > 0 |
 | Low case | $0.52M before cost / $0.02M after | near zero |
-
-**What the earlier $24.9M model was.** It estimated the same role premium for a
-hypothetical one-team renewal portfolio: per-position cap-ledger gaps, a 0.40
-haircut, and a portfolio scaled by team positional spending. It did not use
-actual contracts. Against the 32 actual 2026 classes, $24.9M is the **90.6th
-percentile**; the median is $7.05M. The full bridge is in
-[`writeups/04_valuation.md`](writeups/04_valuation.md).
 
 The 2026 free-agent APY role premium is **+0.179 log points** (95% CI 0.022 to
 0.336, n=306), close to the 2025 cap-ledger gap of **0.185** (0.094 to 0.276,
@@ -59,7 +52,7 @@ The market portfolio now uses the bottom-up free-agency estimate:
 4. [`writeups/03_surplus.md`](writeups/03_surplus.md) — player/team residuals
    and concentration.
 5. [`writeups/04_valuation.md`](writeups/04_valuation.md) — bottom-up valuation,
-   the bridge from $24.9M, and the team distribution.
+   the team distribution, and the valuation scenarios.
 6. [`writeups/05_historical.md`](writeups/05_historical.md) — why the historical
    contract file is context, not a census.
 7. [`writeups/06_adoption.md`](writeups/06_adoption.md) — the cap-manager

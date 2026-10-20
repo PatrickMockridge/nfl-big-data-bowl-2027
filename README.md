@@ -22,8 +22,6 @@ The judged entry established the chain: a 10 Hz Combine burst predicts interior 
 - The premium is concentrated: the top 10% of contracts carry **51%** of it. [Surplus details](implications/free_agency/writeups/03_surplus.md), [code](implications/free_agency/code/surplus.py).
 - Team changes do not earn a detectable free-agent premium: +0.499 (95% CI −0.164 to 1.162). [Pricing details](implications/free_agency/writeups/02_pricing.md).
 
-**What the earlier $24.9M model was.** It estimated the same role premium for a hypothetical one-team renewal portfolio: per-position cap-ledger gaps, a 0.40 haircut, and a portfolio scaled by team positional spending. It did not use actual contracts. Against the 32 actual 2026 classes, $24.9M is the 90.6th percentile; the median is $7.05M. See the [legacy note](implications/markets/writeups/03_free_agency.md).
-
 The dollar figures are inferences from the 2026 class, not forecasts or causal estimates. The full investigation is in [`implications/free_agency/`](implications/free_agency/README.md).
 
 ## What the judged entry found
@@ -44,7 +42,7 @@ The brief asked for a non-obvious, actionable linkage between 10 Hz Combine trac
 1. **Non-obvious:** compare the 10 Hz burst with the stopwatch. The burst carries the pressure signal; the stopwatch does not.
 2. **One position:** DL. The cross-position check showed the measurement is position-specific, so the allocation side is what travels.
 3. **Actionable:** a signal that does not change who plays is not useful. The depth chart does not reward performance; the cap does.
-4. **Dollar:** the contract market is where the role premium has a price. The median team's 2026 class is $7.05M a year, or $6.05M after a $1M implementation cost; the earlier $24.9M model was an upper-tail team.
+4. **Dollar:** the contract market is where the role premium has a price. The median team's 2026 class is $7.05M a year, or $6.05M after a $1M implementation cost.
 
 The judging dimensions reported for the event are Innovation, Accuracy, Impact, and Clarity; the official weighted rubric is not public. The NFL [announcement](https://media.nfl.com/news-and-releases/consumer-products/national-football-league-announces-ninth-annual-big-data-bowl-po) states the brief's focus.
 
