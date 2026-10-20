@@ -60,15 +60,12 @@ def _save(fig, name: str) -> None:
 
 
 def headline() -> None:
-    """One-panel README chart: the team distribution versus the old estimate."""
+    """One-panel README chart: the team distribution of the role premium."""
     d = _read("valuation_by_team.csv")
     d = d[d["positions"].eq("all")].sort_values("annual_role_premium_m").reset_index(drop=True)
     values = d["annual_role_premium_m"]
-    bridge = _read("valuation_bridge.csv").set_index("measure")["value"]
     median = float(values.median())
     p90 = float(values.quantile(0.90))
-    old = float(bridge["old_top_down_base_net_m"])
-    old_pct = float(bridge["old_top_down_percentile_in_team_distribution"])
     colors = [BLUE if v >= median else "#9bb9e0" for v in values]
 
     fig, ax = plt.subplots(figsize=(9.4, 5.2))
@@ -76,19 +73,17 @@ def headline() -> None:
     ax.barh(y, values, color=colors, height=0.82)
     ax.axvline(median, color=INK, linewidth=1.4)
     ax.axvline(p90, color=GRAY, linewidth=1.0, linestyle=":")
-    ax.axvline(old, color=RED, linewidth=1.6, linestyle="--")
     ax.set_yticks([])
     ax.set_ylabel("32 teams, sorted")
-    ax.set_xlabel("Annual role premium, actual 2026 signing class ($M/year)")
-    ax.set_xlim(0, max(values.max(), old) * 1.08)
+    ax.set_xlabel("Annual role premium per team ($M/year)")
+    ax.set_xlim(0, values.max() * 1.08)
     fig.suptitle(
-        f"The previous synthetic \\${old:.1f}M estimate was a "
-        f"{old_pct*100:.1f}th-percentile team",
-        x=0.01, y=1.03, ha="left", fontsize=12.5,
+        f"Median team: \\${median:.1f}M a year of role premium",
+        x=0.01, y=1.03, ha="left", fontsize=14.0,
     )
     ax.set_title(
-        f"Median team: \\${median:.2f}M gross / \\${median-1.0:.2f}M net. "
-        "Conservative EDGE/S/CB: \\$1.38M gross / \\$0.38M net.",
+        "Actual 2026 free-agent class. After a \\$1M implementation cost: "
+        f"\\${median-1.0:.1f}M. Conservative EDGE/S/CB: \\$0.38M.",
         loc="left", fontsize=9.0, color=SECONDARY, pad=8,
     )
     box = dict(facecolor=SURFACE, edgecolor="none", pad=2)
@@ -102,15 +97,9 @@ def headline() -> None:
         xytext=(6, 0), textcoords="offset points", fontsize=8.0,
         color=SECONDARY, va="center", bbox=box,
     )
-    ax.annotate(
-        f"previous synthetic \\${old:.1f}M ({old_pct*100:.1f}th pct)",
-        xy=(old, len(d) * 0.55),
-        xytext=(6, 0), textcoords="offset points", fontsize=8.5,
-        color=RED, va="center", bbox=box,
-    )
     ax.text(
         0.99, 0.02,
-        "Actual 2026 signings; APY role premium. Inference, not a forecast.",
+        "Modeled pay associated with role beyond measured performance. Inference, not a forecast.",
         transform=ax.transAxes, ha="right", fontsize=7.8, color=SECONDARY,
     )
     _save(fig, "fa_headline.png")
