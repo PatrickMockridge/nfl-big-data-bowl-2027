@@ -1,9 +1,9 @@
 # Kaggle writeup upload — step by step
 
-**Status (2026-10-20): v2, host-confirmed salary-data revision.** This supersedes the
-original judged v1 text frozen at `c652424`; v1 remains in git history. v2 adds
-the salary tier (Tier 2) and applies the audit wording corrections. The
-measured core is unchanged.
+**Status (2026-10-20): revised writeup, host-confirmed salary data.** This
+supersedes the original judged text frozen at `c652424`; the original remains
+in git history. The revision adds the salary tier (Tier 2) and applies the
+audit wording corrections. The measured core is unchanged.
 
 The writeup page must be created in the Kaggle UI; the Kaggle CLI has no
 command for creating competition writeups. Everything is prepared so the
@@ -28,7 +28,7 @@ Alternate (56 characters):
 ## 2. Paste the body
 
 Open `writeup/kaggle_writeup.md` and paste the whole file into the Kaggle
-writeup editor. It is the same 1,819-word writeup as `writeup/submission.md`,
+writeup editor. It is the same 1,814-word writeup as `writeup/submission.md`,
 but the five image paths point at public raw GitHub URLs:
 
 - `measurement_panel.png`
@@ -39,7 +39,7 @@ but the five image paths point at public raw GitHub URLs:
 
 The URLs currently point at `main`; pin them to the revision commit for
 immutable images. If the writeup page already exists, replace the body with
-this version and republish; the v2 revision adds Tier 2 (the
+this version and republish; the revision adds Tier 2 (the
 contract market) and the dual-dollar figures.
 
 If Kaggle renders the external images, publish directly.
@@ -56,14 +56,15 @@ publicly available and free" (Tom Bliss, discussion 751037).
 
 ## 3. Attach the public notebook
 
-In the writeup's notebook/link field, attach or link the **v2** notebook:
+In the writeup's notebook/link field, attach or link the public notebook:
 
-https://www.kaggle.com/code/patrickm/nfl-bdb-2027-the-allocation-gap-v2
+https://www.kaggle.com/code/patrickm/nfl-bdb-2027-combine-allocation-price
 
-The v1 notebook remains at
+The earlier notebook remains at
 `https://www.kaggle.com/code/patrickm/nfl-bdb-2027-the-allocation-gap` as the
-original record. Publish `notebooks/03_final_public_v2.ipynb` under the v2
-slug; if the slug is taken, use the published URL and update the writeup.
+record. Publish `notebooks/03_final_public_v2.ipynb` under the
+`nfl-bdb-2027-combine-allocation-price` slug; if the slug is taken, use the
+published URL and update the writeup.
 
 This satisfies the competition's "attached Public Kaggle Notebook" pass/fail
 requirement.
@@ -88,16 +89,16 @@ container and the notebook is attached to it.
 
 ## Limits check
 
-- Words: 1,819 (limit: 2,000)
+- Words: 1,814 (limit: 2,000)
 - Figures: 5 (three composites + `fa_headline` + `fa_role_premium`)
 - Tables: 4 (dollar scenarios, football scorecard, selected models, robustness)
 - Total visuals: 9 (limit: fewer than 10)
-- Public notebook: yes (v2; v1 remains as the original record)
+- Public notebook: yes
 - Combine sensor tracking → regular-season performance linkage: explicit in
   Part 1 Tier 0 and Part 2 "Models"
 - External salary data: public and free; host confirmed (discussion 751037)
 - Revision: the original judged text is at `c652424`; this is the
-  v2 revision with host-confirmed salary data
+  revised writeup with host-confirmed salary data
 
 ## Repo
 

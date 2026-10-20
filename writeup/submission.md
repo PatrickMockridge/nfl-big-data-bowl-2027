@@ -107,8 +107,6 @@ Observational; no causal claims. Playing time is snaps per appearance, not depth
 
 ### Code
 
-Public notebook (v2): https://www.kaggle.com/code/patrickm/nfl-bdb-2027-the-allocation-gap-v2
-
-Original notebook (v1): https://www.kaggle.com/code/patrickm/nfl-bdb-2027-the-allocation-gap
+Public notebook: https://www.kaggle.com/code/patrickm/nfl-bdb-2027-combine-allocation-price
 
 Code: [Combine movement](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/features/combine_movement.py), [performance](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/features/performance.py), [cost-risk](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/discovery/cost_risk.py), [agent model](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/blob/main/src/framework/agentic_allocation.py), [free agency](https://github.com/PatrickMockridge/nfl-big-data-bowl-2027/tree/main/implications/free_agency).
