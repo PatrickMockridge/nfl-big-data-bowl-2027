@@ -1,8 +1,9 @@
 # Market portfolio protocol
 
 **Status:** pre-registration for a GitHub-only extension of `implications/`. It
-is not part of the judged Big Data Bowl entry and does not modify the artifacts
-frozen at `c652424`. Date-stamped **2026-10-20**.
+is not part of the original judged Big Data Bowl entry and does not modify the
+original v1 artifacts at `c652424`; the v2 writeup cites the free-agency deep
+dive, not this portfolio. Date-stamped **2026-10-20**.
 
 Every dollar figure in this extension is an **inference**, not a measurement.
 The measured and descriptive inputs are cited to their output files. The

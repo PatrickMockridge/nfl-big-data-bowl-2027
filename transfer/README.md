@@ -1,9 +1,9 @@
 # Transfer extension — which parts of the allocation-gap argument travel?
 
 **Status:** a GitHub-only extension to the 2027 NFL Big Data Bowl entry. It is
-not part of the judged entry, not attached to the competition, and not published
-on Kaggle. The judged artifacts are frozen at `c652424`. Date-stamped
-**2026-10-20**.
+not attached to the competition and is not published on Kaggle. The original
+v1 judged artifacts are at `c652424`; the v2 writeup keeps the transfer results
+outside it. Date-stamped **2026-10-20**.
 
 The judged entry's tiered argument is: a 10 Hz measurement carries a performance
 signal the stopwatch misses; the signal is essentially unpriced by draft; the

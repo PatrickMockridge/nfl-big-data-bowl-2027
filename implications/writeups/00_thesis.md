@@ -1,6 +1,6 @@
 # The stopwatch prices pressure; the depth chart and the cap price something else
 
-**Status:** extension to the 2027 NFL Big Data Bowl entry, not part of it. GitHub only; not published on Kaggle. Date-stamped 2026-10-19. The competition artifacts are frozen at `c652424`.
+**Status:** extension to the 2027 NFL Big Data Bowl entry, not part of it. GitHub only; not published on Kaggle. Date-stamped 2026-10-19. The original v1 competition artifacts are at `c652424`; the v2 writeup adds the salary tier with host confirmation.
 
 ## The claim
 

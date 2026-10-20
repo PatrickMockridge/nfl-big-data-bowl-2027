@@ -1,8 +1,10 @@
 # Market portfolio — extending the implications package
 
-**Status:** a GitHub-only extension of `implications/`. It is not part of the
-judged Big Data Bowl entry and does not modify the artifacts frozen at
-`c652424`. Date-stamped **2026-10-20**.
+**Status:** a GitHub-only extension of `implications/`. The free-agency
+component is included in the v2 Kaggle revision, with host-confirmed salary
+data (discussion 751037); the position-market portfolio remains an extension.
+The original
+judged text remains at `c652424`. Date-stamped **2026-10-20**.
 
 The existing implications package prices one interior-DL chunk. The `transfer/`
 extension showed that the **structural pattern travels; the measurement does

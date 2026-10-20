@@ -1,10 +1,12 @@
 # Implications of results
 
-**Status:** a separate extension to the 2027 NFL Big Data Bowl entry. It is not part of the judged entry, not attached to the competition, and not published on Kaggle. The judged artifacts are frozen at `c652424`.
+**Status:** a separate extension to the 2027 NFL Big Data Bowl entry. It is not attached to the competition. The original v1 judged artifacts are at `c652424`; the v2 writeup adds a Tier 2 summary of the free-agency finding.
 
 This folder extends the entry's logic beyond the competition: the three pricing mechanisms (stopwatch, depth chart, cap), a transparent dollar value for one team, a low-political-cost adoption chunk, team fit, and messaging. Every dollar figure is an **inference**, not a measurement; the measured coefficients are cited with their source files.
 
 The headline: a scenario, not a value. The one-change guide is the **low case ($0.9M net)**; the arithmetic base is **$6.6M gross per year**, **$5.6M net** after implementation cost, and **$2.3M expected** at 40% adoption. The route decomposition is selection **$0.79M** + role **$2.10M** + contract **$3.75M**; the routes are not causally additive. The range is **$0.9M to $11.1M net**. The value is a first-mover transition rent, not a permanent edge.
+
+The free-agency bottom-up estimate is in [`free_agency/`](free_agency/README.md): a median team carries **$7.05M uncut / $1.82M capture net**. The $6.6M figure above is the legacy one-team DL scenario, a different population.
 
 ## Map
 

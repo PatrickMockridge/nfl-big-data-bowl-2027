@@ -44,7 +44,7 @@ The dollar figures are inferences from the 2026 class, not forecasts or causal e
 
 **Data ethics.** The Combine tracking data are league-provided; this work does not collect new biometric data and does not recommend expanding collection. It is a validity check on measurements the league already takes.
 
-Full text: [`writeup/submission.md`](writeup/submission.md) (Tier 0/1/2), [`docs/APPENDIX.md`](docs/APPENDIX.md) (exploratory cuts). Public notebook: [`notebooks/02_final_public.ipynb`](notebooks/02_final_public.ipynb). Code: [`interior_burst.py`](src/discovery/interior_burst.py), [`combine_movement.py`](src/features/combine_movement.py), [`role_allocation.py`](src/discovery/role_allocation.py), [`cost_risk.py`](src/discovery/cost_risk.py), [`agentic_allocation.py`](src/framework/agentic_allocation.py).
+Full text: [`writeup/submission.md`](writeup/submission.md) (Tier 0/1/2/3), [`docs/APPENDIX.md`](docs/APPENDIX.md) (exploratory cuts). Public notebook: [`notebooks/02_final_public.ipynb`](notebooks/02_final_public.ipynb). Code: [`interior_burst.py`](src/discovery/interior_burst.py), [`combine_movement.py`](src/features/combine_movement.py), [`role_allocation.py`](src/discovery/role_allocation.py), [`cost_risk.py`](src/discovery/cost_risk.py), [`agentic_allocation.py`](src/framework/agentic_allocation.py).
 
 ## Why the brief led here
 
@@ -59,7 +59,7 @@ The judging dimensions reported for the event are Innovation, Accuracy, Impact, 
 
 ## Repo map
 
-- [`writeup/submission.md`](writeup/submission.md) — judged entry (frozen at `c652424`).
+- [`writeup/submission.md`](writeup/submission.md) — v2 revision of the judged entry, with host-confirmed salary data; the original judged text is at `c652424`.
 - [`notebooks/02_final_public.ipynb`](notebooks/02_final_public.ipynb) — public notebook.
 - [`implications/free_agency/`](implications/free_agency/README.md) — the headline deep dive: APY pricing, guarantees, surplus, bottom-up valuation.
 - [`implications/markets/`](implications/markets/README.md) — portfolio across positions, free agency, coaching, special teams.

@@ -92,7 +92,7 @@ def combine_by_position() -> Path:
     ax.tick_params(labelsize=TICK_SIZE)
     _figure_title(
         fig,
-        "The Combine signal is real for defensive linemen, not universal.",
+        "The Combine signal is concentrated in interior linemen, not universal.",
         "Standardized coefficient, 95% CI; DL is the only position group with a detectable link; interaction p=0.0004.",
     )
     return _save(fig, "combine_linkage.png")
@@ -292,7 +292,7 @@ def pressure_signal() -> Path:
     ax.set_xticks([0, 1])
     ax.set_xticklabels(["Pressure", "Sacks"], fontsize=TICK_SIZE)
     ax.set_ylabel("Out-of-sample R2")
-    ax.set_title("The stopwatch is blind to pressure", loc="left", fontsize=10.5, color=INK, pad=8)
+    ax.set_title("The stopwatch does not carry the pressure signal", loc="left", fontsize=10.5, color=INK, pad=8)
     ax.legend(loc="lower right", fontsize=8.5, frameon=False)
     ax.grid(axis="y", alpha=0.7)
     ax.tick_params(labelsize=TICK_SIZE)

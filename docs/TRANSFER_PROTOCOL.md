@@ -1,8 +1,9 @@
 # Transfer protocol — weaker patterns from the same fundamentals
 
 **Status:** pre-registration for a GitHub-only extension. This is not part of the
-judged Big Data Bowl entry and does not modify the artifacts frozen at
-`c652424`. Date-stamped **2026-10-20**. The transfer pilots are
+original judged Big Data Bowl entry and does not modify the original v1
+artifacts at `c652424`; the v2 writeup keeps the transfer results outside it.
+Date-stamped **2026-10-20**. The transfer pilots are
 **Tier 1 descriptive only**: no dollar model, no two-agent model, no causal
 claims.
 

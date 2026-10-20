@@ -1,5 +1,10 @@
 # Kaggle writeup upload — step by step
 
+**Status (2026-10-20): v2, host-confirmed salary-data revision.** This supersedes the
+original judged v1 text frozen at `c652424`; v1 remains in git history. v2 adds
+the salary tier (Tier 2) and applies the audit wording corrections. The
+measured core is unchanged.
+
 The writeup page must be created in the Kaggle UI; the Kaggle CLI has no
 command for creating competition writeups. Everything is prepared so the
 upload is copy-paste.
@@ -14,33 +19,40 @@ Click **Create Writeup** / **New Writeup**.
 
 Suggested title (67 characters):
 
-**The Combine's pressure signal is real; the allocation gap is the lever**
+**The Combine burst predicts pressure; the allocation gap has a price**
 
 Alternate (56 characters):
 
-**The pressure signal is real; the allocation gap is the lever**
+**The Combine burst predicts pressure; the gap has a price**
 
 ## 2. Paste the body
 
 Open `writeup/kaggle_writeup.md` and paste the whole file into the Kaggle
-writeup editor. It is the same 1,946-word writeup as `writeup/submission.md`,
-but the six image paths point at public raw GitHub URLs:
+writeup editor. It is the same 1,814-word writeup as `writeup/submission.md`,
+but the five image paths point at public raw GitHub URLs:
 
-- `pressure_signal.png`
-- `combine_linkage.png`
-- `net_rent.png`
-- `next_role_forest.png`
-- `allocation_gap.png`
-- `agentic_allocation.png`
+- `measurement_panel.png`
+- `pricing_allocation_panel.png`
+- `gap_agent_panel.png`
+- `fa_headline.png`
+- `fa_role_premium.png`
 
-If the writeup page already exists, replace the body with this version and
-republish; the cost-risk rebuild changed the figure numbers and captions.
+The URLs currently point at `main`; pin them to the revision commit for
+immutable images. If the writeup page already exists, replace the body with
+this version and republish; the v2 revision adds Tier 2 (the
+contract market) and the dual-dollar figures.
 
 If Kaggle renders the external images, publish directly.
 
-If the images do not render, upload the six PNGs from `writeup/figures/`
-through the editor's image button and replace each raw GitHub URL with the
-uploaded image. The captions already name the figures.
+If the images do not render, upload the five PNGs from `writeup/figures/`
+(the three composites) and `implications/free_agency/writeups/figures/`
+(`fa_headline.png`, `fa_role_premium.png`) through the editor's image button
+and replace each raw GitHub URL with the uploaded image. The captions already
+name the figures.
+
+The salary analysis is included under the host's confirmation: "Using external
+data on player salaries is appropriate for a submission as long as it is
+publicly available and free" (Tom Bliss, discussion 751037).
 
 ## 3. Attach the public notebook
 
@@ -71,13 +83,16 @@ container and the notebook is attached to it.
 
 ## Limits check
 
-- Words: 1,946 (limit: 2,000)
-- Figures: 6
-- Tables: 2
-- Total visuals: 8 (limit: fewer than 10)
+- Words: 1,814 (limit: 2,000)
+- Figures: 5 (three composites + `fa_headline` + `fa_role_premium`)
+- Tables: 4 (dollar scenarios, football scorecard, selected models, robustness)
+- Total visuals: 9 (limit: fewer than 10)
 - Public notebook: yes
 - Combine sensor tracking → regular-season performance linkage: explicit in
-  Part 1 "What we found" and Part 2 "Models"
+  Part 1 Tier 0 and Part 2 "Models"
+- External salary data: public and free; host confirmed (discussion 751037)
+- Revision: the original judged text is at `c652424`; this is the
+  v2 revision with host-confirmed salary data
 
 ## Repo
 

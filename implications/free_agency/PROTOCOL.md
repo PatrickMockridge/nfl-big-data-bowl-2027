@@ -1,8 +1,9 @@
 # Free-agency investigation protocol
 
 **Status:** pre-registration for a GitHub-only extension. It is not part of the
-judged Big Data Bowl entry and does not modify the artifacts frozen at
-`c652424`. Date-stamped **2026-10-20**.
+original judged Big Data Bowl entry and does not modify the original v1
+artifacts at `c652424`; the v2 writeup summarizes this finding. Date-stamped
+**2026-10-20**.
 
 Every dollar figure is an **inference**. The contract models are player-level
 cross-sectional associations plus robustness; they are not causal estimates.

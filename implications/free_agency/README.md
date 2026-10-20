@@ -1,8 +1,9 @@
 # The NFL free-agent market carries about $7M a year of uncut role premium
 
-**Status:** a GitHub-only extension of `implications/`. It is not part of the
-judged Big Data Bowl entry and does not modify the artifacts frozen at
-`c652424`. Date-stamped **2026-10-20**.
+**Status:** included in the v2 Kaggle revision, with host-confirmed salary data
+(discussion 751037);
+the original judged text remains at `c652424`. The report was built after the
+original judged entry. Date-stamped **2026-10-20**.
 
 **Discussion:** [Kaggle thread on whether to include this finding in the BDB submission](https://www.kaggle.com/competitions/nfl-big-data-bowl-2027/discussion/751037).
 

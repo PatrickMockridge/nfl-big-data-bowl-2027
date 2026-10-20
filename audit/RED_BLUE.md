@@ -1,8 +1,9 @@
 # Red team / blue team: an adversarial audit of the implied findings
 
-**Status:** a GitHub-only extension. It is not part of the judged Big Data Bowl
-entry, does not modify the artifacts frozen at `c652424`, and is not published
-on Kaggle. Date-stamped **2026-10-20**.
+**Status:** a GitHub-only audit. It is not part of the original judged entry,
+does not modify the original v1 artifacts at `c652424`, and is not published on
+Kaggle. The v2 writeup adds the salary tier with host confirmation; this audit's verdicts refer
+to v1 unless noted. Date-stamped **2026-10-20**.
 
 **Companions:** [README](README.md) · [COOPTATION](COOPTATION.md) ·
 [scorecard.csv](scorecard.csv).
@@ -175,9 +176,10 @@ more than a claim that cannot.
 look — the depth chart, the role premium, the transfer template — not what will
 happen. The repo says this repeatedly.
 
-**B10. The judged artifacts are frozen and the extensions are labeled.** The
-entry is at `c652424`; the extensions say they are not part of it. The work does
-not retroactively change the judged artifact.
+**B10. The original v1 judged artifacts are frozen and the extensions are
+labeled.** The v1 entry is at `c652424`; the extensions say they are not part of
+it. The v2 writeup is a separate revision with host-confirmed salary data; it
+does not retroactively change v1.
 
 ## 4. Finding audit
 

@@ -1,14 +1,16 @@
 # Erratum: corrections to the frozen judged entry
 
-**Status:** the judged Big Data Bowl entry is frozen at `c652424`. This erratum
-does not edit it. It records the statements in the frozen entry that the
+**Status:** the original judged Big Data Bowl entry is at `c652424`. The
+writeup was subsequently revised after the competition host confirmed public
+salary data (discussion 751037); the original text remains at `c652424`. This
+erratum records the statements in the original frozen entry that the
 adversarial audit downgrades, the correct wording, and the evidence. The
 extensions and the root README carry the corrected wording.
 
 The full red/blue audit is in [RED_BLUE.md](RED_BLUE.md); the machine-readable
 verdicts are in [scorecard.csv](scorecard.csv).
 
-| Location | Frozen text | Correction | Evidence |
+| Location (v1 at `c652424`) | Frozen text | Correction | Evidence |
 |---|---|---|---|
 | `writeup/submission.md:1` | "The Combine's pressure signal is real" | "The pressure association is in-sample and cross-player." | The 2025 temporal R² is −0.045; the team-FE estimate is +0.298 (−0.045, 0.640). The repo's own thesis says the association is not robust enough to call a validated tool. |
 | `writeup/submission.md:11` | Sacks **+0.317** | Add: "The stopwatch is the stronger out-of-sample sack model, and the sack outcome is below the 0.50 reliability gate." | Interior sack split-half Spearman–Brown is 0.493; OOF R² is +0.120 for the stopwatch and +0.059 for the burst; the burst adds +0.007 R². |

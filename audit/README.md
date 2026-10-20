@@ -1,8 +1,10 @@
 # Adversarial audit: the implied findings
 
-**Status:** a GitHub-only extension. It is not part of the judged Big Data Bowl
-entry, does not modify the artifacts frozen at `c652424`, and is not published
-on Kaggle. Date-stamped **2026-10-20**.
+**Status:** a GitHub-only extension. It is not part of the original judged Big
+Data Bowl entry, does not modify the original artifacts at `c652424`, and is
+not published on Kaggle. The judged writeup was revised after the competition
+host confirmed public salary data (discussion 751037); the original remains at
+`c652424`. Date-stamped **2026-10-20**.
 
 **Contents:** [RED_BLUE.md](RED_BLUE.md) — the red/blue audit ·
 [COOPTATION.md](COOPTATION.md) — external readings and insider threat ·
