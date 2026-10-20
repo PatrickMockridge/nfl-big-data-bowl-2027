@@ -86,3 +86,31 @@ python scripts/19_salary_figures.py
 
 The OTC archive download is cached in `data/external/otc_cap_2025/`. Re-running
 `otc_cap.download(force=True)` refreshes the 32 archived pages.
+
+## Market extension sources
+
+The `implications/markets/` portfolio uses additional public market data. Raw
+downloads stay in `data/external/market/` (gitignored); only derived aggregates
+are written to `implications/markets/outputs/`.
+
+| Source | URL | Coverage | License |
+|---|---|---|---|
+| nflverse trades | `github.com/nflverse/nflverse-data/releases/download/trades/trades.csv` | 4,975 rows, 2002–2026; team-level trades with player/pick fields | Public nflverse; cite |
+| nflverse draft picks | `github.com/nflverse/nflverse-data/releases/download/draft_picks/draft_picks.csv` | 12,927 rows, 1980–2026; career outcomes from PFR | Public; cite nflverse/PFR |
+| Coaching tenure | Derived from `data/external/games.csv` (`home_coach`, `away_coach`) | 893 team-seasons, 1999–2026; first/last game proxy | Public nflverse; cite |
+| Hire/fire dates | PFR `pro-football-reference.com/coaches/` or Wikipedia | Optional; not downloaded by default | Cite; no bulk redistribution |
+| Historical contracts | Local `data/external/historical_contracts.csv.gz` | 31,893 contracts, 1983–2022; APY/guarantee | Apache-2.0 per the contract snapshot |
+| Special teams stats | Local `data/external/stats_player_week_2023/24/25.csv` | Weekly kicking/punting/return stats | Public nflverse; cite |
+
+**Notes and limits.**
+
+- Trades and draft picks are market context, not a causal event study. Trade
+  terms are not a clean price, and the draft-pick value field is PFR's
+  approximate value.
+- Coaching hire/fire dates are proxied by the first and last regular-season game
+  in the games file. No coach compensation data is public.
+- The historical contract file is not linked to the 2023–25 performance data; it
+  is a long-run APY context series, not a valuation input.
+- K/P special-teams reliability fails the 0.50 gate; the returner composite
+  passes but returners are paid through their offensive/defensive position.
+- Raw source pages are not redistributed; derived aggregates only.

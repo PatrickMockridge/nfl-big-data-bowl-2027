@@ -39,6 +39,15 @@ and the report says so.
 excluding rookie deals and players without prior-season performance. The full
 2026 class is used for composition and terms description.
 
+**Data audit correction (2026-10-20).** The first panel build found 1,086
+contract rows / 1,043 players in the 2026 class, 696 with 2025 snaps, **307 with
+a 2025 performance row**, and **302 non-rookie veterans with non-null
+`perf_z`** (115 re-sign, 187 team-change). The "~594 with performance" figure in
+the samples table counted a performance row, not a non-null `perf_z`. The
+primary 2026 model therefore uses n=302; the pooled 2025+2026 APY model (with a
+sample dummy) is the larger cross-check. This is a sample-size correction, not a
+gate change.
+
 **Primary cross-check:** 2025 active APY contracts with 2025 performance.
 
 **Cap-ledger reconciliation:** the 909-player sample; must reproduce the

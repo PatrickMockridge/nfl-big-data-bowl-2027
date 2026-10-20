@@ -33,6 +33,20 @@ implications/
 
 The notebook, [`code/implications.ipynb`](code/implications.ipynb), is the executable version. It embeds the model tables and runs without the gitignored `outputs/` directory.
 
+## Market portfolio extension
+
+[`markets/`](markets/) extends this package into NFL-adjacent markets (EDGE, WR,
+DB, OL, TE, free agency/contract, coaching, special teams) with a route-gated
+model. It is a separate GitHub-only extension; the interior-DL numbers above are
+unchanged.
+
+## Free-agency investigation
+
+[`free_agency/`](free_agency/) is a player-level deep dive that supersedes the
+market portfolio's top-down free-agency section. It finds a median-team annual
+role premium of $7.05M gross / $6.05M net, with the old $24.9M at the 90.6th
+percentile of the team distribution.
+
 ## Reproduce
 
 ```bash

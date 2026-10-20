@@ -47,9 +47,11 @@ free-agency market.
 | Coaching retention | — | — | — | descriptive / reading |
 | Special teams | — | descriptive | descriptive if gate passes | descriptive |
 
-`route_status` is one of `modeled`, `sensitivity`, `not_modeled`, or
-`unidentifiable`. A disabled route is implemented by setting its inputs to zero
-in all three scenarios; the route remains visible in the table with its status.
+`route_status` is one of `modeled`, `sensitivity`, `display_only`,
+`not_modeled`, or `unidentifiable`. `display_only` means the route is estimated
+but its dollars are counted in the free-agency market, not in the position
+total. A disabled route is implemented by setting its inputs to zero in all
+three scenarios; the route remains visible in the table with its status.
 
 **Cross-construct caveat.** Every contract route uses the salary layer's
 `perf_z` (nflverse production), not the BDB NGS performance residual. The

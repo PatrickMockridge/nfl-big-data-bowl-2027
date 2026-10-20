@@ -93,10 +93,24 @@ panel outcomes are oriented higher = better.
 | TE | `route_burst` = same across TE route drills | `perf_z` (separation residual) | gate | 0.449 |
 | DB | `transition_quick` = mean of `-z_time_to_1yd` and `z_path_efficiency` across DB backpedal drills | `perf_z` (coverage residual) | gate | 0.121 |
 | OL | `pass_set_quick` = mean of `-z_time_to_1yd` and `z_max_accel_first_05` across OL pass-set drills | `perf_z` (pressure-allowed residual) | gate | 0.553 |
-| DL | `pass_rush_burst` = mean of `z_max_speed` and `z_max_accel_first_05` on PASS_RUSH_DRILL | `perf_z` (get-off residual) | gate | 0.953 |
+| DL | `pass_rush_burst` = mean of `z_max_speed` and `z_max_accel_first_05` on PASS_RUSH_DRILL | `pressure_rate_z` (entry headline) | gate | 0.953 |
 
 DL is split into INTERIOR (DT/NT) and EDGE (DE/OLB). INTERIOR is the positive
 control; EDGE is the weaker secondary/placebo.
+
+**Implementation corrections, disclosed 2026-10-20 after the first run.** Two
+specifications were clarified once the code was run against the data:
+
+1. The sample gate counts **player-season observations**, the unit of the
+   models and of the entry's n=64 interior result. Unique-player counts are
+   reported alongside. The gate thresholds are unchanged (60 primary, 40
+   exploratory).
+2. The DL outcome is `pressure_rate_z`, matching the entry's headline
+   burst→pressure result. `burst_z` is the entry benchmark; `pass_rush_burst`
+   is the task-matched transfer signal. The non-DL outcome remains `perf_z`.
+
+These corrections affect the DL positive control and the reported n, not the
+direction or threshold of any gate. They are repeated in the writeup.
 
 ## Gates and decision rules
 
@@ -104,8 +118,10 @@ control; EDGE is the weaker secondary/placebo.
   within the family, Spearman-Brown corrected. Per-drill ICC is reported as a
   diagnostic.
 - **Outcome gate:** split-half reliability ≥ 0.50 from the existing audit.
-- **Sample gate:** primary test requires ≥ 60 players; 40–59 is exploratory
-  only; < 40 is not tested.
+- **Sample gate:** primary test requires ≥ 60 player-season rows (the original
+  wording said "players"; see the disclosed correction above); 40–59 is
+  exploratory only; < 40 is not tested. Unique-player counts are reported
+  alongside.
 - **Status vocabulary:** `supported` (beta > 0, CI lower > 0), `weak` (beta > 0,
   CI includes 0), `null` (beta ≤ 0 or CI upper < 0), `unidentifiable` (gate
   failed). No other positive label.
