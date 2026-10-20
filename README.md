@@ -24,6 +24,8 @@ The judged entry established the chain: a 10 Hz Combine burst predicts interior 
 
 The dollar figures are inferences from the 2026 class, not forecasts or causal estimates. The full investigation is in [`implications/free_agency/`](implications/free_agency/README.md).
 
+**Discussion:** [Kaggle thread on whether to include this finding in the submission](https://www.kaggle.com/competitions/nfl-big-data-bowl-2027/discussion/751037).
+
 ## What the judged entry found
 
 - Burst → pressure **+0.354** (0.143–0.565, n=64); sacks **+0.317** (0.083–0.550, n=63). The 40/10 joint test is p=0.998; out-of-sample R² is −0.113 for the stopwatch and +0.178 for the burst.

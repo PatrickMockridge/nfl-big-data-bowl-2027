@@ -4,6 +4,8 @@
 judged Big Data Bowl entry and does not modify the artifacts frozen at
 `c652424`. Date-stamped **2026-10-20**.
 
+**Discussion:** [Kaggle thread on whether to include this finding in the BDB submission](https://www.kaggle.com/competitions/nfl-big-data-bowl-2027/discussion/751037).
+
 Role is playing time: snaps, routes, coverage assignments. A median team's
 2026 free-agent class carries about **$7.0M a year** of modeled role premium —
 pay that tracks role beyond measured performance. After a **$1M**
