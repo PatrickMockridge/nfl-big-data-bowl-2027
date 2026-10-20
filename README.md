@@ -2,7 +2,9 @@
 
 Role is prior-season snap share in this model. A median team's 2026 free-agent class carries about **$7.0M a year** of uncut modeled role premium — pay that tracks role beyond measured performance. At the base **0.40** capture assumption, the modeled annual capture is about **$2.8M gross / $1.8M net** after a **$1M** implementation cost.
 
-The judged entry established the chain: a 10 Hz Combine burst predicts interior pressure while the stopwatch does not; the depth chart does not detectably reward measured performance; the cap does.
+*Role premium* means the raw minus role-controlled performance coefficient. It is a conditional association, not an unearned-pay verdict.
+
+The judged entry established the chain: a 10 Hz Combine burst predicts interior pressure while the stopwatch does not; the depth chart does not detectably reward measured performance; the cap is associated with measured performance.
 
 ![Median team: $7.0M a year of uncut role premium from the actual 2026 free-agent class; 32 teams sorted.](implications/free_agency/writeups/figures/fa_headline.png)
 
@@ -38,6 +40,8 @@ The dollar figures are inferences from the 2026 class, not forecasts or causal e
 - Allocation gap: **+0.59 SD** for late picks/UDFAs, **−0.92 SD** for early picks.
 - The two-agent cross-construct difference (+0.28; not a behavioral weight), the Yellow Square fallback (wide null), and the weekly check are in the entry.
 
+**Genealogy.** The burst and allocation analyses were added after the preregistered tests and are labeled exploratory. The preregistered Yellow/Möbius framework returned a wide null. The novelty is the allocation probe, not the burst metric alone. See the [audit](audit/README.md).
+
 **Data ethics.** The Combine tracking data are league-provided; this work does not collect new biometric data and does not recommend expanding collection. It is a validity check on measurements the league already takes.
 
 Full text: [`writeup/submission.md`](writeup/submission.md) (Tier 0/1/2), [`docs/APPENDIX.md`](docs/APPENDIX.md) (exploratory cuts). Public notebook: [`notebooks/02_final_public.ipynb`](notebooks/02_final_public.ipynb). Code: [`interior_burst.py`](src/discovery/interior_burst.py), [`combine_movement.py`](src/features/combine_movement.py), [`role_allocation.py`](src/discovery/role_allocation.py), [`cost_risk.py`](src/discovery/cost_risk.py), [`agentic_allocation.py`](src/framework/agentic_allocation.py).
@@ -46,9 +50,9 @@ Full text: [`writeup/submission.md`](writeup/submission.md) (Tier 0/1/2), [`docs
 
 The brief asked for a non-obvious, actionable linkage between 10 Hz Combine tracking and NFL performance, focused on one position group, and usable by coaches, scouts, and front offices. The work followed that order:
 
-1. **Non-obvious:** compare the 10 Hz burst with the stopwatch. The burst carries the pressure signal; the stopwatch does not.
+1. **Non-obvious:** compare the 10 Hz burst with the stopwatch. The burst carries the pressure signal; the stopwatch does not. The entry's distinct move is the allocation probe that follows.
 2. **One position:** DL. The cross-position check showed the measurement is concentrated in interior linemen, so the allocation side is what travels.
-3. **Actionable:** a signal that does not change who plays is not useful. The depth chart does not reward performance; the cap does.
+3. **Plausibly actionable (untested):** a signal that does not change who plays is not useful. The depth chart does not detectably reward measured performance; the cap is associated with measured performance.
 4. **Dollar:** the contract market is where the role premium has a price. The median team's 2026 class carries $7.05M uncut a year; at the 0.40 capture assumption the annual capture is $2.82M gross / $1.82M net after a $1M implementation cost.
 
 The judging dimensions reported for the event are Innovation, Accuracy, Impact, and Clarity; the official weighted rubric is not public. The NFL [announcement](https://media.nfl.com/news-and-releases/consumer-products/national-football-league-announces-ninth-annual-big-data-bowl-po) states the brief's focus.

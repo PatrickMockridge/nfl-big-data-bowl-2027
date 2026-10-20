@@ -12,7 +12,7 @@ The entry's measured result is not "tracking predicts performance." It is that t
 | The depth chart | Status and prior role | Next-season role: current role +0.606, draft capital +0.785, performance −0.011 (95% CI −0.119 to 0.097, n=233). The concurrent estimate is −0.132 (p=0.031), marginal. |
 | The cap | Performance, partly role | Full 909-player ledger: performance +0.328 (0.264–0.392); +0.143 (0.078–0.208) with playing time. |
 
-The pure measurement finding is the 10 Hz burst: it predicts interior pressure at **+0.354 SD/SD** (0.143–0.565, n=64). Top versus bottom burst tercile pressure is **3.83% vs 2.47%** (+1.36 pp); sacks are **0.97% vs 0.35%** (2.7×). The signal is position-specific: DL +0.734, WR +0.366 (p=0.084), OL +0.058, TE +0.093; interaction p=0.0004. The stopwatch is not blind to sacks, but it is blind to the pressure that precedes them.
+The pure measurement finding is the 10 Hz burst: it predicts interior pressure at **+0.354 SD/SD** (0.143–0.565, n=64). Top versus bottom burst tercile pressure is **3.83% vs 2.47%** (+1.36 pp); sacks are **0.97% vs 0.35%** (2.7×). The signal is concentrated in interior linemen: DL +0.734, WR +0.366 (p=0.084), OL +0.058, TE +0.093. The Combine-movement interaction is p=0.0004; the burst-pressure interaction is p=0.137 and is not significant. The stopwatch is not blind to sacks, but it does not carry the pressure signal that precedes them.
 
 The structural reading is: **the allocation technology is status-legible; the pricing technology is performance-legible; the gap between them is measurable.** That is not a claim that coaches are irrational. It is a claim about information: draft slot and prior role are cheap, public, and predictable; performance is noisy and slow to update.
 
@@ -22,7 +22,7 @@ The structural reading is: **the allocation technology is status-legible; the pr
 |---|---|---|
 | The burst predicts interior pressure and sacks | Measured | `outputs/discovery/interior_burst_models.csv` |
 | The stopwatch does not carry the pressure signal | Measured | `interior_burst_validation.csv`, `interior_burst_incremental.csv` |
-| The Combine signal is position-specific | Measured | `combine_linkage_by_position.csv` |
+| The Combine signal is concentrated in interior linemen | Measured | `combine_linkage_by_position.csv` |
 | Role is sticky and draft-driven; performance is not detectable | Measured | `role_allocation_coefficients.csv` |
 | The cap pays performance, partly through role | Measured association | `outputs/salary/pay_model_full.csv` |
 | The allocation gap is mostly role | Descriptive decomposition | `allocation_gap_groups.csv`, `allocation_gap.parquet` |
@@ -40,7 +40,7 @@ It is a structural claim, not a moral one. The coach is not foolish to weight a 
 
 ## Why this is a distinct entry
 
-Most Big Data Bowl work asks whether a tracking metric predicts an outcome. That is a useful question, and the answer here is narrow: the burst is a position-specific pressure signal, not a universal talent score. The distinct move is to use the measurement as a probe into how the league allocates labour. The competition's rubric rewards football insight and a readable argument as much as model fit; a structural claim with a reproducible measurement underneath is a different product from a metric leaderboard.
+Most Big Data Bowl work asks whether a tracking metric predicts an outcome. That is a useful question, and the answer here is narrow: the burst is an interior-DL pressure signal, not a universal talent score. The distinct move is to use the measurement as a probe into how the league allocates labour. The competition's rubric rewards football insight and a readable argument as much as model fit; a structural claim with a reproducible measurement underneath is a different product from a metric leaderboard.
 
 ## What would change the thesis
 

@@ -5,7 +5,7 @@ entry. Date-stamped 2026-10-20.
 
 ## The claim
 
-The entry's measured result is a position-specific pressure signal. Its
+The entry's measured result is an interior-DL pressure signal. Its
 structural reading is that three pricing mechanisms see different things: the
 stopwatch prices sacks, not pressure; the depth chart prices status and prior
 role; the cap prices performance, partly through role. The `transfer/`

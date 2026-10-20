@@ -30,7 +30,8 @@ The DB row is from the discovery role panel (n=69); the transfer gap panel has
 the transfer gap panel after the merge; the discovery panel has 29 rows before
 the merge.
 
-Current role and draft are positive everywhere; performance is null everywhere.
+Current role and draft are positive everywhere; performance shows no detectable
+association, and the CIs include modest positive effects.
 This is the same allocation pattern as the pooled entry, position by position.
 The one positive point estimate is OL (+0.190), and its CI includes zero.
 

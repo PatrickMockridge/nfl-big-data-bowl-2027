@@ -4,7 +4,7 @@
 
 This folder extends the entry's logic beyond the competition: the three pricing mechanisms (stopwatch, depth chart, cap), a transparent dollar value for one team, a low-political-cost adoption chunk, team fit, and messaging. Every dollar figure is an **inference**, not a measurement; the measured coefficients are cited with their source files.
 
-The headline: for one team that adopts a Pareto-adjacent chunk, the base case is **$6.6M gross per year**, **$5.6M net** after implementation cost, and **$2.3M expected** at 40% adoption. The route decomposition is selection **$0.79M** + role **$2.10M** + contract **$3.75M**. The routes are not causally additive, so the total is a scenario, not a sum of independent gains. The range is **$0.9M to $11.1M net**. The value is a first-mover transition rent, not a permanent edge.
+The headline: a scenario, not a value. The one-change guide is the **low case ($0.9M net)**; the arithmetic base is **$6.6M gross per year**, **$5.6M net** after implementation cost, and **$2.3M expected** at 40% adoption. The route decomposition is selection **$0.79M** + role **$2.10M** + contract **$3.75M**; the routes are not causally additive. The range is **$0.9M to $11.1M net**. The value is a first-mover transition rent, not a permanent edge.
 
 ## Map
 

@@ -7,7 +7,7 @@ role, not the stopwatch.
 
 **Pillars:**
 
-1. **Measurement is position-specific.** The DL pass-rush signal reproduces;
+1. **Measurement is concentrated in interior linemen.** The DL pass-rush signal reproduces;
    EDGE is borderline; WR is weak; TE/OL/DB fail reliability or variance gates.
 2. **The unpriced-signal and allocation patterns travel.** Task-matched drill
    signals are unpriced by draft; performance→role is null; the gap follows the
@@ -35,7 +35,7 @@ and TE/OL/DB are unidentifiable for measurement reasons. The portable pattern is
 that the cap pays performance while the depth chart pays status; price the role,
 and use the drill signal only where it has passed its own reliability gate.
 
-**One paragraph.** The entry measured a position-specific pressure signal and
+**One paragraph.** The entry measured an interior-DL pressure signal and
 read it as an allocation gap. The transfer extension shows the structure travels
 further than the signal: task-matched drill signals are unpriced, performance
 is unrewarded in next-season role, and the gap follows the draft in WR, OL, and
@@ -56,7 +56,7 @@ association, not a causal effect.
 | Cap / contract | Role-controlled vs raw performance by position; EDGE/S/CB gaps have CIs excluding zero. | The $11M uncut base without the $5.4M conservative and $0.2M low, or the $6.8M/$4.5M/−$1.0M capture totals; the free-agency component is $6.05M uncut / $1.82M capture. | Model the renewal portfolio with the role-controlled coefficient. |
 | Coach / personnel | Role stickiness and the performance null; the chunk protects the coach. | "The depth chart is a status market." | Review the largest role gaps; keep the starting lineup intact. |
 | Analytics | The transfer matrix and the reliability gates. | The DL signal as a WR/DB result. | Re-run the reliability and out-of-sample checks in the team's own data. |
-| League office | The rookie-scale/role-pipeline question; the measurement is position-specific. | Club-specific blame or a causal claim. | Ask whether the role pipeline uses the signals the testing shows. |
+| League office | The rookie-scale/role-pipeline question; the measurement is concentrated in interior linemen. | Club-specific blame or a causal claim. | Ask whether the role pipeline uses the signals the testing shows. |
 | Media / portfolio | The three pricing mechanisms and the route-gated market map. | A single big number without the range and tiers. | Keep the measured/descriptive/inferred separation explicit. |
 
 ## Proof points
@@ -90,7 +90,7 @@ association, not a causal effect.
 ## What not to say
 
 1. Not "the DL burst predicts WR/DB/OL performance." The measurement is
-   position-specific.
+   interior-DL-specific.
 2. Not "the portfolio proves $11M." It is an inference with an uncut $5.4M
    conservative and $0.2M low; the capture total is $6.8M/$4.5M/−$1.0M; the
    free-agency component is $6.05M uncut / $1.82M capture.

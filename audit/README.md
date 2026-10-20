@@ -10,6 +10,10 @@ on Kaggle. Date-stamped **2026-10-20**.
 [ERRATUM.md](ERRATUM.md) — corrections to the frozen entry ·
 [scorecard.csv](scorecard.csv) — all 68 findings, one row each.
 
+**Blue-team adjudication:** [§7 of RED_BLUE.md](RED_BLUE.md#7-blue-team-adjudication-of-the-45-open-findings)
+decides the 45 open findings — 15 cheap fixes, 23 defended, 3 that need new
+data, 2 conceded, 2 out of scope.
+
 > **Audit and remediation.** The audit itself did not change the judged entry.
 > A first remediation pass has now corrected the extensions and the root README;
 > the judged entry is unchanged, and its corrections are recorded in
@@ -29,6 +33,11 @@ contract-term controls. Open: the haircut judgment (F15), the attenuation
 check, the joint overlap model, and the identification critiques. See
 [RECEPTION.md](RECEPTION.md) for the practical/values objections and the
 remaining irreducible dismissals.
+
+The blue-team §7 pass then applied all 15 recommended fixes (J5, J6/X2, I1,
+T7, T9, M2, M5, M6, T8, F4, X3, X6, X10, X11). J7 remains open on measurement
+(the label already travels), and I2 is conceded: the $6.6M sum is a scenario,
+not an additive value.
 
 ## Bottom line
 

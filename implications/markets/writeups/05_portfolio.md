@@ -45,6 +45,9 @@ dollar case is still a pricing-correction case, not a Combine-signal case.
 - The DL anchor's full net ($5.64M) is not added. Its selection + role ($2.45M)
   is in the DL row. Its contract route is part of the legacy top-down estimate
   and is superseded by the bottom-up report; it is not counted separately.
+- The rule prevents counting the same row twice; it does not remove the
+  economic overlap. Both levers price role, and the capturable low case is the
+  guide.
 - The low-case sum is the conservative guide when role and contract decisions
   share an organizational driver. The arithmetic base and the low case are both
   reported; no additional ad hoc haircut is applied.

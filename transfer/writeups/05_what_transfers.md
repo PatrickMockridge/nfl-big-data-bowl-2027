@@ -31,7 +31,7 @@ The **structure** of the entry's argument travels. The **measurement** does not.
    drill signal travels to another position just because the allocation pattern
    does.
 
-3. **The allocation gap is the strongest transfer.** The per-position gradient
+3. **The allocation gap is descriptively consistent, not replicated.** The per-position gradient
    is visible in WR, OL, and DL, and the performance→role coefficient is null
    everywhere. The strict tail is small (4–6 players per position) and is a
    review list, not a population. That matches the entry's descriptive framing.

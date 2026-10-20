@@ -29,7 +29,7 @@ Stable or contending teams are poor fits for this specific piece: the coach has 
 
 ## Implementation sequence
 
-1. **Data audit (week 1).** Reproduce the burst metric on the team's own charting and the competition data. Check the position-specific split and the outcome reliability: pressure split-half 0.44 (0.61 Spearman-Brown), sacks 0.33 (0.49). Do not use the signal outside interior defensive line.
+1. **Data audit (week 1).** Reproduce the burst metric on the team's own charting and the competition data. Check the interior-DL split and the outcome reliability: pressure split-half 0.44 (0.61 Spearman-Brown), sacks 0.33 (0.49). Do not use the signal outside interior defensive line.
 2. **Coaching review (weeks 2–3).** Identify one or two pass-rush sub-package swaps, not a depth-chart overhaul. The coach keeps the starting lineup and the veteran's base snaps; the change is situational.
 3. **Cap and legal review (weeks 3–4).** Model guarantees and dead money. The nominal $6M saving per decision can be smaller after proration and offsets; the role route is the largest single assumption in the valuation.
 4. **Pilot (weeks 4–10).** Track pressure rate, sack rate, and snap counts for the affected players. Pre-register the decision rule: extend if the pressure differential holds and the locker-room cost is contained. Stop if the veteran's performance or the unit's pressure rate declines.

@@ -4,11 +4,11 @@
 
 ## The message house
 
-**Roof:** *The stopwatch is blind to pressure; the depth chart is blind to performance; the cap is not.*
+**Roof:** *The stopwatch does not carry the pressure signal; the depth chart does not detectably reward measured performance; the cap is associated with measured performance.*
 
 **Pillars:**
 
-1. **Measurement.** The 10 Hz Combine burst predicts interior pressure at +0.354 SD/SD (0.143–0.565, n=64). Top versus bottom burst tercile pressure is 3.83% vs 2.47%; sacks are 0.97% vs 0.35%. The 40-yard dash and 10-yard split add nothing to pressure (joint p=0.998); out-of-sample pressure R² is −0.113 for the stopwatch and +0.178 for the burst. The signal is position-specific: DL +0.734, WR +0.366 (p=0.084), OL +0.058, TE +0.093; interaction p=0.0004.
+1. **Measurement.** The 10 Hz Combine burst predicts interior pressure at +0.354 SD/SD (0.143–0.565, n=64). Top versus bottom burst tercile pressure is 3.83% vs 2.47%; sacks are 0.97% vs 0.35%. The 40-yard dash and 10-yard split add nothing to pressure (joint p=0.998); out-of-sample pressure R² is −0.113 for the stopwatch and +0.178 for the burst. The signal is concentrated in interior linemen: DL +0.734, WR +0.366 (p=0.084), OL +0.058, TE +0.093. The Combine-movement interaction is p=0.0004; the burst-pressure interaction is p=0.137 and is not significant.
 2. **Allocation.** Next-season role follows current role (+0.606) and draft capital (+0.785); the performance coefficient is −0.011 (95% CI −0.119 to 0.097, n=233). The allocation gap is +0.59 SD for late picks and UDFAs and −0.92 SD for early picks in the full 233-row sample. The gap is mostly role: the group-mean role spread is 1.462 SD versus a performance spread of 0.046 SD in the full sample, and 1.104 versus 0.106 in the reliable sample.
 3. **Value.** For one team that adopts a low-political-cost chunk, the base case is $6.6M gross per year, $5.6M net after implementation cost, and $2.3M expected at 40% adoption. The range is $0.9M to $11.1M net. The value is a first-mover transition rent, not a permanent edge.
 
@@ -26,11 +26,11 @@
 
 | Audience | Lead with | Do not lead with | The ask |
 |---|---|---|---|
-| Club analytics | The burst-versus-stopwatch result, position-specific, with the OOS contrast. | The dollar figure or the "emperor" framing. | Test it on your board; tell me where it fails. |
+| Club analytics | The burst-versus-stopwatch result, concentrated in interior linemen, with the OOS contrast. | The dollar figure or the "emperor" framing. | Test it on your board; tell me where it fails. |
 | Cap / contract staff | The role-controlled coefficient (+0.143) versus the raw (+0.328); the exp≥4 split (+0.443 / +0.217). | A promise of cap savings. | Does this match your valuation model? |
 | Coaching / personnel | The weekly stickiness result (last week's role +0.753, performance −0.006); the low-political-cost chunk. | "The depth chart is a status market." | Which 10–15% of pass-rush snaps would you test? |
 | League office | The rookie-scale and role-pipeline question; the structural allocation gap. | Club-specific blame. | Is this a policy question worth studying? |
-| Analytics media | The three pricing mechanisms; the "stopwatch blind to pressure" result. | The model's Tier 2 wedge as if it were identified. | A conversation after the competition deadline. |
+| Analytics media | The three pricing mechanisms; the "stopwatch does not carry pressure" result. | The model's Tier 2 wedge as if it were identified. | A conversation after the competition deadline. |
 | General / portfolio | The tiers and the measured-versus-inferred split. | A single big number without a range. | Read the thesis and the valuation. |
 
 The order is deliberate. The measurement is the hardest evidence; the allocation reading is the interpretation; the dollar value is the consequence. A reader who rejects the interpretation can still keep the measurement.

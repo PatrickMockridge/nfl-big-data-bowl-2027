@@ -74,7 +74,11 @@ def role_premium(
             "gap_ci_low": gap - 1.96 * se,
             "gap_ci_high": gap + 1.96 * se,
             "n": n,
-            "status": "primary" if n >= min_n else "exploratory",
+            "status": (
+                "exploratory"
+                if sample == "apy_2024"
+                else ("primary" if n >= min_n else "exploratory")
+            ),
         },
         pd.concat([raw, role], ignore_index=True),
     )

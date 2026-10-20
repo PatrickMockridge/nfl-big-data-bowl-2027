@@ -13,6 +13,9 @@ assumption, the modeled annual capture is about **$2.8M gross / $1.8M net**
 after a **$1M** implementation cost. The 32-team distribution runs from $1.81M
 at P10 to $22.51M at P90.
 
+*Role premium* means the raw minus role-controlled performance coefficient. It
+is a conditional association, not an unearned-pay verdict.
+
 ![Median team: $7.0M a year of uncut role premium from the actual 2026 free-agent class; 32 teams sorted.](writeups/figures/fa_headline.png)
 
 ## The finding

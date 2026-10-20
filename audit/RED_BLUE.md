@@ -7,11 +7,11 @@ on Kaggle. Date-stamped **2026-10-20**.
 **Companions:** [README](README.md) · [COOPTATION](COOPTATION.md) ·
 [scorecard.csv](scorecard.csv).
 
-> **Audit only.** The public README and the extension writeups have not been
-> changed. Where a verdict is *downgrade* or *concede*, the remediation
-> register at the end records the recommended wording and the line it would
-> replace. The public summaries therefore still carry the stronger claim. This
-> document exists so the gap is visible, not so it can be hidden.
+> **Audit and remediation.** The audit did not change the judged entry. The
+> first remediation pass and the blue-team §7 pass have now changed the
+> extension writeups and the root README; the judged entry is unchanged, and its
+> corrections are in [ERRATUM.md](ERRATUM.md). The original audit verdicts are
+> preserved; `scorecard.csv` carries the current remediation status.
 
 ## 0. Rules of engagement
 
@@ -1292,4 +1292,419 @@ are in [ERRATUM.md](ERRATUM.md).
 | `transfer/writeups/01_drill_translation.md:30-33` | "supported" | "borderline after Holm." |
 | `transfer/README.md:21-23` | Benchmark first | Put the task-matched signal first; label the benchmark as the positive control. |
 | `implications/markets/writeups/05_portfolio.md:66-70` | "lowest-political-cost lever" | Remove; the co-optation annex shows it is not politically costless. |
+
+## 7. Blue-team adjudication of the 45 open findings
+
+This is the blue team's response to the audit, not a second audit. The audit
+left 45 findings open. For each one, the question is not "can we make the
+criticism go away?" It is: **does this criticism change the work, or does it
+stay on the table?** The default is to leave it on the table. A criticism is a
+boundary condition, not a defect.
+
+### 7.0 What we acknowledge without argument
+
+We are not going to pretend these are not true:
+
+- The dollar figures are scenarios, not measurements. The 0.40 haircut, the $1M
+  cost, and the 40% adoption are judgments. The annual headline now shows the
+  uncut premium and the haircut-adjusted capture side by side.
+- The role premium is a conditional association, not a causal effect. It falls
+  from **+0.179** to **+0.049** (−0.093 to 0.191, n=253) when contract length
+  and guarantee share are added as commitment controls. We report both.
+- The depth-chart null is absence of evidence, not proof of zero. The
+  performance measure does not capture assignment difficulty, trust, or health.
+- The transfer measurement does not travel. TE, OL, and DB are unidentifiable
+  for measurement reasons; WR is weak.
+- The post-preregistration genealogy is real. The final headline analyses were
+  added after the preregistered tests, and the preregistered novelty returned a
+  wide null. The erratum and the genealogy record it.
+- The work is co-optable. The COOPTATION annex records the labor, racial-
+  justice, surveillance, safety, betting, and antitrust readings. We cannot
+  control citation.
+- The portfolio base assumes independence. The capturable low case (−$0.99M)
+  is the stress guide, not the arithmetic base.
+
+None of these changes the measured associations. None of them is a reason to
+weaken the findings. That is the distinction this section enforces.
+
+### 7.1 The standard
+
+We back down only if at least one of these is true:
+
+1. **The repo's own numbers contradict the claim.** A count, a ratio, or a
+   coefficient that does not reproduce.
+2. **The claim states an inference as a measured fact.** A null correlation
+   described as "the market does not price," or a model output described as a
+   behavioral weight.
+3. **A cheap fix preserves the finding.** A label, a rename, a reordering, or
+   an existing number that closes the criticism without changing the result.
+4. **The claim is load-bearing and a serious professional reader would reject
+   it as stated.** This is the highest bar. It requires a named objection from
+   the field, not a generic preference for a different model.
+
+Otherwise: **leave it on the table.** State the criticism, state the defense,
+state what would change our mind, and move on.
+
+The standard cuts both ways. It stops us from watering down a measured result
+to reduce the open count. It also stops us from defending a claim the data do
+not support. The next two sections are the balance.
+
+### 7.2 The decisions
+
+The table covers the 45 findings that were open at the start of this pass.
+Fifteen have since been applied; `scorecard.csv` carries the current status.
+
+| ID | Claim | Decision | Why | Cost if we back down |
+|---|---|---|---|---|
+| J5 | Combine-performance interaction p=0.0004 | **apply** | The p belongs to the Combine-movement model; name it and separate it from the burst-pressure interaction (p=0.137). | One sentence; no number changes. |
+| J6 | Cap pays performance +0.328 / +0.143 | **apply** | Change "pays" to "is associated with measured performance"; the result stands. | One word; no number changes. |
+| X2 | The cap pays performance (framing) | **apply** | Same fix as J6; keep "cap charge, not pay" as the label. | One word; no number changes. |
+| J7 | Depth-chart null −0.011 | **needs data** | The current text already says "does not detectably"; the live criticism is assignment-aware measurement. The null and OOS R² 0.503 stand. | Weakening the null would not answer the measurement critique. |
+| I1 | One team $6.6M / $5.6M / $2.3M | **apply** | Put "a scenario, not a value" and the route decomposition before the number. | Reordering; no number changes. |
+| I2 | Three routes additive | **conceded** | The routes are not additive; the public text now leads with the low case. The $6.6M sum is a scenario. | The sum loses its headline status; the finding stays. |
+| T7 | Allocation gap is the strongest transfer | **apply** | "Strongest transfer" → "descriptively consistent, not replicated." | One phrase; the small-sample criticism stays open. |
+| T9 | Career ladder status-legible | **apply** | "Strongly" → "descriptively; mechanical." | One adverb; no number changes. |
+| M2 | Position values IDL 2.45 / EDGE 1.24 / WR 0.40 / OL 0.89 | **apply** | "Market values" → "route scenarios." | One label; no number changes. |
+| M6 | No double counting | **apply** | Add: "the row rule does not remove the economic overlap; the capturable low case is the guide." | One sentence; the accounting rule stays. |
+| X3 | "Role premium" | **apply** | Define it at first use: "raw minus role-controlled performance coefficient." | One clause; no number changes. |
+| X6 | Actionable | **apply** | "Actionable" → "plausibly actionable, untested." | One word; the no-pilot criticism stays open. |
+| X10 | Post-preregistration headline | **apply** | Add the genealogy note to the public headline or erratum. | One note; the claim stays. |
+| X11 | Genealogy and novelty drift | **apply** | State the novelty as the allocation probe, not the burst. | One sentence; no number changes. |
+| J8 | Allocation gap +0.59 late / −0.92 early | **leave** | Descriptive, consistent across positions; the strict tail is a review list. An independent role measure is needed only for a causal reading. | Lose the descriptive pattern; no. |
+| T1 | Structure travels; measurement does not | **leave** | The extension already says the measurement does not travel; the template is the claim. | Lose the cross-position framing; no. |
+| T2 | DL benchmark +0.368 reproduces +0.354 | **leave** | Labeled benchmark; the task-matched signal is in the same table. | Lose the reproduction check; no. |
+| T3 | Task-matched DL +0.271 / +0.166 | **leave** | Positive, Holm-borderline; the extension says no OOS increment. | Lose the only cross-position test; no. |
+| T5 | WR weak +0.053 | **leave** | Labeled weak, not null; the CI is reported. | Lose an honest weak result; no. |
+| T6 | TE/OL/DB unidentifiable | **leave** | Measurement failure, not no-effect; the gates are reported. | Turn absence of evidence into evidence of absence; no. |
+| T8 | Performance→role null everywhere | **apply** | Use "no detectable association; CIs include modest positive effects" instead of "null everywhere." | One phrase; no number changes. |
+| M1 | Route gating | **leave** | Pre-specified method choice; display-only rows separated. | Lose the portfolio discipline; no. |
+| M5 | EV $4.41M at 40% adoption | **apply** | Label "adoption-scaled uncut total"; it is not a probabilistic expectation. | One label; no number changes. |
+| M8 | Coaching/ST descriptive only | **leave** | No dollar case; explicitly descriptive. | Nothing to lose; no. |
+| M9 | Old $24.9M at 90.6th percentile | **leave** | Reconciliation, labeled legacy; not a validation. | Lose the bridge; no. |
+| F2 | 2025 cap-ledger +0.185 | **leave** | n=909, CI above zero; the anchor for the 2026 estimate. | Lose the strongest salary result; no. |
+| F3 | 2025 APY +0.105 | **leave** | Cross-check, CI crosses zero, labeled. | Lose an honest cross-check; no. |
+| F4 | 2024 +0.029 | **apply** | Relabel the 2024 row from "primary" to "exploratory"; the writeup already calls it thin. | One word; no number changes. |
+| F5 | Draft-matched +0.151 | **leave** | Survives the control; smaller, reported. | Lose the draft robustness; no. |
+| F6 | Team-FE +0.099 | **leave** | Sensitivity, CI crosses zero, labeled. | Lose the within-team check; no. |
+| F8 | Guarantees +8.30; years +32.75 | **leave** | n=250, CIs far from zero; role is priced in contract structure. | Lose the contract-structure evidence; no. |
+| F9 | Top 10% carry 51% | **leave** | Descriptive; the report says target the tail. | Lose the tail warning; no. |
+| F14 | Old $24.9M at 90.6th percentile | **leave** | Same reconciliation as M9. | Lose the bridge; no. |
+| F16 | Historical file is not a census | **leave** | Correct caveat; the row count is explained (31,893 raw / 30,769 cleaned). | Lose an honest limit; no. |
+| I6 | Depth chart suppresses the players | **leave** | The current text says "consistent with"; "suppresses" is the audit's paraphrase, not the repo's claim. | Nothing; the current text is already hedged. |
+| F18 | Role is snaps, routes, coverage | **leave** | The current text already says "prior-season snap share"; the audit quote is stale. | Nothing; the current text is already correct. |
+| I4 | First-mover 2–5 years | **needs data** | No adoption-timing data; label "plausibly" and leave. | Weakening would not produce the data. |
+| M7 | Contract reprices faster | **needs data** | Same. | Same. |
+| F15 | 0.40 haircut | **leave** | The 0.40 haircut is disclosed as a judgment with 0.15/0.60 sensitivities; estimating it is future work. | Losing the range would overstate precision. |
+| I5 | The market does not price the signal | **leave** | The current text says "does not detectably price"; the audit quote is stale. Defend the hedged text. | Weakening the hedge would lose the honest null. |
+| F7 | Team-change +0.499 | **leave** | The repo says "not detectable"; the wide interval is the finding, not a null. | Turning an interval into a null would overclaim. |
+| X7 | The market is inefficient | **leave** | The repo does not claim "inefficient"; the current text says "does not detectably price." The audit quote is a misattribution. | Nothing; the claim is not in the repo. |
+| I3 | Pareto-adjacent; politically manageable | **conceded** | The political judgment was removed; "Pareto-adjacent" with a named loser stands. | Nothing; the finding is normative. |
+| X4 | Price the role | **out of scope** | A recommendation, not an empirical finding. | Nothing; it is not a finding. |
+| X12 | Co-optation and insider threat | **out of scope** | Non-empirical reception map; no defense is possible. | Nothing; monitor citation. |
+
+**Counts:** 15 apply, 23 leave, 3 need data (J7, I4, M7), 2 conceded, 2 out of scope. T7's methodological half also needs data; the label fix closes the wording issue without pretending to settle it.
+
+### 7.3 The defenses
+
+These are the findings that carry the work. Each one gets the criticism, what
+it gets right, the defense, the decision, and the falsifier.
+
+#### J6. The cap pays performance
+
+**The criticism.** The performance measure is role-loaded (r≈0.5 with snaps),
+cap hit is an accounting residual, not pay, and "pays" implies intent.
+
+**What it gets right.** The measure is not a pure performance measure, and the
+cap is not cash. The verb "pays" is stronger than the association.
+
+**The defense.** The association is +0.328 log points (0.264–0.392, n=909),
+and it survives the role control at +0.143 (0.078–0.208). That is the strongest
+salary result in the repo. The label says "cap charge, not pay"; the
+role-loaded caveat is in the same paragraph. The critic is asking for a
+role-free performance measure and a cash model. Those are worth building, but
+they are new data, not a correction to this result.
+
+**Decision.** Apply the word "associated"; defend the finding. **What would
+change our mind.** A role-free performance measure showing the coefficient
+collapses.
+
+#### J7. The depth chart does not detectably reward performance
+
+**The criticism.** The CI rules out only large effects; the performance
+measure misses assignment difficulty, trust, and health. The null may be a
+measurement gap.
+
+**What it gets right.** The measure is incomplete, and the null is not proof of
+zero.
+
+**The defense.** The model has out-of-sample R² 0.503, and the performance
+coefficient stays between −0.038 and +0.026 across folds. Current role (+0.606)
+and draft (+0.785) are strong. The claim says "does not detectably reward," not
+"does not reward." The critic's alternative measure is the right next study; it
+does not make the current null disappear.
+
+**Decision.** The label is already in the text; the live criticism needs an
+assignment-aware measure. Leave the null; needs data. **What would change our
+mind.** An assignment-aware performance measure that predicts next-season role.
+
+#### J8. The allocation gap
+
+**The criticism.** A constructed difference between standardized measures; the
+role spread is 1.462 SD versus a performance spread of 0.046 SD; the strict
+tail is 13 player-seasons (12 players).
+
+**What it gets right.** The gap is not a behavioral quantity, and the tail is
+small.
+
+**The defense.** The pattern is consistent in the full and reliable samples and
+in WR, OL, and DL. The report labels it descriptive and calls the tail a review
+list, not a population. The critic wants an independent role measure; that is
+new data, not a reason to delete the descriptive pattern.
+
+**Decision.** Leave; needs data for the stronger claim. **What would change our
+mind.** An independent role measure that does not reproduce the gradient.
+
+#### F2. The 2025 cap-ledger role premium
+
+**The criticism.** Cap hit is accounting, not pay; the performance measure is
+role-loaded; the sample excludes OL and specialists.
+
+**What it gets right.** The measure is a cap charge, and the coverage is
+partial.
+
+**The defense.** n=909, +0.185 (0.094–0.276), CI well above zero. It is the
+anchor that the 2026 APY estimate reconciles to. The label is already "cap
+hit." A role-free measure would be better; it does not make this association
+wrong.
+
+**Decision.** Leave; defend. **What would change our mind.** A role-free
+measure showing the gap collapses.
+
+#### F5. The draft-matched role premium
+
+**The criticism.** Draft capital absorbs 16% of the gap; the lower bound is
+0.016; the model still cannot separate role from unmeasured performance.
+
+**What it gets right.** The gap is smaller, and the identification problem
+remains.
+
+**The defense.** The gap survives the control at +0.151 (0.016–0.286). The repo
+reports the shrinkage rather than hiding it. The critic's demand is for a
+better identification strategy, not a correction to the number.
+
+**Decision.** Leave; defend. **What would change our mind.** A draft-matched
+model with a forward-role measure that shows no gap.
+
+#### F8. Guarantees and length
+
+**The criticism.** Guarantee share is bounded and selection-laden; the quintile
+table is not in the CSVs; a one-unit snap-share change is large.
+
+**What it gets right.** The outcome is bounded, and the selection story is
+real.
+
+**The defense.** The snap-share coefficient is +8.30 points (5.25–11.35,
+n=250), and the years coefficient is +32.75 (13.33–52.18). Role is priced in
+contract structure, not only headline APY. The result is labeled descriptive;
+it is consistent with the APY finding.
+
+**Decision.** Leave; defend. **What would change our mind.** Guarantee data
+with signing dates showing the association is an artifact of structure.
+
+#### T3. The task-matched DL signal
+
+**The criticism.** Holm p=0.061/0.054; the interior incremental R² is −0.027;
+there is no out-of-sample increment over the stopwatch.
+
+**What it gets right.** The signal is borderline after correction and does not
+beat the incumbent out of sample.
+
+**The defense.** The coefficients are positive in both subgroups (+0.271
+interior, +0.166 edge), and the benchmark reproduces the entry at +0.368. The
+extension says the measurement does not travel; it does not claim a validated
+tool. The critic is asking for a larger sample and a cleaner replication. Those
+are the right next tests.
+
+**Decision.** Leave; defend the screen, not the tool. **What would change our
+mind.** A Holm-corrected replication with a positive incremental R².
+
+#### T6. TE, OL, and DB are unidentifiable
+
+**The criticism.** "Unidentifiable" can be read as "no effect"; the gates fail
+for different reasons.
+
+**What it gets right.** The phrase is easy to misread.
+
+**The defense.** The writeup explicitly distinguishes unidentifiable from null:
+TE's outcome reliability is 0.449, OL's signal reliability is 0.448, DB's
+outcome reliability is 0.121. These are measurement failures, not evidence of
+no effect. The label is the finding.
+
+**Decision.** Leave; defend the label. **What would change our mind.** Better
+outcome measures that clear the gates.
+
+#### M6. No double counting
+
+**The criticism.** The rule prevents counting the same row twice, not the same
+economic decision; both levers price role.
+
+**What it gets right.** The economic overlap is real.
+
+**The defense.** The rule is an accounting convention, and the report says so.
+The capturable low case (−$0.99M) is the overlap-adjusted guide. The critic is
+right that the base sum assumes independence; the answer is the range, not a
+different accounting rule.
+
+**Decision.** Apply the one-line caveat; defend the rule. **What would change
+our mind.** A joint adoption model showing the overlap is small.
+
+#### F9. The premium is concentrated
+
+**The criticism.** Sixteen contracts carry half the premium; the median is
+fragile.
+
+**What it gets right.** The median-team sum is sensitive to a few observations.
+
+**The defense.** The concentration is the finding, not a bug. The report says
+to target the tail and not to sell a median team the top-decile number. A
+sensitivity that drops the top contracts would be useful; it would not change
+the descriptive result.
+
+**Decision.** Leave; defend. **What would change our mind.** A top-contract-drop
+sensitivity that shows the median collapses to zero.
+
+#### T1. The structure travels; the measurement does not
+
+**The criticism.** "Travels" overstates a pattern tested in one position and
+weakly in another.
+
+**What it gets right.** The measurement transfer is not established.
+
+**The defense.** The extension says exactly that: the measurement link does
+not travel, WR is weak, and TE/OL/DB are unidentifiable. The portable claim is
+the allocation pattern, not the signal. The word "travels" is a summary of a
+template, not a claim that the DL result replicates everywhere.
+
+**Decision.** Leave; defend the template. **What would change our mind.** A
+position with a reliable outcome that shows the opposite allocation pattern.
+
+#### X3. "Role premium"
+
+**The criticism.** "Premium" reads as overpaid; the same term can mean players
+are overpaid, clubs overpay, or role is underpriced.
+
+**What it gets right.** The term is ambiguous.
+
+**The defense.** The report defines it as the raw-minus-role-controlled
+coefficient difference and labels it an association. The fix is a one-line
+definition at first use, not a change to the finding.
+
+**Decision.** Apply the definition; defend the coefficient. **What would change
+our mind.** Nothing; this is a definitional fix.
+
+### 7.4 The cheap fixes we recommend
+
+These are the only public changes the blue team recommends. They preserve the
+finding; none changes a measured coefficient. Items 1–16 have been approved and
+applied. J7 and I2 are consistency/concession fixes, not closures: the J7 label
+already travels and the assignment-measurement criticism stays open; I2 is a
+conceded sum, not a relabeled one.
+
+1. **J5** — name the model the p=0.0004 interaction belongs to; separate the
+   Combine-movement and burst-pressure tests in the public summary and erratum.
+2. **J6/X2** — "pays" → "is associated with measured performance" in the root
+   README and the audit summary; keep "cap charge, not pay" as the label.
+3. **J7** — `README.md:51`: "does not reward performance" → "does not
+   detectably reward measured performance."
+4. **I1** — put "a scenario, not a value" and the route decomposition before
+   the $6.6M number.
+5. **I2** — lead the one-team implications with the low case as the
+   one-change number; keep the $6.6M sum as a scenario.
+6. **T7** — `transfer/writeups/05_what_transfers.md:34`: "the strongest
+   transfer" → "descriptively consistent, not replicated."
+7. **T9** — `transfer/writeups/04_breadth_and_career.md:91`: "strongly
+   status-legible" → "descriptively status-legible; mechanical."
+8. **M2** — `implications/markets/README.md`: "market values" / "Base
+   portfolio net" → "route scenarios."
+9. **M6** — add the one-line caveat: "the rule prevents counting the same row
+   twice; the economic overlap remains, and the capturable low case is the
+   guide."
+10. **X3** — define "role premium" once, at first use: "raw minus
+    role-controlled performance coefficient."
+11. **X6** — "actionable" → "plausibly actionable, untested."
+12. **X10/X11** — add the claim genealogy to the headline or a prominent note,
+    and state the novelty as the allocation probe, not the burst.
+13. **Residual housekeeping** — the "blind" / "position-specific" / "does not
+    reward" wording in the non-frozen writeups (closed findings J3/J4/X1), so
+    the public summaries match the erratum.
+14. **T8** — "null everywhere" → "no detectable association; CIs include modest
+    positive effects."
+15. **M5** — "EV" → "adoption-scaled uncut total"; it is not a probabilistic
+    expectation.
+16. **F4** — relabel the 2024 row from "primary" to "exploratory"; the writeup
+    already calls it thin.
+
+### 7.5 What we will not water down
+
+These are the measured findings worth a professional's time. We will not
+remove them, and we will not trade them for a critic's preferred model:
+
+- **Cap ↔ performance:** +0.328 (0.264–0.392, n=909); +0.143 (0.078–0.208)
+  with role.
+- **2025 cap-ledger role premium:** +0.185 (0.094–0.276, n=909).
+- **2026 APY gap:** +0.179 (0.022–0.336, n=306), with the expected-role ladder
+  (+0.076 years, +0.150 guarantees, +0.049 both) stated in the same breath.
+- **Draft-matched gap:** +0.151 (0.016–0.286).
+- **Guarantees and length:** +8.30 pp (5.25–11.35) and +32.75 (13.33–52.18),
+  n=250.
+- **Depth-chart null:** −0.011 (−0.119 to 0.097, n=233), OOS R² 0.503.
+- **Allocation gap:** +0.59 late / −0.92 early; descriptive, consistent across
+  positions, strict tail 13 player-seasons / 12 players.
+- **Burst → interior pressure:** +0.354 (0.143–0.565), reproduced at +0.368
+  (0.149–0.587); cross-player screen, not a season forecast.
+- **Task-matched DL signal:** +0.271/+0.166, Holm-borderline; the extension
+  already says the measurement does not travel.
+- **Per-position cap-ledger gaps:** EDGE +0.326, S +0.331, CB +0.224; the only
+  CI-supported positions.
+
+### 7.6 What we will not claim
+
+The blue team also has a duty not to defend what the data do not support:
+
+- The role premium is not causal.
+- No player is shown to be overpaid.
+- The market is not proven inefficient.
+- The work is not a validated tool, and "actionable" is not tested.
+- The measurement does not transfer outside DL.
+- The allocation gap is not structural.
+- The first-mover window is not an estimate.
+- The 0.40 haircut is not estimated.
+- The portfolio is not worth $11M.
+- The $6.6M one-team sum is not additive; it is a scenario.
+- The judged entry was not pre-registered as the final headline.
+
+### 7.7 What would change our mind
+
+| Defended claim | The test that would change the verdict |
+|---|---|
+| Cap ↔ performance | A role-free performance measure showing the coefficient collapses. |
+| Depth-chart null | An assignment-aware performance measure that predicts next-season role. |
+| Allocation gap | An independent role measure that does not reproduce the gradient. |
+| 2025 cap-ledger role premium | A role-free measure showing the gap collapses. |
+| Draft-matched gap | A forward-role control showing no gap. |
+| Guarantees/length | Guarantee data with signing dates showing the association is structural. |
+| Task-matched DL signal | A Holm-corrected replication with positive incremental R². |
+| Unidentifiable TE/OL/DB | Better outcome measures that clear the 0.50 gate. |
+| No double counting | A joint adoption model showing the overlap is small. |
+| Concentration | A top-contract-drop sensitivity that shows the median collapses. |
+| Structure travels | A reliable position that shows the opposite allocation pattern. |
+| $6.6M one-team sum | A joint adoption model showing the routes are additive. |
+
+The blue team's verdict: **15 cheap fixes, 23 findings defended, 3 that need new
+data, 2 conceded, 2 out of scope.** The measured core is unchanged. The
+work is not watered down; it is bounded. A professional reader can take the
+cap-performance association, the depth-chart null, the allocation gap, and the
+role-premium association seriously, with the labels that travel. The criticisms
+that remain are the price of inference on observational data, not evidence that
+the findings are wrong.
 

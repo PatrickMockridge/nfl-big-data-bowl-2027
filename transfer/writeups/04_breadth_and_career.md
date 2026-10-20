@@ -88,7 +88,7 @@ coefficient, but it is unidentifiable here.
 
 ### Reading
 
-The BDB-native reward proxy is strongly status-legible. Career start rate rises
+The BDB-native reward proxy is descriptively status-legible; the relationship is mechanical. Career start rate rises
 from 0.03 to 0.56 across draft quartiles; measured performance adds nothing once
 draft is controlled (−0.017, p=0.27) and remains null with role added (−0.033,
 p=0.10). Role itself is a strong correlate, as expected: career starts and snaps

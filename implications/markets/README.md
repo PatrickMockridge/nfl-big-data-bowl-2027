@@ -12,7 +12,7 @@ supports, and carry every number's evidence tier.
 
 ## Headline
 
-| Market | Base portfolio net | Conservative | Low | Evidence |
+| Market | Base route scenario | Conservative | Low | Evidence |
 |---|---:|---:|---:|---|
 | Interior DL (anchor, selection + role) | $2.45M | $2.45M | $0.29M | measured + inference |
 | EDGE | $1.24M | $1.24M | −$0.27M | measured association, borderline |
@@ -23,6 +23,9 @@ supports, and carry every number's evidence tier.
 | Free agency / contract | $6.05M uncut / $1.82M capture | $0.38M uncut / −$0.45M capture | $0.88M uncut / −$0.29M capture | dedicated bottom-up report |
 | **Portfolio total (uncut)** | **$11.03M** | **$5.37M** | **$0.18M** | inference |
 
+The position rows are route scenarios built from judgment parameters, not
+bottom-up market values.
+
 **Dual totals.**
 
 | Total | Base | Conservative | Low |
@@ -32,8 +35,8 @@ supports, and carry every number's evidence tier.
 
 - The uncut total is **$11.03M base / $5.37M conservative / $0.18M low**. The
   capturable total is **$6.80M / $4.54M / −$0.99M**. The low stress case is the
-  capturable **−$0.99M**, not the uncut $0.18M. The uncut EV is **$4.41M**;
-  the capture EV is **$2.72M**.
+  capturable **−$0.99M**, not the uncut $0.18M. The adoption-scaled uncut total
+  at 40% is **$4.41M**; the adoption-scaled capture total is **$2.72M**.
 - The conservative and low columns are different stress axes: conservative
   zeroes the pricing gaps whose CI includes zero in the contract/free-agency
   market; low uses the low assumptions throughout. Position-market nets have no
