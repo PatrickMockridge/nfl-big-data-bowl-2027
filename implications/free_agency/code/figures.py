@@ -82,8 +82,9 @@ def headline() -> None:
     ax.set_xlabel("Annual role premium, actual 2026 signing class ($M/year)")
     ax.set_xlim(0, max(values.max(), old) * 1.08)
     fig.suptitle(
-        f"The old \\${old:.1f}M estimate was a {old_pct*100:.1f}th-percentile team",
-        x=0.01, y=1.03, ha="left", fontsize=13.0,
+        f"The previous synthetic \\${old:.1f}M estimate was a "
+        f"{old_pct*100:.1f}th-percentile team",
+        x=0.01, y=1.03, ha="left", fontsize=12.5,
     )
     ax.set_title(
         f"Median team: \\${median:.2f}M gross / \\${median-1.0:.2f}M net. "
@@ -102,7 +103,8 @@ def headline() -> None:
         color=SECONDARY, va="center", bbox=box,
     )
     ax.annotate(
-        f"old top-down \\${old:.1f}M ({old_pct*100:.1f}th pct)", xy=(old, len(d) * 0.55),
+        f"previous synthetic \\${old:.1f}M ({old_pct*100:.1f}th pct)",
+        xy=(old, len(d) * 0.55),
         xytext=(6, 0), textcoords="offset points", fontsize=8.5,
         color=RED, va="center", bbox=box,
     )

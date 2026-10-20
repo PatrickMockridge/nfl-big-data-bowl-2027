@@ -4,27 +4,29 @@ This repo contains the judged 2027 Big Data Bowl entry and the post-competition 
 
 **The judged entry:** a 10 Hz Combine burst predicts interior pressure and sacks; the 40-yard dash and 10-yard split do not. The depth chart does not reward measured performance — next-season role follows current role and draft. The cap does reward performance.
 
-**The headline extension:** the contract market pays for role. A median team's actual 2026 free-agent signing class implies **$7.05M gross / $6.05M net per year**. The earlier top-down estimate of **$24.9M** was a 90.6th-percentile synthetic portfolio, not the median team.
+**The headline extension:** the contract market pays for role. A median team's actual 2026 free-agent signing class implies **$7.05M gross / $6.05M net per year**.
 
-![The old $24.9M estimate was a 90.6th-percentile team; the median team's actual 2026 class is $7.05M gross / $6.05M net.](implications/free_agency/writeups/figures/fa_headline.png)
+**What the previous $24.9M estimate was.** The first market-portfolio pass did not use actual contracts. It took nine per-position raw-vs-role performance gaps from the 2025 cap ledger, applied a 0.40 haircut to each, multiplied by a synthetic renewal portfolio scaled by team positional spending, and summed the positions. That produced **$24.9M** for a hypothetical one-team portfolio. The dedicated free-agency investigation replaced it with the observed 2026 signing class. The $24.9M figure sits at the **90.6th percentile** of the 32-team distribution; the median team is **$7.05M gross / $6.05M net**. See the [legacy note](implications/markets/writeups/03_free_agency.md) for the old calculation.
+
+![The previous synthetic $24.9M estimate was a 90.6th-percentile team; the median team's actual 2026 class is $7.05M gross / $6.05M net.](implications/free_agency/writeups/figures/fa_headline.png)
 
 ## The headline number
 
-| Measure | Value |
-|---|---:|
-| Median team, 2026 free-agent class | **$7.05M gross / $6.05M net** |
-| Conservative (EDGE/S/CB) | $1.38M gross / $0.38M net |
-| Low | $0.52M gross / $0.02M net |
-| Old top-down estimate | $24.91M (90.6th percentile) |
-| Portfolio total | $11.03M base / $5.37M conservative / −$0.68M low |
+| Measure | Value | Details |
+|---|---:|---|
+| Median team, 2026 free-agent class | **$7.05M gross / $6.05M net** | [valuation](implications/free_agency/writeups/04_valuation.md) |
+| Conservative (EDGE/S/CB) | $1.38M gross / $0.38M net | [valuation](implications/free_agency/writeups/04_valuation.md) |
+| Low | $0.52M gross / $0.02M net | [valuation](implications/free_agency/writeups/04_valuation.md) |
+| Previous synthetic estimate (not contracts) | $24.91M (90.6th percentile) | [legacy note](implications/markets/writeups/03_free_agency.md) |
+| Portfolio total | $11.03M base / $5.37M conservative / −$0.68M low | [portfolio](implications/markets/writeups/05_portfolio.md) |
 
-- 2026 APY role premium: **+0.179** (95% CI 0.022–0.336, n=306). 2025 cap ledger: **+0.185** (0.094–0.276, n=909).
-- The cross-checks are weaker: 2025 active APY +0.105 (CI crosses zero); 2024 +0.029 (null); draft-matched 2026 +0.151 (0.016–0.286).
-- Role is also priced in guarantees: guarantee share rises from 0.46 to 0.60 across snap-share quintiles.
-- The premium is concentrated: the top 10% of contracts carry **51%** of it.
-- Team changes do not earn a detectable free-agent premium: +0.499 (95% CI −0.164 to 1.162).
+- 2026 APY role premium: **+0.179** (95% CI 0.022–0.336, n=306). 2025 cap ledger: **+0.185** (0.094–0.276, n=909). [Pricing details](implications/free_agency/writeups/02_pricing.md), [model code](implications/free_agency/code/pricing.py).
+- The cross-checks are weaker: 2025 active APY +0.105 (CI crosses zero); 2024 +0.029 (null); draft-matched 2026 +0.151 (0.016–0.286). [Pricing details](implications/free_agency/writeups/02_pricing.md).
+- Role is also priced in guarantees: guarantee share rises from 0.46 to 0.60 across snap-share quintiles. [Guarantee model](implications/free_agency/writeups/02_pricing.md).
+- The premium is concentrated: the top 10% of contracts carry **51%** of it. [Surplus details](implications/free_agency/writeups/03_surplus.md), [code](implications/free_agency/code/surplus.py).
+- Team changes do not earn a detectable free-agent premium: +0.499 (95% CI −0.164 to 1.162). [Pricing details](implications/free_agency/writeups/02_pricing.md).
 
-The dollar figures are inferences from the 2026 class, not forecasts or causal estimates.
+The dollar figures are inferences from the 2026 class, not forecasts or causal estimates. The full investigation is in [`implications/free_agency/`](implications/free_agency/README.md).
 
 ## What the judged entry found
 
@@ -35,7 +37,7 @@ The dollar figures are inferences from the 2026 class, not forecasts or causal e
 - Allocation gap: **+0.59 SD** for late picks/UDFAs, **−0.92 SD** for early picks.
 - The two-agent wedge (+0.28), the Yellow Square fallback (wide null), and the weekly check are in the entry.
 
-Full text: [`writeup/submission.md`](writeup/submission.md). Public notebook: [`notebooks/02_final_public.ipynb`](notebooks/02_final_public.ipynb).
+Full text: [`writeup/submission.md`](writeup/submission.md) (Tier 0/1/2), [`docs/APPENDIX.md`](docs/APPENDIX.md) (exploratory cuts). Public notebook: [`notebooks/02_final_public.ipynb`](notebooks/02_final_public.ipynb). Code: [`interior_burst.py`](src/discovery/interior_burst.py), [`combine_movement.py`](src/features/combine_movement.py), [`role_allocation.py`](src/discovery/role_allocation.py), [`cost_risk.py`](src/discovery/cost_risk.py), [`agentic_allocation.py`](src/framework/agentic_allocation.py).
 
 ## Why the brief led here
 
@@ -44,7 +46,7 @@ The brief asked for a non-obvious, actionable linkage between 10 Hz Combine trac
 1. **Non-obvious:** compare the 10 Hz burst with the stopwatch. The burst carries the pressure signal; the stopwatch does not.
 2. **One position:** DL. The cross-position check showed the measurement is position-specific, so the allocation side is what travels.
 3. **Actionable:** a signal that does not change who plays is not useful. The depth chart does not reward performance; the cap does.
-4. **Dollar:** the contract market is where the role premium has a price. The median team's 2026 class is $6.05M net; the old $24.9M was an upper-tail team.
+4. **Dollar:** the contract market is where the role premium has a price. The median team's 2026 class is $6.05M net; the previous synthetic $24.9M estimate was an upper-tail team.
 
 The judging dimensions reported for the event are Innovation, Accuracy, Impact, and Clarity; the official weighted rubric is not public. The NFL [announcement](https://media.nfl.com/news-and-releases/consumer-products/national-football-league-announces-ninth-annual-big-data-bowl-po) states the brief's focus.
 
