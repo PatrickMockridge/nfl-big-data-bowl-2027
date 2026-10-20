@@ -24,6 +24,8 @@ The judged entry established the chain: a 10 Hz Combine burst predicts interior 
 
 The dollar figures are inferences from the 2026 class, not forecasts or causal estimates. The full investigation is in [`implications/free_agency/`](implications/free_agency/README.md).
 
+**Adversarial audit:** [red-team/blue-team review of every implied finding](audit/README.md).
+
 **Discussion:** [Kaggle thread on whether to include this finding in the submission](https://www.kaggle.com/competitions/nfl-big-data-bowl-2027/discussion/751037).
 
 ## What the judged entry found
@@ -55,6 +57,7 @@ The judging dimensions reported for the event are Innovation, Accuracy, Impact, 
 - [`implications/free_agency/`](implications/free_agency/README.md) — the headline deep dive: APY pricing, guarantees, surplus, bottom-up valuation.
 - [`implications/markets/`](implications/markets/README.md) — portfolio across positions, free agency, coaching, special teams.
 - [`transfer/`](transfer/README.md) — cross-position check of the allocation-gap pattern.
+- [`audit/`](audit/README.md) — red-team/blue-team audit of every implied finding.
 - [`docs/`](docs/) — protocols, data sources, appendix.
 
 ## Reproduce
