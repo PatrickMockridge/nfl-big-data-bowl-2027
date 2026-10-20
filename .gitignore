@@ -3,6 +3,7 @@
 /figures/
 /notebooks/figures/
 /implications/outputs/
+/implications/markets/outputs/
 .venv/
 __pycache__/
 *.pyc
