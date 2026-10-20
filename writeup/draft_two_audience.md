@@ -1,5 +1,7 @@
 # The Combine's pressure signal is real; the allocation gap is the lever
 
+**Historical v1 draft — superseded by [`submission.md`](submission.md).**
+
 ## Part 1 — What the data show, and what they imply
 
 The data support a narrow finding: a 10 Hz Combine burst predicts interior pressure and sacks, while the stopwatch does not carry the pressure signal. Under normal assumptions about role allocation, that signal implies a larger gap. The argument is tiered; each tier says what it can support.

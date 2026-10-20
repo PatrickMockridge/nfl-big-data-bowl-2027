@@ -4,7 +4,9 @@ Role is prior-season snap share in this model. A median team's 2026 free-agent c
 
 *Role premium* means the raw minus role-controlled performance coefficient. It is a conditional association, not an unearned-pay verdict.
 
-The judged entry established the chain: a 10 Hz Combine burst predicts interior pressure while the stopwatch does not; the depth chart does not detectably reward measured performance; the cap is associated with measured performance.
+**Current entry:** [`writeup/submission.md`](writeup/submission.md) (v2, 2026-10-20). The original judged text is at `c652424`; the public notebook is [`notebooks/03_final_public_v2.ipynb`](notebooks/03_final_public_v2.ipynb).
+
+The entry establishes the chain: a 10 Hz Combine burst predicts interior pressure while the stopwatch does not; the depth chart does not detectably reward measured performance; the cap is associated with measured performance; and the contract market prices role.
 
 ![Median team: $7.0M a year of uncut role premium from the actual 2026 free-agent class; 32 teams sorted.](implications/free_agency/writeups/figures/fa_headline.png)
 
@@ -31,20 +33,21 @@ The dollar figures are inferences from the 2026 class, not forecasts or causal e
 
 **Discussion:** [Kaggle thread on whether to include this finding in the submission](https://www.kaggle.com/competitions/nfl-big-data-bowl-2027/discussion/751037).
 
-## What the judged entry found
+## What the entry found
 
 - Burst → pressure **+0.354** (0.143–0.565, n=64); sacks **+0.317** (0.083–0.550, n=63). The 40/10 joint test is p=0.998; out-of-sample R² is −0.113 for the stopwatch and +0.178 for the burst. The stopwatch is the stronger out-of-sample sack model, and the sack outcome is below the 0.50 reliability gate.
 - Concentrated in interior linemen: DL **+0.734** (0.461–1.007); WR +0.366 (p=0.084); OL +0.058; TE +0.093. The Combine-movement interaction is p=0.0004; the burst-pressure interaction is p=0.137 and is not significant.
-- Cap pays performance: **+0.328** raw (0.264–0.392); **+0.143** with role (0.078–0.208).
+- Cap charge is associated with performance: **+0.328** raw (0.264–0.392); **+0.143** with role (0.078–0.208).
 - Next-season role: current role **+0.606**, draft **+0.785**, performance **−0.011** (−0.119 to 0.097).
 - Allocation gap: **+0.59 SD** for late picks/UDFAs, **−0.92 SD** for early picks.
+- Market: the 2026 APY role premium is **+0.179** (0.022–0.336, n=306); the 2025 cap ledger is **+0.185** (n=909); the median team's class is **$7.05M uncut / $1.82M capture net** at 0.40; the conservative EDGE/S/CB case is **−$0.45M**; commitment-controlled **+0.049** (n=253).
 - The two-agent cross-construct difference (+0.28; not a behavioral weight), the Yellow Square fallback (wide null), and the weekly check are in the entry.
 
 **Genealogy.** The burst and allocation analyses were added after the preregistered tests and are labeled exploratory. The preregistered Yellow/Möbius framework returned a wide null. The novelty is the allocation probe, not the burst metric alone. See the [audit](audit/README.md).
 
 **Data ethics.** The Combine tracking data are league-provided; this work does not collect new biometric data and does not recommend expanding collection. It is a validity check on measurements the league already takes.
 
-Full text: [`writeup/submission.md`](writeup/submission.md) (Tier 0/1/2/3), [`docs/APPENDIX.md`](docs/APPENDIX.md) (exploratory cuts). Public notebook: [`notebooks/03_final_public_v2.ipynb`](notebooks/03_final_public_v2.ipynb); the original is [`notebooks/02_final_public.ipynb`](notebooks/02_final_public.ipynb). Code: [`interior_burst.py`](src/discovery/interior_burst.py), [`combine_movement.py`](src/features/combine_movement.py), [`role_allocation.py`](src/discovery/role_allocation.py), [`cost_risk.py`](src/discovery/cost_risk.py), [`agentic_allocation.py`](src/framework/agentic_allocation.py).
+Full text: [`writeup/submission.md`](writeup/submission.md) (Tier 0/1/2/3), [`docs/APPENDIX.md`](docs/APPENDIX.md) (exploratory cuts). Kaggle upload: [`writeup/kaggle_writeup.md`](writeup/kaggle_writeup.md); steps and limits: [`writeup/KAGGLE_UPLOAD.md`](writeup/KAGGLE_UPLOAD.md). Public notebook: [`notebooks/03_final_public_v2.ipynb`](notebooks/03_final_public_v2.ipynb); the original is [`notebooks/02_final_public.ipynb`](notebooks/02_final_public.ipynb). Code: [`interior_burst.py`](src/discovery/interior_burst.py), [`combine_movement.py`](src/features/combine_movement.py), [`role_allocation.py`](src/discovery/role_allocation.py), [`cost_risk.py`](src/discovery/cost_risk.py), [`agentic_allocation.py`](src/framework/agentic_allocation.py), [free agency](implications/free_agency/code/).
 
 ## Why the brief led here
 
@@ -59,12 +62,16 @@ The judging dimensions reported for the event are Innovation, Accuracy, Impact, 
 
 ## Repo map
 
-- [`writeup/submission.md`](writeup/submission.md) — v2 revision of the judged entry, with host-confirmed salary data; the original judged text is at `c652424`.
-- [`notebooks/02_final_public.ipynb`](notebooks/02_final_public.ipynb) — public notebook.
-- [`implications/free_agency/`](implications/free_agency/README.md) — the headline deep dive: APY pricing, guarantees, surplus, bottom-up valuation.
-- [`implications/markets/`](implications/markets/README.md) — portfolio across positions, free agency, coaching, special teams.
-- [`transfer/`](transfer/README.md) — cross-position check of the allocation-gap pattern.
-- [`audit/`](audit/README.md) — red-team/blue-team audit of every implied finding.
+- [`writeup/submission.md`](writeup/submission.md) — current v2 entry, with host-confirmed salary data; the original judged text is at `c652424`.
+- [`writeup/kaggle_writeup.md`](writeup/kaggle_writeup.md) — the Kaggle upload copy: same text, raw image URLs.
+- [`writeup/KAGGLE_UPLOAD.md`](writeup/KAGGLE_UPLOAD.md) — upload steps, limits, and notebook link.
+- [`writeup/draft_two_audience.md`](writeup/draft_two_audience.md) — historical v1 draft (superseded).
+- [`notebooks/03_final_public_v2.ipynb`](notebooks/03_final_public_v2.ipynb) — current public notebook.
+- [`notebooks/02_final_public.ipynb`](notebooks/02_final_public.ipynb) — original v1 notebook, frozen at `c652424`.
+- [`implications/free_agency/`](implications/free_agency/README.md) — the deep dive behind Tier 2: APY pricing, guarantees, surplus, bottom-up valuation.
+- [`implications/markets/`](implications/markets/README.md) — portfolio across positions, free agency, coaching, special teams (extension).
+- [`transfer/`](transfer/README.md) — cross-position check of the allocation-gap pattern (extension).
+- [`audit/`](audit/README.md) — red/blue audit, erratum, reception scan, scorecard.
 - [`docs/`](docs/) — protocols, data sources, appendix.
 
 ## Reproduce
@@ -80,6 +87,14 @@ python scripts/35_free_agency_valuation.py
 python scripts/36_free_agency_history.py
 python scripts/37_free_agency_figures.py
 ```
+
+Writeup figures (composites):
+
+```bash
+python scripts/38_writeup_composites.py
+```
+
+The composites require the six `writeup/figures/` PNGs from the entry pipeline and the free-agency figures.
 
 Market portfolio:
 
@@ -102,8 +117,14 @@ python scripts/23_transfer_career.py
 python scripts/24_transfer_figures.py
 ```
 
+Current public notebook:
+
+```bash
+jupyter nbconvert --execute --to notebook --inplace notebooks/03_final_public_v2.ipynb
+```
+
 <details>
-<summary>Judged entry pipeline</summary>
+<summary>Original entry pipeline (v1)</summary>
 
 ```bash
 python scripts/01_download.py
@@ -134,3 +155,5 @@ jupyter nbconvert --execute --to notebook --inplace notebooks/02_final_public.ip
 ## License and data
 
 Code is MIT (`LICENSE`). Competition data is CC BY-NC 4.0 (`DATA_LICENSE.md`), is not committed, and is not redistributed. External data sources and licenses are in [`docs/EXTERNAL_DATA.md`](docs/EXTERNAL_DATA.md).
+
+The salary tier uses public, free contract data: OverTheCap, nflverse, and the Apache-2.0 contract snapshot. Raw source pages are not redistributed; only derived aggregates are used. The competition host confirmed that publicly available, free salary data is appropriate ([discussion 751037](https://www.kaggle.com/competitions/nfl-big-data-bowl-2027/discussion/751037)).
